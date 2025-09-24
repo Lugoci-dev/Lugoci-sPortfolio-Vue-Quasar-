@@ -1,1 +1,33 @@
 /* app global css */
+@import 'tailwindcss';
+
+/* @layer base {
+  body {
+    @apply bg-slate-100;
+  }
+} */
+
+body {
+  font-family: 'Inconsolata', monospace;
+  background: linear-gradient(180deg, hsl(227, 69%, 5%) 0%, hsl(227, 77%, 17%) 100%);
+  /* background: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%); */
+  /* background: linear-gradient(180deg, #f37362 0%, #ffffff 100%); */
+}
+
+html {
+  font-size: clamp(14px, 1.2vw, 20px);
+}
+
+@theme {
+  --color-Neutral900: hsl(227, 75%, 14%);
+  --color-Neutral800: hsl(226, 25%, 17%);
+  --color-Neutral700: hsl(225, 23%, 24%);
+  --color-Neutral600: hsl(226, 11%, 37%);
+  --color-Neutral300: hsl(0, 0%, 78%);
+  --color-Neutral200: hsl(217, 61%, 90%);
+  --color-Neutral100: hsl(0, 0%, 93%);
+  --color-Neutral0: hsl(200, 60%, 99%);
+  --color-Red400: hsl(3, 86%, 64%);
+  --color-Red500: hsl(3, 71%, 56%);
+  --color-Red700: hsl(3, 77%, 44%);
+}

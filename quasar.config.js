@@ -38,7 +38,7 @@ export default defineConfig((ctx) => {
         node: 'node20',
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'hash'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -96,7 +96,19 @@ export default defineConfig((ctx) => {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
     framework: {
-      config: {},
+      config: {
+        brand: {
+          primary: 'hsl(227, 75%, 14%)',
+          secondary: 'hsl(200, 60%, 99%)',
+          accent: 'hsl(3, 71%, 56%)',
+          dark: 'hsl(226, 25%, 17%)',
+          negative: 'hsl(225, 23%, 24%)',
+          positive: 'hsl(226, 11%, 37%)',
+
+          info: 'hsl(0, 0%, 78%)',
+          warning: 'hsl(217, 61%, 90%)',
+        },
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
