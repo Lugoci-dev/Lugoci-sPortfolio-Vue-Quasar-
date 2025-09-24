@@ -1,15 +1,46 @@
 <script setup>
 import LinkBox from 'src/components/common/LinkBox.vue'
+
+import { ref, onMounted } from 'vue'
+
+const icons = ref([
+  '/public/icons/angular.svg',
+  '/public/icons/axios.svg',
+  '/public/icons/expressjs.svg',
+  '/public/icons/getpinoio.svg',
+  '/public/icons/javascript.svg',
+  '/public/icons/nodejs.svg',
+  '/public/icons/pinboard.svg',
+  '/public/icons/pingcap.svg',
+])
+
+const positions = ref([])
+
+onMounted(() => {
+  // Inicializa las posiciones en fila
+  positions.value = icons.value.map((_, i) => i * 80)
+
+  function animate() {
+    positions.value = positions.value.map((x) =>
+      x <= -80 ? (icons.value.length - 1) * 80 : x - 0.5,
+    )
+    requestAnimationFrame(animate)
+  }
+
+  animate()
+})
 </script>
 
 <template>
-  <q-page>
+  <q-page class="text-Neutral200">
     <div
-      class="h-auto flex justify-center py-12 px-4 md:px-24 gap-8 md:gap-20 text-white"
+      class="bg-[url('src/assets/pattern-lines.svg')] bg-cover bg-center h-auto flex justify-center pt-12 pb-9 px-4 md:px-24 gap-8 md:gap-20 text-Neutral200"
       style="width: 98vw"
     >
+      <!-- <img class="absolute top-3.5 right-0" src="../assets/pattern-squiggly-line-top.svg" alt="" /> -->
+      <img class="absolute top-14 left-32 w-32" src="../assets/pattern-circle.svg" />
       <div class="flex-1 flex-col self-center">
-        <p class="text-2xl">Hello <span class="text-accent">I'am</span></p>
+        <p class="text-2xl">Hello <span class="text-accent text-weight-bolder">I'am</span></p>
         <p class="text-4xl">Isaac D. Gonzalez Rodriguez</p>
         <p class="text-positive">
           <!-- Error <span class="text-accent text-weight-bold">404</span>: Frase ingeniosa no encontrada! -->
@@ -19,33 +50,14 @@ import LinkBox from 'src/components/common/LinkBox.vue'
         </p>
         <q-separator color="accent"></q-separator>
         <div class="py-4 flex gap-2">
-          <!-- <div
-            class="flex flex-1 min-w-56 justify-between items-center bg-dark border rounded-md border-Neutral700 p-2"
-          >
-            <div class="flex flex-2 justify-center gap-2 items-center">
-              <q-icon size="1.5rem" name="img:src/assets/gmail.png" />
-              <span>isaitodaniel@gmail.com</span>
-            </div>
-
-            <q-icon class="bg-negative p-1.5 rounded-md" name="content_copy" />
-          </div> -->
           <LinkBox
             class="min-w-56"
             link-icon="img:src/assets/gmail.png"
             text-link="isaitodaniel@gmail.com"
+            action-icon="content_copy"
           ></LinkBox>
 
           <div class="flex gap-1 justify-between items-center rounded-md w-1/2">
-            <!-- <div
-              class="flex flex-2 min-w-38 justify-between gap-2 items-center bg-dark border rounded-md border-Neutral700 p-2"
-            >
-              <div class="flex flex-2 justify-center gap-2 items-center">
-                <q-icon size="1.5rem" name="img:src/assets/github-mark-white.svg" />
-                <span> GitHub</span>
-              </div>
-
-              <q-icon class="bg-negative p-1.5 rounded-md" name="open_in_new" />
-            </div> -->
             <LinkBox
               class="min-w-38"
               link-icon="img:src/assets/github-mark-white.svg"
@@ -57,15 +69,6 @@ import LinkBox from 'src/components/common/LinkBox.vue'
               text-link="LinkedIn"
               action-icon="open_in_new"
             ></LinkBox>
-            <!-- <div
-              class="flex flex-2 min-w-38 justify-between gap-2 items-center bg-dark border rounded-md border-Neutral700 p-2"
-            >
-              <div class="flex flex-2 justify-center gap-2 items-center">
-                <q-icon size="1.5rem" name="img:src/assets/linkedin.png" />
-                <span> Linkedin</span>
-              </div>
-              <q-icon class="bg-negative p-1.5 rounded-md" name="open_in_new" />
-            </div> -->
           </div>
         </div>
       </div>
@@ -85,7 +88,35 @@ import LinkBox from 'src/components/common/LinkBox.vue'
       </div>
     </div>
 
-    <div class="">
+    <!-- <div class="h-18" style="background: linear-gradient(to right, #040918 0%, #091540 100%)"></div> -->
+
+    <img class="absolute right-30" src="../assets/pattern-circle.svg" alt="" />
+
+    <div class="flex pb-16 px-4 md:px-24 items-center justify-between">
+      <div class="flex-1">
+        <span class="text-accent text-weight-bolder text-4xl"
+          ><sapan class="text-warning text-weight-thin">Relevant</sapan> Projects...
+          <q-icon color="accent" name="arrow_drop_down"
+        /></span>
+      </div>
+
+      <div
+        class="relative overflow-hidden w-full md:w-1/2 h-20 flex items-center justify-start border-l-4 border-Red400"
+      >
+        <div
+          v-for="(icon, i) in icons"
+          :key="i"
+          class="absolute transition-transform"
+          :style="{ transform: `translateX(${positions[i]}px)` }"
+        >
+          <img :src="icon" class="w-8 h-8" />
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="px-4 md:px-24 bg-[url('src/assets/pattern-squiggly-line-bottom-desktop.svg')] bg-cover bg-center h-screen"
+    >
       <p class="text-2xl">Hello I'am</p>
       <p class="text-4xl">Isaac D. Gonzalez Rodriguez</p>
       <p style="color: hsl(227, 75%, 14%)">- **Neutral 900**: ``</p>
@@ -99,3 +130,5 @@ import LinkBox from 'src/components/common/LinkBox.vue'
     </div>
   </q-page>
 </template>
+
+<style></style>
