@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf ">
+  <q-layout>
     <q-header class="pt-8 px-4 md:px-24" style="background: transparent">
       <q-toolbar
         style="background: linear-gradient(to right, #040918 0%, #091540 100%); border-radius: 12px"
@@ -8,13 +8,23 @@
         <q-toolbar-title class="text-Neutral0"> Lugoci@<b>dev</b> </q-toolbar-title>
         <q-space />
         <div class="text-weight-regular">
-          <span v-for="option in options" :key="option" style="margin-right: 1rem">{{
-            option
-          }}</span>
+          <router-link
+            :to="item.path"
+            v-for="item in navItems"
+            :key="item"
+            class="mr-3"
+            :class="{
+              'text-weight-bold  border-Red400 border-b-2': route.path === item.path,
+            }"
+            >{{ item.name }}</router-link
+          >
         </div>
         <q-space />
         <!-- <q-btn to="/start/" style="background: hsl(226, 11%, 37%)" size="sm" rounded no-caps> -->
-        <button class="p-0.5 border border-dashed border-Neutral600 rounded-md">
+        <button
+          @click="downloadCv"
+          class="transition-all duration-300 ease-in-out p-0.5 cursor-pointer hover:bg-Neutral800 border border-dashed border-Neutral600 rounded-md"
+        >
           <q-icon
             class="bg-negative border border-dashed border-Red400 p-1 rounded-md"
             name="download"
@@ -35,8 +45,20 @@
 <script setup>
 // import { ref } from 'vue'
 // import EssentialLink from 'components/EssentialLink.vue'
+import { useRoute } from 'vue-router'
 
-const options = ['Home', 'About', 'Portfolio']
+const route = useRoute()
+
+// const options = ['Home', 'About', 'Portfolio']
+const navItems = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Portfolio', path: '/portfolio' },
+]
+
+const downloadCv = () => {
+  console.log('Downloading CV...')
+}
 
 // const linksList = [
 //   {

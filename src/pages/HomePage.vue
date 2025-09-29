@@ -1,7 +1,16 @@
 <script setup>
 import LinkBox from 'src/components/common/LinkBox.vue'
+import CopyBox from 'src/components/common/CopyBox.vue'
 
-import { ref, onMounted } from 'vue'
+import { useProjectsStore } from 'src/stores/projects-store'
+
+import { ref, onMounted, computed } from 'vue'
+import ProjectBox from 'src/components/common/projectBox.vue'
+// import { storeToRefs } from 'pinia'
+
+// const { projects } = storeToRefs(useProjectsStore())
+
+const relevantProjects = computed(() => useProjectsStore().relevantProjects)
 
 const icons = ref([
   '/public/icons/angular.svg',
@@ -50,24 +59,25 @@ onMounted(() => {
         </p>
         <q-separator color="accent"></q-separator>
         <div class="py-4 flex gap-2">
-          <LinkBox
+          <CopyBox
             class="min-w-56"
-            link-icon="img:src/assets/gmail.png"
+            box-icon="img:src/assets/gmail.png"
             text-link="isaitodaniel@gmail.com"
-            action-icon="content_copy"
-          ></LinkBox>
+          ></CopyBox>
 
           <div class="flex gap-1 justify-between items-center rounded-md w-1/2">
             <LinkBox
               class="min-w-38"
               link-icon="img:src/assets/github-mark-white.svg"
               text-link="GitHub"
+              target="https://www.github.com"
             ></LinkBox>
             <LinkBox
               class="min-w-38"
               link-icon="img:src/assets/linkedin.png"
               text-link="LinkedIn"
               action-icon="open_in_new"
+              target="https://www.linkedin.com"
             ></LinkBox>
           </div>
         </div>
@@ -82,7 +92,9 @@ onMounted(() => {
             Error <span class="text-accent text-weight-bold">404</span>: Frase ingeniosa no
             encontrada!
           </span>
-          <q-icon size="1.5rem" color="accent" name="info"></q-icon>
+          <router-link to="portfolio">
+            <q-icon size="1.5rem" color="accent" name="info"></q-icon>
+          </router-link>
         </div>
         <!-- <q-space></q-space> -->
       </div>
@@ -92,14 +104,7 @@ onMounted(() => {
 
     <img class="absolute right-30" src="../assets/pattern-circle.svg" alt="" />
 
-    <div class="flex pb-16 px-4 md:px-24 items-center justify-between">
-      <div class="flex-1">
-        <span class="text-accent text-weight-bolder text-4xl"
-          ><sapan class="text-warning text-weight-thin">Relevant</sapan> Projects...
-          <q-icon color="accent" name="arrow_drop_down"
-        /></span>
-      </div>
-
+    <div class="flex pb-12 md:flex-row-reverse px-4 md:px-24 items-center justify-between">
       <div
         class="relative overflow-hidden w-full md:w-1/2 h-20 flex items-center justify-start border-l-4 border-Red400"
       >
@@ -112,12 +117,40 @@ onMounted(() => {
           <img :src="icon" class="w-8 h-8" />
         </div>
       </div>
+
+      <div class="flex-1">
+        <span class="text-accent text-weight-bolder text-4xl"
+          ><span class="text-warning text-weight-thin">Relevant</span> Projects...
+          <q-icon color="accent" name="arrow_drop_down"
+        /></span>
+      </div>
     </div>
 
+    <div class="flex justify-around">
+      <q-space></q-space>
+      <router-link
+        to="portfolio"
+        class="transition-all duration-300 ease-in-out mx-4 md:mx-24 text-weight-bold hover:shadow-[inset_0_-2px_0_0_hsl(3,86%,64%)]"
+        >All projects</router-link
+      >
+    </div>
     <div
-      class="px-4 md:px-24 bg-[url('src/assets/pattern-squiggly-line-bottom-desktop.svg')] bg-cover bg-center h-screen"
+      class="flex flex-col md:flex-row mt-4 justify-center items-center gap-4 px-4 md:px-24 bg-[url('src/assets/pattern-squiggly-line-bottom-desktop.svg')] bg-cover bg-center pb-24"
     >
-      <p class="text-2xl">Hello I'am</p>
+      <!-- <p v-for="project in relevantProjects" :key="project.id">{{ project.name }}</p> -->
+
+      <ProjectBox
+        class="md:min-w-80 md:max-w-100"
+        v-for="project in relevantProjects"
+        :key="project.id"
+        :id="project.id"
+        :name="project.name"
+        :description="project.description"
+        :languages="project.languages"
+        :image="project.imageTop"
+      ></ProjectBox>
+
+      <!-- <p class="text-2xl">Hello I'am</p>
       <p class="text-4xl">Isaac D. Gonzalez Rodriguez</p>
       <p style="color: hsl(227, 75%, 14%)">- **Neutral 900**: ``</p>
       <p style="color: hsl(226, 25%, 17%)">- **Neutral 800**: ``</p>
@@ -126,7 +159,7 @@ onMounted(() => {
       <p style="color: hsl(0, 0%, 78%)">- **Neutral 300**: ``</p>
       <p style="color: hsl(217, 61%, 90%)">- **Neutral 200**: ``</p>
       <p style="color: hsl(0, 0%, 93%)">- **Neutral 100**: ``</p>
-      <p style="color: hsl(200, 60%, 99%)">- **Neutral 0**: ``</p>
+      <p style="color: hsl(200, 60%, 99%)">- **Neutral 0**: ``</p> -->
     </div>
   </q-page>
 </template>
