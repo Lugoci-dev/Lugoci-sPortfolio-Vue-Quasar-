@@ -5,7 +5,7 @@
         style="background: linear-gradient(to right, #040918 0%, #091540 100%); border-radius: 12px"
       >
         <q-icon name="code" class="text-accent" size="3rem" />
-        <q-toolbar-title class="text-Neutral0"> Lugoci@<b>dev</b> </q-toolbar-title>
+        <q-toolbar-title class="text-Neutral0 not-md:hidden"> Lugoci@<b>dev</b> </q-toolbar-title>
         <q-space />
         <div class="text-weight-regular">
           <router-link
@@ -30,7 +30,10 @@
             name="download"
             size="1rem"
           />
-          <span class="pr-2 text-accent text-weight-bold"> Download CV</span>
+          <span class="pr-2 text-accent text-weight-bold">
+            <span class="not-md:hidden"> Download</span> CV</span
+          >
+          <!-- <span class="pr-2 text-accent text-weight-bold"> Download CV</span> -->
         </button>
         <!-- </q-btn> -->
       </q-toolbar>

@@ -4,6 +4,21 @@ import CopyBox from 'src/components/common/CopyBox.vue'
 
 import { useProjectsStore } from 'src/stores/projects-store'
 
+// LinkBox icons importing
+import gmailIcon from 'src/assets/gmail.png'
+import gitHubIcon from 'src/assets/github-mark-white.svg'
+import linkedInIcon from 'src/assets/linkedin.png'
+
+// Technologies Icons importing
+import angular from 'src/assets/icons/angular.svg'
+import axios from 'src/assets/icons/axios.svg'
+import expressjs from 'src/assets/icons/expressjs.svg'
+import getpinoio from 'src/assets/icons/getpinoio.svg'
+import javascript from 'src/assets/icons/javascript.svg'
+import nodejs from 'src/assets/icons/nodejs.svg'
+import pinboard from 'src/assets/icons/pinboard.svg'
+import pingcap from 'src/assets/icons/pingcap.svg'
+
 import { ref, onMounted, computed } from 'vue'
 import ProjectBox from 'src/components/common/projectBox.vue'
 // import { storeToRefs } from 'pinia'
@@ -12,16 +27,7 @@ import ProjectBox from 'src/components/common/projectBox.vue'
 
 const relevantProjects = computed(() => useProjectsStore().relevantProjects)
 
-const icons = ref([
-  '/public/icons/angular.svg',
-  '/public/icons/axios.svg',
-  '/public/icons/expressjs.svg',
-  '/public/icons/getpinoio.svg',
-  '/public/icons/javascript.svg',
-  '/public/icons/nodejs.svg',
-  '/public/icons/pinboard.svg',
-  '/public/icons/pingcap.svg',
-])
+const icons = ref([angular, axios, expressjs, getpinoio, javascript, nodejs, pinboard, pingcap])
 
 const positions = ref([])
 
@@ -58,23 +64,23 @@ onMounted(() => {
           consequuntur facere odit nemo? Magnam, repellendus?
         </p>
         <q-separator color="accent"></q-separator>
-        <div class="py-4 flex gap-2">
+        <div class="py-4 flex flex-col md:flex-row gap-2">
           <CopyBox
-            class="min-w-56"
-            box-icon="img:src/assets/gmail.png"
+            class="min-w-68"
+            :box-icon="`img:${gmailIcon}`"
             text-link="isaitodaniel@gmail.com"
           ></CopyBox>
 
-          <div class="flex gap-1 justify-between items-center rounded-md w-1/2">
+          <div class="flex gap-1 justify-between items-center rounded-md md:w-1/2">
             <LinkBox
               class="min-w-38"
-              link-icon="img:src/assets/github-mark-white.svg"
+              :link-icon="`img:${gitHubIcon}`"
               text-link="GitHub"
               target="https://www.github.com"
             ></LinkBox>
             <LinkBox
               class="min-w-38"
-              link-icon="img:src/assets/linkedin.png"
+              :link-icon="`img:${linkedInIcon}`"
               text-link="LinkedIn"
               action-icon="open_in_new"
               target="https://www.linkedin.com"
@@ -92,7 +98,7 @@ onMounted(() => {
             Error <span class="text-accent text-weight-bold">404</span>: Frase ingeniosa no
             encontrada!
           </span>
-          <router-link to="portfolio">
+          <router-link to="about">
             <q-icon size="1.5rem" color="accent" name="info"></q-icon>
           </router-link>
         </div>
@@ -120,7 +126,7 @@ onMounted(() => {
 
       <div class="flex-1">
         <span class="text-accent text-weight-bolder text-4xl"
-          ><span class="text-warning text-weight-thin">Relevant</span> Projects...
+          ><span class="text-warning text-weight-thin">Relevant</span>Projects...
           <q-icon color="accent" name="arrow_drop_down"
         /></span>
       </div>

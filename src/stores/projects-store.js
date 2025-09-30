@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
 
+import preview1 from 'src/assets/preview.jpg'
+import preview2 from 'src/assets/preview 2.jpg'
+
 export const useProjectsStore = defineStore('project', {
   state: () => ({
     projects: [
@@ -9,7 +12,7 @@ export const useProjectsStore = defineStore('project', {
         description:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit, facere odit nemo? Magnam, repellendus?',
         relevant: true,
-        imageTop: 'src/assets/preview.jpg',
+        imageTop: preview1,
         languages: ['HTML', 'CSS', 'JavaScript', 'Vue'],
         tools: ['vue', 'Quasar', 'Stripe'],
       },
@@ -19,7 +22,7 @@ export const useProjectsStore = defineStore('project', {
         description:
           'Amet nisi inventore iste quo neque aperiam suscipit minus ducimus esse odio debitis obcaecati eum delectus consequuntur.',
         relevant: true,
-        imageTop: 'src/assets/preview 2.jpg',
+        imageTop: preview2,
         languages: ['HTML', 'CSS', 'TypeScript', 'Angular', 'API'],
         tools: ['Angular', 'API'],
       },
@@ -29,7 +32,7 @@ export const useProjectsStore = defineStore('project', {
         description:
           'Amet nisi inventore iste quo neque aperiam suscipit minus ducimus esse odio debitis obcaecati eum delectus consequuntur.',
         relevant: true,
-        imageTop: 'src/assets/preview 2.jpg',
+        imageTop: preview2,
         languages: ['HTML', 'CSS', 'JavaScript'],
         tools: ['Json'],
       },
