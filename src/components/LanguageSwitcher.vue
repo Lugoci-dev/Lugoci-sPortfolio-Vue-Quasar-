@@ -1,5 +1,5 @@
 <template>
-  <div class="not-md:hidden">
+  <div>
     <q-btn-dropdown
       class="px-2 text-adaptive-mid"
       split
