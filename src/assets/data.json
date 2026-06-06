@@ -1,0 +1,83 @@
+[
+  {
+    "id": "2ew-wdfFs",
+    "name": "Tesis project",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit, facere odit nemo? Magnam, repellendus?",
+    "relevant": true,
+    "imageTop": "preview1",
+    "languages": ["HTML", "CSS", "JavaScript", "Vue"],
+    "tools": ["Vue", "Quasar", "Stripe"]
+  },
+  {
+    "id": "3ew-ydfFs",
+    "name": "Countries API",
+    "description": "Amet nisi inventore iste quo neque aperiam suscipit minus ducimus esse odio debitis obcaecati eum delectus consequuntur.",
+    "relevant": true,
+    "imageTop": "preview2",
+    "languages": ["HTML", "CSS", "TypeScript", "Angular", "API"],
+    "tools": ["Angular", "API"]
+  },
+  {
+    "id": "4ew-xdfFs",
+    "name": "Jobs Listing",
+    "description": "Aplicación para listar ofertas de trabajo, permitiendo a los usuarios buscar y filtrar por diferentes criterios.",
+    "relevant": true,
+    "imageTop": "preview3",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["JSON", "Bootstrap"]
+  },
+  {
+    "id": "5ew-abcFs",
+    "name": "E-commerce Platform",
+    "description": "Plataforma de comercio electrónico que permite a los usuarios comprar y vender productos en línea.",
+    "relevant": true,
+    "imageTop": "preview4",
+    "languages": ["HTML", "CSS", "JavaScript", "React"],
+    "tools": ["React", "Redux", "Firebase"]
+  },
+  {
+    "id": "6ew-defFs",
+    "name": "Weather App",
+    "description": "Aplicación que muestra el clima actual y pronósticos utilizando la API de OpenWeather.",
+    "relevant": true,
+    "imageTop": "preview5",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["API", "Bootstrap"]
+  },
+  {
+    "id": "7ew-ghiFs",
+    "name": "Portfolio Website",
+    "description": "Sitio web personal para mostrar proyectos y habilidades, optimizado para dispositivos móviles.",
+    "relevant": true,
+    "imageTop": "preview6",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["jQuery"]
+  },
+  {
+    "id": "8ew-jklFs",
+    "name": "Blog Platform",
+    "description": "Plataforma de blogs donde los usuarios pueden crear, editar y comentar publicaciones.",
+    "relevant": true,
+    "imageTop": "preview7",
+    "languages": ["HTML", "CSS", "JavaScript", "Node.js"],
+    "tools": ["Express", "MongoDB"]
+  },
+  {
+    "id": "9ew-mnoFs",
+    "name": "Chat Application",
+    "description": "Aplicación de chat en tiempo real que permite a los usuarios comunicarse mediante mensajes instantáneos.",
+    "relevant": true,
+    "imageTop": "preview8",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["Socket.io", "Node.js"]
+  },
+  {
+    "id": "10ew-pqrFs",
+    "name": "Recipe Finder",
+    "description": "Aplicación que permite a los usuarios buscar recetas según los ingredientes que tienen en casa.",
+    "relevant": true,
+    "imageTop": "preview9",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["API", "React"]
+  }
+]

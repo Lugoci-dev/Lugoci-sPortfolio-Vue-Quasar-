@@ -1,0 +1,83 @@
+[
+  {
+    "id": "2ew-wdfFs",
+    "name": "projects.1.name",
+    "description": "projects.1.description",
+    "relevant": true,
+    "imageTop": "src/assets/preview.jpg",
+    "languages": ["HTML", "CSS", "JavaScript", "Vue"],
+    "tools": ["Vue", "Quasar", "Stripe"]
+  },
+  {
+    "id": "3ew-ydfFs",
+    "name": "projects.2.name",
+    "description": "projects.2.description",
+    "relevant": true,
+    "imageTop": "src/assets/preview 2.jpg",
+    "languages": ["HTML", "CSS", "TypeScript", "Angular", "API"],
+    "tools": ["Angular", "API"]
+  },
+  {
+    "id": "4ew-xdfFs",
+    "name": "projects.3.name",
+    "description": "projects.3.description",
+    "relevant": true,
+    "imageTop": "src/assets/preview.jpg",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["JSON", "Bootstrap"]
+  },
+  {
+    "id": "5ew-abcFs",
+    "name": "projects.4.name",
+    "description": "projects.4.description",
+    "relevant": true,
+    "imageTop": "src/assets/preview.jpg",
+    "languages": ["HTML", "CSS", "JavaScript", "React"],
+    "tools": ["React", "Redux", "Firebase"]
+  },
+  {
+    "id": "6ew-defFs",
+    "name": "projects.5.name",
+    "description": "projects.5.description",
+    "relevant": true,
+    "imageTop": "src/assets/preview.jpg",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["API", "Bootstrap"]
+  },
+  {
+    "id": "7ew-ghiFs",
+    "name": "projects.6.name",
+    "description": "projects.6.description",
+    "relevant": true,
+    "imageTop": "src/assets/preview.jpg",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["jQuery"]
+  },
+  {
+    "id": "8ew-jklFs",
+    "name": "projects.7.name",
+    "description": "projects.7.description",
+    "relevant": true,
+    "imageTop": "src/assets/preview.jpg",
+    "languages": ["HTML", "CSS", "JavaScript", "Node.js"],
+    "tools": ["Express", "MongoDB"]
+  },
+  {
+    "id": "9ew-mnoFs",
+    "name": "projects.8.name",
+    "description": "projects.8.description",
+    "relevant": true,
+    "imageTop": "src/assets/preview.jpg",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["Socket.io", "Node.js"]
+  },
+  {
+    "id": "10ew-pqrFs",
+    "name": "projects.9.name",
+    "description": "projects.9.description",
+    "relevant": true,
+    "imageTop": "src/assets/preview 2.jpg",
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "tools": ["API", "React"]
+  }
+]
