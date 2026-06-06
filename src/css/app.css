@@ -1,33 +1,171 @@
 /* app global css */
 @import 'tailwindcss';
 
-/* @layer base {
-  body {
-    @apply bg-slate-100;
-  }
-} */
+/* ── Dark mode variant: usa la clase que Quasar agrega al <body> ── */
+@custom-variant dark (&:where(.body--dark, .body--dark *));
+
+/* ── Tema LIGHT (por defecto) ── */
+:root {
+  --n900: hsl(200, 60%, 99%);
+  --n800: hsl(0, 0%, 93%);
+  --n700: hsl(217, 61%, 90%);
+  --n600: hsl(0, 0%, 78%);
+  --n300: hsl(226, 11%, 37%);
+  --n200: hsl(225, 23%, 24%);
+  --n100: hsl(226, 25%, 17%);
+  --n0: hsl(227, 75%, 14%);
+  --body-bg: linear-gradient(180deg, hsl(200, 60%, 99%) 0%, hsl(217, 61%, 90%) 100%);
+  --toolbar-bg: linear-gradient(to right, hsl(200, 60%, 99%) 0%, hsl(217, 61%, 90%) 100%);
+}
+
+/* ── Tema DARK ── */
+.body--dark {
+  --n900: hsl(227, 75%, 14%);
+  --n800: hsl(226, 25%, 17%);
+  --n700: hsl(225, 23%, 24%);
+  --n600: hsl(226, 11%, 37%);
+  --n300: hsl(0, 0%, 78%);
+  --n200: hsl(217, 61%, 90%);
+  --n100: hsl(0, 0%, 93%);
+  --n0: hsl(200, 60%, 99%);
+  --body-bg: linear-gradient(180deg, hsl(227, 69%, 5%) 0%, hsl(227, 77%, 17%) 100%);
+  --toolbar-bg: linear-gradient(to right, #040918 0%, #091540 100%);
+}
+
+@theme {
+  --color-Neutral900: var(--n900);
+  --color-Neutral800: var(--n800);
+  --color-Neutral700: var(--n700);
+  --color-Neutral600: var(--n600);
+  --color-Neutral300: var(--n300);
+  --color-Neutral200: var(--n200);
+  --color-Neutral100: var(--n100);
+  --color-Neutral0: var(--n0);
+  --color-Red400: hsl(3, 86%, 64%);
+  --color-Red500: hsl(3, 71%, 56%);
+  --color-Red700: hsl(3, 77%, 44%);
+}
 
 body {
   font-family: 'Inconsolata', monospace;
-  background: linear-gradient(180deg, hsl(227, 69%, 5%) 0%, hsl(227, 77%, 17%) 100%);
-  /* background: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%); */
-  /* background: linear-gradient(180deg, #f37362 0%, #ffffff 100%); */
+  background: var(--body-bg);
+  transition: background 0.3s ease;
+}
+
+/* ── Transición suave para TODOS los elementos que dependen del tema ── */
+.text-adaptive-dark,
+.text-adaptive-mid,
+.nav-link,
+.dropdown-text,
+.dropdown-bg,
+.card-bg,
+.card-border,
+.card-icon-bg,
+.download-border,
+.download-bg,
+.border-adaptive {
+  transition:
+    color 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
 }
 
 html {
   font-size: clamp(14px, 1.2vw, 20px);
 }
 
-@theme {
-  --color-Neutral900: hsl(227, 75%, 14%);
-  --color-Neutral800: hsl(226, 25%, 17%);
-  --color-Neutral700: hsl(225, 23%, 24%);
-  --color-Neutral600: hsl(226, 11%, 37%);
-  --color-Neutral300: hsl(0, 0%, 78%);
-  --color-Neutral200: hsl(217, 61%, 90%);
-  --color-Neutral100: hsl(0, 0%, 93%);
-  --color-Neutral0: hsl(200, 60%, 99%);
-  --color-Red400: hsl(3, 86%, 64%);
-  --color-Red500: hsl(3, 71%, 56%);
-  --color-Red700: hsl(3, 77%, 44%);
+/* ── Utilidades ── */
+.toolbar-bg {
+  background: var(--toolbar-bg);
+}
+
+/* ── Texto adaptable: oscuro en light, claro en dark ── */
+.text-adaptive-dark {
+  color: hsl(227, 75%, 14%);
+}
+.body--dark .text-adaptive-dark {
+  color: hsl(200, 60%, 99%);
+}
+
+/* ── Texto adaptable: medio en light, medio-claro en dark ── */
+.text-adaptive-mid {
+  color: hsl(226, 11%, 37%);
+}
+.body--dark .text-adaptive-mid {
+  color: hsl(0, 0%, 78%);
+}
+
+/* ── Borde adaptable ── */
+.border-adaptive {
+  border-color: hsl(226, 11%, 37%);
+}
+.body--dark .border-adaptive {
+  border-color: hsl(226, 11%, 37%);
+}
+
+/* ── Dropdown ── */
+.dropdown-bg {
+  background: hsl(200, 60%, 99%);
+}
+.body--dark .dropdown-bg {
+  background: hsl(227, 75%, 14%);
+}
+.dropdown-text,
+.nav-link {
+  color: hsl(226, 11%, 37%);
+}
+.body--dark .dropdown-text,
+.body--dark .nav-link {
+  color: hsl(0, 0%, 78%);
+}
+
+/* ── Download button ── */
+.download-border {
+  border-color: hsl(0, 0%, 78%);
+}
+.body--dark .download-border {
+  border-color: hsl(226, 25%, 17%);
+}
+
+.download-bg {
+  background: hsl(0, 0%, 78%);
+}
+.body--dark .download-bg {
+  background: hsl(226, 25%, 17%);
+}
+
+.download-hover:hover {
+  background: hsl(217, 61%, 90%);
+}
+.body--dark .download-hover:hover {
+  background: hsl(225, 23%, 24%);
+}
+
+/* ── Cards (CopyBox / LinkBox) ── */
+.card-bg {
+  background: hsl(0, 0%, 93%);
+}
+.body--dark .card-bg {
+  background: hsl(226, 25%, 17%);
+}
+
+.card-border {
+  border-color: hsl(217, 61%, 90%);
+}
+.body--dark .card-border {
+  border-color: hsl(225, 23%, 24%);
+}
+
+.card-hover:hover {
+  background: hsl(217, 61%, 90%);
+}
+.body--dark .card-hover:hover {
+  background: hsl(225, 23%, 24%);
+}
+
+.card-icon-bg {
+  background: hsl(0, 0%, 78%);
+}
+.body--dark .card-icon-bg {
+  background: hsl(226, 11%, 37%);
 }

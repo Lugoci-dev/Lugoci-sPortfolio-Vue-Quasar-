@@ -1,13 +1,13 @@
 <template>
   <div
-    class="flex flex-2 hover:bg-negative justify-between gap-2 items-center bg-dark border rounded-md border-Neutral700 p-2"
+    class="flex flex-2 card-hover justify-between gap-2 items-center card-bg border rounded-md card-border p-2"
   >
-    <div class="flex flex-2 justify-center gap-2 items-center">
+    <div class="flex flex-2 justify-center gap-2 items-center text-adaptive-mid">
       <q-icon size="1.5rem" :name="boxIcon" />
       <span> {{ props.textLink }}</span>
     </div>
-    <button :onclick="copyText" class="cursor-pointer">
-      <q-icon class="bg-negative p-1.5 rounded-md" name="content_copy" />
+    <button :onclick="copyText" class="cursor-pointer text-adaptive-mid">
+      <q-icon class="card-icon-bg p-1.5 rounded-md" name="content_copy" />
     </button>
   </div>
 </template>
