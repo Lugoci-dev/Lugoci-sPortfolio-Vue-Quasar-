@@ -27,10 +27,10 @@ const props = defineProps({
     ></q-img>
     <div class="flex flex-col gap-2 pb-4">
       <div class="pt-4 flex items-center justify-between">
-        <span class="text-weight-bolder text-2xl"> {{ props.name }}</span>
+        <span class="text-weight-bolder text-2xl"> {{ $t(props.name) }}</span>
         <q-icon size="1.5rem" name="more_vert"></q-icon>
       </div>
-      <p class="text-positive">{{ props.description }}</p>
+      <p class="text-positive">{{ $t(props.description) }}</p>
       <div class="flex md:justify-center gap-2">
         <TextBox class="" v-for="(language, i) in languages" :key="i" :text="language"> </TextBox>
       </div>

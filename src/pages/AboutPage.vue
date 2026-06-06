@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex justify-center py-40">
-    <p class="text-2xl text-Neutral300">
-      Hello <span class="text-accent text-weight-bolder">About Page</span>
+    <p class="text-2xl text-adaptive-mid">
+      {{ $t('pages.about') }}
     </p>
   </q-page>
 </template>
