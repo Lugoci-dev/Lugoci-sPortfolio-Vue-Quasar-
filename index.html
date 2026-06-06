@@ -24,6 +24,27 @@
     <link rel="icon" type="image/ico" href="favicon.ico" />
   </head>
   <body>
+    <script>
+      // ── Anti-flash: aplica body--dark ANTES de que Vue/Quasar renderice ──
+      ;(function () {
+        try {
+          var mode = localStorage.getItem('dark-mode')
+          var isDark
+          if (mode === 'true') {
+            isDark = true
+          } else if (mode === 'false') {
+            isDark = false
+          } else {
+            isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          }
+          if (isDark) {
+            document.body.classList.add('body--dark')
+          }
+        } catch (e) {
+          // localStorage bloqueado o no disponible
+        }
+      })()
+    </script>
     <!-- quasar:entry-point -->
   </body>
 </html>
