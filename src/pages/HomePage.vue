@@ -4,12 +4,10 @@ import CopyBox from 'src/components/common/CopyBox.vue'
 
 import { useProjectsStore } from 'src/stores/projects-store'
 
-// LinkBox icons importing
 import gmailIcon from 'src/assets/gmail.png'
 import gitHubIcon from 'src/assets/github-mark-white.svg'
 import linkedInIcon from 'src/assets/linkedin.png'
 
-// Technologies Icons importing
 import angular from 'src/assets/icons/angular.svg'
 import axios from 'src/assets/icons/axios.svg'
 import expressjs from 'src/assets/icons/expressjs.svg'
@@ -19,35 +17,29 @@ import nodejs from 'src/assets/icons/nodejs.svg'
 import pinboard from 'src/assets/icons/pinboard.svg'
 import pingcap from 'src/assets/icons/pingcap.svg'
 
-// import { ref, onMounted, computed } from 'vue'
-import { ref, onMounted } from 'vue'
-
-import ProjectBox from 'src/components/common/projectBox.vue'
-import { storeToRefs } from 'pinia'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const { loadData } = useProjectsStore()
-const { projects } = storeToRefs(useProjectsStore())
 
-// const relevantProjects = computed(() => useProjectsStore().relevantProjects)
-
-const icons = ref([angular, axios, expressjs, getpinoio, javascript, nodejs, pinboard, pingcap])
+const icons = [angular, axios, expressjs, getpinoio, javascript, nodejs, pinboard, pingcap]
 
 const positions = ref([])
+let animId = null
 
 onMounted(() => {
-  positions.value = icons.value.map((_, i) => i * 80)
-
-  function animate() {
-    positions.value = positions.value.map((x) =>
-      x <= -80 ? (icons.value.length - 1) * 80 : x - 0.5,
-    )
-    requestAnimationFrame(animate)
-  }
-
+  positions.value = icons.map((_, i) => i * 80)
   loadData()
-
-  animate()
+  loop()
 })
+
+onUnmounted(() => {
+  if (animId) cancelAnimationFrame(animId)
+})
+
+function loop() {
+  positions.value = positions.value.map((x) => (x <= -80 ? (icons.length - 1) * 80 : x - 0.5))
+  animId = requestAnimationFrame(loop)
+}
 </script>
 
 <template>
@@ -56,8 +48,7 @@ onMounted(() => {
       class="bg-[url('src/assets/pattern-lines.svg')] bg-cover bg-center h-auto flex justify-center pt-12 pb-9 px-4 md:px-42 gap-8 md:gap-20 text-Neutral200"
       style="width: 98vw"
     >
-      <!-- <img class="absolute top-3.5 right-0" src="../assets/pattern-squiggly-line-top.svg" alt="" /> -->
-      <img class="absolute top-14 left-32 w-32" src="../assets/pattern-circle.svg" />
+      <img class="absolute top-14 left-32 w-32" loading="lazy" src="../assets/pattern-circle.svg" />
       <div class="flex-1 flex-col self-center">
         <p class="text-2xl text-adaptive-dark">
           {{ $t('home.intro.hello.greeting')
@@ -93,7 +84,7 @@ onMounted(() => {
 
       <div class="flex flex-col md:items-center md:justify-center gap-4">
         <q-avatar size="40vh">
-          <q-img src="../assets/me.jpg" :ratio="1" />
+          <q-img src="../assets/images/owner.webp" :ratio="1" />
         </q-avatar>
         <div class="flex flex-col-reverse md:flex-row md:items-center gap-2">
           <span class="text-adaptive-mid text-lg md:text-sm">
@@ -115,7 +106,7 @@ onMounted(() => {
         <div
           v-for="(icon, i) in icons"
           :key="i"
-          class="absolute transition-transform"
+          class="absolute will-change-transform"
           :style="{ transform: `translateX(${positions[i]}px)` }"
         >
           <img :src="icon" class="w-8 h-8" />
@@ -127,42 +118,16 @@ onMounted(() => {
           ><span class="text-adaptive-mid text-weight-thin">{{
             $t('projects.title.announce')
           }}</span
-          >{{ $t('projects.title.highlighted') }}... <q-icon color="accent" name="arrow_drop_down"
-        /></span>
-      </div>
-    </div>
-
-    <div class="">
-      <div class="flex px-4 gap-4 md:px-42">
-        <q-space></q-space>
-
-        <router-link
-          to=""
-          class="z-10 cursor-pointer text-weight-bold shadow-[inset_0_-2px_0_0_hsl(3,86%,64%)]"
-          >{{ $t('projects.relevant') }}</router-link
-        >
-        <router-link
-          to="portfolio"
-          class="z-10 transition-all cursor-pointer duration-300 ease-in-out text-weight-bold hover:shadow-[inset_0_-2px_0_0_hsl(3,86%,64%)]"
-          >{{ $t('projects.all') }}</router-link
-        >
-      </div>
-      <div
-        class="flex flex-col px-4 md:flex-row mt-4 justify-center items-center gap-4 md:px-42 pb-24"
-      >
-        <!-- <p v-for="project in relevantProjects" :key="project.id">{{ project.name }}</p> -->
-
-        <ProjectBox
-          class="max-w-120"
-          v-for="project in projects"
-          :key="project.id"
-          :id="project.id"
-          :name="project.name"
-          :description="project.description"
-          :languages="project.languages"
-          :image="project.imageTop"
-        ></ProjectBox>
+          >{{ $t('projects.title.highlighted') }}...
+          <!-- <q-icon color="accent" name="arrow_drop_down"/> -->
+        </span>
       </div>
     </div>
   </q-page>
 </template>
+
+<style scoped>
+.will-change-transform {
+  will-change: transform;
+}
+</style>
