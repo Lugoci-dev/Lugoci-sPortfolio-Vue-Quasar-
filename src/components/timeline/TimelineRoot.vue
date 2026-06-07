@@ -150,6 +150,7 @@ import ExperienceCard from './cards/ExperienceCard.vue'
 import AchievementCard from './cards/AchievementCard.vue'
 import AwardCard from './cards/AwardCard.vue'
 import CertificationCard from './cards/CertificationCard.vue'
+import CollageCard from './cards/CollageCard.vue'
 
 const { locale } = useI18n()
 const $q = useQuasar()
@@ -177,6 +178,7 @@ const componentMap = {
   achievement: AchievementCard,
   award: AwardCard,
   certification: CertificationCard,
+  collage: CollageCard,
 }
 
 function resolveComponent(type) {

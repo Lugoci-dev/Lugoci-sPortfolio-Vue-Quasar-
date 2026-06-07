@@ -1,12 +1,12 @@
 <template>
   <div
-    class="experience-card cursor-pointer group"
+    class="collage-card cursor-pointer group"
     @click="$router.push(`/project/${entry.id}`)"
     role="button"
     tabindex="0"
     @keydown.enter="$router.push(`/project/${entry.id}`)"
   >
-    <!-- Periodo + Type badge -->
+    <!-- Periodo + Type badge + count -->
     <div class="flex flex-wrap items-center gap-2 mb-3">
       <span
         class="period-badge inline-flex items-center gap-1 bg-Red400 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full"
@@ -24,60 +24,58 @@
         <span>{{ localized(entry.cycle.end.label) }} {{ entry.cycle.end.year }}</span>
       </span>
 
-      <!-- Type badge -->
+      <!-- Type badge with count -->
       <span
-        class="inline-flex items-center text-[10px] md:text-xs font-semibold px-2.5 py-0.5 rounded-full border text-adaptive-mid"
+        class="inline-flex items-center gap-1 text-[10px] md:text-xs font-semibold px-2.5 py-0.5 rounded-full border text-adaptive-mid"
         style="border-color: var(--n600)"
       >
-        {{ $t('type.' + entry.type) }}
+        {{ $t('type.collage') }}
+        <span
+          class="bg-accent text-white text-[9px] md:text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
+        >
+          {{ projectCount }}
+        </span>
       </span>
     </div>
 
-    <!-- Nombre del rol / proyecto (desde entry.data) -->
+    <!-- Nombre -->
     <h5 class="text-adaptive-dark text-base md:text-lg font-bold mb-2 leading-snug">
       {{ localized(entry.data.name) }}
     </h5>
 
-    <!-- Summary -->
-    <p class="text-adaptive-mid text-xs md:text-sm leading-relaxed mb-3">
-      {{ localized(entry.data.summary) }}
-    </p>
-
-    <!-- Tecnologías -->
-    <div v-if="entry.data.technologies?.length" class="flex flex-wrap gap-1.5 mb-1.5">
-      <span
-        v-for="tech in entry.data.technologies"
-        :key="tech"
-        class="text-xs font-semibold px-2.5 py-1 rounded-full border border-Red400 text-accent transition-colors duration-200 hover:bg-Red400 hover:text-white"
+    <!-- Items (no summary for collage) -->
+    <ul v-if="entry.data.items?.length" class="space-y-1.5 mb-3">
+      <li
+        v-for="(item, i) in entry.data.items"
+        :key="i"
+        class="flex flex-row items-start gap-2 text-xs md:text-sm text-adaptive-mid"
       >
-        {{ tech }}
-      </span>
-    </div>
-
-    <!-- Tools -->
-    <div v-if="entry.data.tools?.length" class="flex flex-wrap gap-1.5">
-      <span
-        v-for="tool in entry.data.tools"
-        :key="tool"
-        class="text-xs font-medium px-2 py-0.5 rounded-full border text-adaptive-mid transition-colors duration-200"
-        style="border-color: var(--n600)"
-      >
-        {{ tool }}
-      </span>
-    </div>
+        <svg class="w-4 h-4 mt-0.5 shrink-0 text-accent" viewBox="0 0 20 20" fill="currentColor">
+          <path
+            fill-rule="evenodd"
+            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <span class="flex-1">{{ localized(item) }}</span>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 const { locale } = useI18n()
 const $router = useRouter()
 
-defineProps({
+const props = defineProps({
   entry: { type: Object, required: true },
 })
+
+const projectCount = computed(() => props.entry.data?.projects?.length ?? 0)
 
 function localized(obj) {
   if (!obj) return ''
@@ -86,7 +84,7 @@ function localized(obj) {
 </script>
 
 <style scoped>
-.experience-card {
+.collage-card {
   width: 100%;
 }
 </style>
