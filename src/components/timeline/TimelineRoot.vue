@@ -1,151 +1,160 @@
 <template>
   <div ref="containerRef" class="timeline-root relative max-w-5xl mx-auto">
-    <!-- ═══ SVG raíces decorativas ═══ -->
-    <svg
-      class="absolute inset-0 w-full h-full pointer-events-none z-0 hidden md:block"
-      :viewBox="`0 0 1000 ${svgHeight}`"
-      preserveAspectRatio="none"
-    >
-      <defs>
-        <linearGradient id="rootGradient" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="hsl(3, 86%, 64%)" stop-opacity="0.4" />
-          <stop offset="50%" stop-color="hsl(3, 86%, 64%)" stop-opacity="0.7" />
-          <stop offset="100%" stop-color="hsl(3, 71%, 56%)" stop-opacity="0.95" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M 500 0 C 490 100, 515 200, 498 350 C 480 500, 520 650, 502 800 C 485 950, 510 1100, 500 1200"
-        stroke="url(#rootGradient)"
-        stroke-width="5"
-        fill="none"
-        style="filter: drop-shadow(0 0 8px hsl(3, 86%, 64%, 0.35))"
-      />
-      <path
-        d="M 502 150 C 480 300, 525 450, 495 600 C 465 750, 530 900, 505 1050 C 490 1120, 510 1160, 500 1200"
-        stroke="hsl(3, 77%, 44%)"
-        stroke-width="2"
-        fill="none"
-        opacity="0.5"
-      />
-    </svg>
-
-    <!-- ═══ Wrapper con altura dinámica ═══ -->
-    <div class="timeline-wrapper relative z-10" :style="{ minHeight: wrapperHeight + 'px' }">
-      <!-- ── Entries posicionadas ── -->
-      <div
-        v-for="entry in positionedEntries"
-        :key="entry.id"
-        class="timeline-node"
-        :class="{
-          'is-dimmed': hoveredId && hoveredId !== entry.id,
-          'is-hovered': hoveredId === entry.id,
-        }"
-        :style="{
-          position: 'absolute',
-          top: entry.top + 'px',
-          left: entry.side === 'left' ? '0' : 'auto',
-          right: entry.side === 'left' ? 'auto' : '0',
-          width: 'calc(50% - 28px)',
-        }"
-        @mouseenter="hoveredId = entry.id"
-        @mouseleave="hoveredId = null"
-      >
-        <!-- ═══ Punto: SIEMPRE en temporalTop (alineado con markers) ═══ -->
-        <span
-          class="node-dot"
-          :class="entry.side === 'left' ? 'dot-left' : 'dot-right'"
-          :style="dotShift(entry)"
-        />
-
-        <!-- ═══ Conector vertical (solo si hay offset por anti-colisión) ═══ -->
+    <!-- ═══════════════════════════════════════════
+         DESKTOP — Layout actual con engine de posicionamiento
+         ═══════════════════════════════════════════ -->
+    <template v-if="!isMobile">
+      <!-- Wrapper con altura dinámica -->
+      <div class="timeline-wrapper relative z-10" :style="{ minHeight: wrapperHeight + 'px' }">
+        <!-- Entries posicionadas -->
         <div
-          v-if="entry.top > entry.temporalTop"
-          class="node-connector-v"
-          :class="entry.side === 'left' ? 'conn-v-left' : 'conn-v-right'"
-          :style="{
-            top: dotShiftPx(entry),
-            height: entry.top - entry.temporalTop + 'px',
+          v-for="entry in positionedEntries"
+          :key="entry.id"
+          class="timeline-node"
+          :class="{
+            'is-dimmed': hoveredId && hoveredId !== entry.id,
+            'is-hovered': hoveredId === entry.id,
           }"
-        />
-
-        <!-- ═══ Conector horizontal ═══ -->
-        <div
-          class="node-connector-h"
-          :class="entry.side === 'left' ? 'conn-h-left' : 'conn-h-right'"
-          :style="dotShift(entry)"
-        />
-
-        <!-- ═══ Card contenedora (en adjustedTop = dentro del nodo) ═══ -->
-        <div
-          class="node-card card-bg card-border border rounded-xl p-5 md:p-6 transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]"
-          :class="entry.side === 'left' ? 'card-left' : 'card-right'"
+          :style="{
+            position: 'absolute',
+            top: entry.top + 'px',
+            left: entry.side === 'left' ? '0' : 'auto',
+            right: entry.side === 'left' ? 'auto' : '0',
+            width: 'calc(50% - 28px)',
+          }"
+          @mouseenter="hoveredId = entry.id"
+          @mouseleave="hoveredId = null"
         >
-          <component :is="resolveComponent(entry.type)" :entry="entry" />
+          <!-- Punto: SIEMPRE en temporalTop (alineado con markers) -->
+          <span
+            class="node-dot"
+            :class="entry.side === 'left' ? 'dot-left' : 'dot-right'"
+            :style="dotShift(entry)"
+          />
+
+          <!-- Conector vertical (solo si hay offset por anti-colisión) -->
+          <div
+            v-if="entry.top > entry.temporalTop"
+            class="node-connector-v"
+            :class="entry.side === 'left' ? 'conn-v-left' : 'conn-v-right'"
+            :style="{
+              top: dotShiftPx(entry),
+              height: entry.top - entry.temporalTop + 'px',
+            }"
+          />
+
+          <!-- Conector horizontal -->
+          <div
+            class="node-connector-h"
+            :class="entry.side === 'left' ? 'conn-h-left' : 'conn-h-right'"
+            :style="dotShift(entry)"
+          />
+
+          <!-- Card contenedora (en adjustedTop = dentro del nodo) -->
+          <div
+            class="node-card card-bg card-border border rounded-xl p-5 md:p-6 transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]"
+            :class="entry.side === 'left' ? 'card-left' : 'card-right'"
+          >
+            <component :is="resolveComponent(entry.type)" :entry="entry" />
+          </div>
+        </div>
+
+        <!-- Línea central vertical -->
+        <div
+          v-if="lineStyle['--line-top']"
+          class="timeline-line absolute left-1/2 -translate-x-1/2 w-[2px] pointer-events-none z-5"
+          :style="lineStyle"
+        >
+          <div class="w-full h-full bg-gradient-to-b from-Red400/10 via-Red400/45 to-Red400/15" />
+        </div>
+
+        <!-- Segmentos de ciclo (barra de duración en la línea) -->
+        <div
+          v-for="seg in cycleSegments"
+          :key="'cycle-' + seg.id"
+          class="cycle-segment absolute left-1/2 -translate-x-1/2 pointer-events-none z-6 transition-all duration-300 ease-in-out"
+          :class="{ 'is-active': hoveredId === seg.id }"
+          :style="{ top: seg.top + 'px', height: seg.height + 'px' }"
+        />
+
+        <!-- Marcadores de años + meses -->
+        <div
+          v-for="mark in timelineMarkers"
+          :key="mark.year + '-' + mark.month"
+          class="timeline-marker absolute left-1/2 -translate-x-1/2 z-10"
+          :style="{ top: mark.top + 'px' }"
+          :class="[
+            mark.type,
+            mark.hasItem && 'has-item',
+            isMarkerActive(mark) && 'tooltip-active',
+            markerTooltipSide(mark),
+          ]"
+        >
+          <!-- Tick visual -->
+          <span class="tick-line" :class="mark.type" />
+
+          <!-- Label de año sobre la línea (badge centrado con contraste) -->
+          <span v-if="mark.type === 'year'" class="year-badge">{{ mark.label }}</span>
+
+          <!-- Tooltip de mes al hacer hover -->
+          <div class="month-tooltip">
+            <span>{{ locale === 'es' ? mark.monthLabelEs : mark.monthLabelEn }}</span>
+            <span class="year-in-tooltip">{{ mark.year }}</span>
+          </div>
         </div>
       </div>
+    </template>
 
-      <!-- ═══ Línea central vertical ─── -->
-      <div
-        v-if="lineStyle['--line-top']"
-        class="timeline-line absolute left-1/2 -translate-x-1/2 w-[2px] pointer-events-none z-5"
-        :style="lineStyle"
-      >
-        <div class="w-full h-full bg-gradient-to-b from-Red400/10 via-Red400/45 to-Red400/15" />
-      </div>
+    <!-- ═══════════════════════════════════════════
+         MOBILE — Stacked list simplificado sin engine
+         ═══════════════════════════════════════════ -->
+    <template v-else>
+      <div class="mobile-timeline relative pl-[36px]">
+        <!-- Línea decorativa izquierda -->
+        <div
+          class="absolute left-[15px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-Red400/40 to-transparent pointer-events-none"
+        ></div>
 
-      <!-- ═══ Segmentos de ciclo (barra de duración en la línea) ═══ -->
-      <div
-        v-for="seg in cycleSegments"
-        :key="'cycle-' + seg.id"
-        class="cycle-segment absolute left-1/2 -translate-x-1/2 pointer-events-none z-6"
-        :style="{ top: seg.top + 'px', height: seg.height + 'px' }"
-      />
+        <!-- Grupos por año -->
+        <div v-for="group in mobileYearGroups" :key="group.year">
+          <!-- Separador de año -->
+          <div class="year-section relative z-10 pt-6 pb-2 -ml-[36px] pl-[15px]">
+            <span class="font-extrabold text-lg text-Red400 tracking-wide">{{ group.year }}</span>
+          </div>
 
-      <!-- ═══ Marcadores de años + meses ═══ -->
-      <div
-        v-for="mark in timelineMarkers"
-        :key="mark.year + '-' + mark.month"
-        class="timeline-marker absolute left-1/2 -translate-x-1/2 z-10"
-        :style="{ top: mark.top + 'px' }"
-        :class="[
-          mark.type,
-          mark.hasItem && 'has-item',
-          isMarkerActive(mark) && 'tooltip-active',
-          markerTooltipSide(mark),
-        ]"
-      >
-        <!-- Tick visual -->
-        <span class="tick-line" :class="mark.type" />
+          <!-- Entries del año -->
+          <div v-for="entry in group.entries" :key="entry.id" class="relative pb-5">
+            <!-- Dot sobre la línea -->
+            <span
+              class="mobile-dot absolute w-3.5 h-3.5 rounded-full border-[3px] border-Red400 z-10 shadow-md"
+              style="left: -20px; top: 20px; transform: translateX(-50%)"
+            ></span>
 
-        <!-- Label de año sobre la línea (badge centrado con contraste) -->
-        <span v-if="mark.type === 'year'" class="year-badge">{{ mark.label }}</span>
-
-        <!-- Tooltip de mes al hacer hover -->
-        <div class="month-tooltip">
-          <span>{{ locale === 'es' ? mark.monthLabelEs : mark.monthLabelEn }}</span>
-          <span class="year-in-tooltip">{{ mark.year }}</span>
+            <!-- Card -->
+            <div class="mobile-card card-bg card-border border rounded-xl p-5 relative">
+              <component :is="resolveComponent(entry.type)" :entry="entry" />
+            </div>
+          </div>
         </div>
       </div>
-
-      <!-- Línea izquierda (mobile) -->
-      <div
-        class="md:hidden absolute left-[15px] top-0 bottom-0 w-[2px] bg-Red400/40 pointer-events-none"
-      ></div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useTimelineEngine } from 'src/composables/useTimelineEngine'
+import { useQuasar } from 'quasar'
+import { useTimelineEngine, normalizeCycle, yearFromIndex } from 'src/composables/useTimelineEngine'
 import ExperienceCard from './cards/ExperienceCard.vue'
 import AchievementCard from './cards/AchievementCard.vue'
 import AwardCard from './cards/AwardCard.vue'
 import CertificationCard from './cards/CertificationCard.vue'
 
 const { locale } = useI18n()
+const $q = useQuasar()
 const hoveredId = ref(null)
+const isMobile = computed(() => $q.screen.lt.md)
 
 const props = defineProps({
   entries: { type: Array, required: true },
@@ -202,8 +211,29 @@ function markerTooltipSide() {
   return entry.side === 'left' ? 'tooltip-on-right' : 'tooltip-on-left'
 }
 
-/* ── SVG viewBox dinámico ── */
-const svgHeight = computed(() => Math.max(wrapperHeight.value, 400))
+/* ── Mobile: agrupar entries por año ── */
+const mobileYearGroups = computed(() => {
+  const items = (props.entries || []).map((entry) => ({
+    ...entry,
+    ...normalizeCycle(entry.cycle),
+  }))
+
+  // Sort descendente por startIndex (más reciente primero)
+  const sorted = [...items].sort((a, b) => b.startIndex - a.startIndex)
+
+  // Agrupar por año
+  const groups = {}
+  for (const item of sorted) {
+    const y = yearFromIndex(item.startIndex)
+    if (!groups[y]) groups[y] = []
+    groups[y].push(item)
+  }
+
+  // Retornar como array ordenado (años descendentes)
+  return Object.entries(groups)
+    .sort(([a], [b]) => Number(b) - Number(a))
+    .map(([year, entries]) => ({ year: Number(year), entries }))
+})
 </script>
 
 <style scoped>
@@ -230,6 +260,16 @@ const svgHeight = computed(() => Math.max(wrapperHeight.value, 400))
   border-radius: 2px;
   background: hsl(3, 86%, 64%, 0.2);
   box-shadow: 0 0 6px hsla(3, 86%, 64%, 0.1);
+  transition:
+    width 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.cycle-segment.is-active {
+  width: 7px;
+  background: hsl(3, 86%, 64%, 0.55);
+  box-shadow: 0 0 14px hsla(3, 86%, 64%, 0.35);
 }
 
 /* ── Nodo individual ── */
@@ -481,76 +521,42 @@ const svgHeight = computed(() => Math.max(wrapperHeight.value, 400))
   border-color: transparent transparent transparent var(--n950);
 }
 
-/* ═══ MÓVIL ═══ */
-@media (max-width: 767px) {
-  .timeline-marker {
-    left: 15px;
-    transform: none;
-  }
+/* ═══ MOBILE — Stacked list simplificado ═══ */
 
-  .tick-line {
-    left: 15px;
-    transform: none;
-  }
-  .year-badge {
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .month-tooltip {
-    left: 28px;
-    transform: translateY(-50%) translateX(-8px);
-  }
-  .tooltip-on-left .month-tooltip {
-    left: auto;
-    right: 28px;
-  }
-  .timeline-marker:hover .month-tooltip,
-  .timeline-marker.tooltip-active .month-tooltip {
-    transform: translateY(-50%) translateX(0);
-  }
-  .month-tooltip::before {
-    right: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    border-color: transparent var(--n950) transparent transparent;
-  }
-  .tooltip-on-left .month-tooltip::before {
-    right: auto;
-    left: 100%;
-    border-color: transparent transparent transparent var(--n950);
-  }
+/* Dot sobre la línea */
+.mobile-dot {
+  background-color: var(--n900);
+  box-shadow: 0 0 6px hsla(3, 86%, 64%, 0.4);
+}
 
-  .timeline-node {
-    width: calc(100% - 40px) !important;
-    left: 30px !important;
-    right: auto !important;
-  }
+.body--light .mobile-dot {
+  background-color: #ffffff;
+}
 
-  .dot-left,
-  .dot-right {
-    left: -22px;
-  }
+/* Separador de año con línea sutil */
+.year-section {
+  border-bottom: 1px solid hsl(3, 86%, 64%, 0.12);
+  margin-bottom: 8px;
+}
 
-  .conn-v-left,
-  .conn-v-right {
-    left: -13px;
-  }
+/* Card mobile: flecha decorativa apuntando a la línea izquierda */
+.mobile-card {
+  position: relative;
+  z-index: 10;
+}
 
-  .conn-h-left,
-  .conn-h-right {
-    left: -13px;
-    right: auto;
-  }
-
-  .node-card {
-    width: 100%;
-  }
-
-  .node-card::before {
-    left: -5px !important;
-    border-width: 1px 1px 0 0 !important;
-    transform: rotate(45deg) !important;
-    box-shadow: 2px -2px 3px rgba(0, 0, 0, 0.08) !important;
-  }
+.mobile-card::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 20px;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  border-left: 1px solid var(--n700);
+  border-bottom: 1px solid var(--n700);
+  transform: rotate(45deg);
+  z-index: -1;
+  border-radius: 0 0 0 2px;
 }
 </style>
