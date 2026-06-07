@@ -2,8 +2,8 @@ import home from './home'
 import projects from './projects'
 
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful',
+  failed: 'Acción fallida',
+  success: 'Acción exitosa',
   home,
   projects,
 }
