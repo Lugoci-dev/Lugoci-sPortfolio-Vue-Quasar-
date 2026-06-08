@@ -1,24 +1,24 @@
 <template>
   <q-layout>
-    <!-- Left drawer: mobile navigation -->
     <q-drawer v-model="leftDrawerOpen" side="left" behavior="mobile" width="280" class="card-bg">
       <div class="flex flex-col h-full p-4">
-        <!-- Branding with avatar -->
-        <div class="flex items-center gap-3 mb-1 mt-6">
+        <div class="flex items-centerjustify-center gap-3 mb-1 mt-6">
           <q-avatar size="2.5rem">
-            <img src="src/assets/images/owner.webp" alt="Isaac" />
+            <img src="src/assets/images/owner.webp" loading="lazy" alt="Isaac" />
           </q-avatar>
-          <div>
-            <router-link to="/" class="text-adaptive-dark font-extrabold text-xl no-underline">
+          <div class="flex-col justify-center">
+            <router-link
+              to="/"
+              class="flex-1 text-adaptive-dark font-extrabold text-xl no-underline"
+            >
               Lugoci@<b>dev</b>
             </router-link>
-            <p class="text-adaptive-mid text-[11px] mt-0.5 opacity-60 leading-tight">
+            <p class="flex-1 text-adaptive-mi text-[11px] mt-0.5 opacity-60 leading-tight">
               {{ $t('home.intro.name') }}
             </p>
           </div>
         </div>
 
-        <!-- Navigation -->
         <q-list separator class="mt-6">
           <q-item
             v-for="item in navItems"
@@ -37,7 +37,6 @@
 
         <q-space />
 
-        <!-- Language switcher + GitHub -->
         <div class="flex flex-col gap-2">
           <LanguageSwitcher full-width />
           <a
@@ -49,13 +48,27 @@
             <q-icon name="code" size="1rem" />
             {{ $t('home.nav.source') }}
           </a>
+
+          <q-separator class="my-1" />
+
+          <CopyBox :box-icon="`img:${gmailIcon}`" text-link="isaitodaniel@gmail.com" />
+          <LinkBox
+            :link-icon="`img:${gitHubIcon}`"
+            text-link="GitHub"
+            target="https://www.github.com"
+          />
+          <LinkBox
+            :link-icon="`img:${linkedInIcon}`"
+            text-link="LinkedIn"
+            action-icon="open_in_new"
+            target="https://www.linkedin.com"
+          />
         </div>
       </div>
     </q-drawer>
 
     <q-header class="pt-8 px-4 md:px-42" style="background: transparent" reveal>
       <q-toolbar class="toolbar-bg" style="border-radius: 12px">
-        <!-- Hamburger: code icon with nudge on mobile -->
         <q-icon
           name="code"
           class="text-accent cursor-pointer select-none nudge-mobile"
@@ -63,14 +76,12 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <!-- Title: clickable → home -->
         <q-toolbar-title class="text-adaptive-dark font-extrabold">
           <router-link to="/" class="no-underline text-adaptive-dark">
             Lugoci@<b>dev</b>
           </router-link>
         </q-toolbar-title>
 
-        <!-- Desktop: nav links -->
         <q-space class="max-md:hidden" />
         <div class="text-weight-regular max-md:hidden">
           <router-link
@@ -86,7 +97,6 @@
         </div>
         <q-space class="max-md:hidden" />
 
-        <!-- Dark mode toggle -->
         <q-btn flat round dense size="sm" @click="toggleDark" class="q-mr-sm border nav-link">
           <q-icon :name="darkIcon" class="nav-link" size="1.2rem" />
           <q-tooltip anchor="bottom middle" self="top middle" :offset="[0, 4]">
@@ -94,7 +104,6 @@
           </q-tooltip>
         </q-btn>
 
-        <!-- Desktop: LanguageSwitcher -->
         <LanguageSwitcher class="max-md:hidden" />
         <a
           :href="cvUrl"
@@ -123,8 +132,14 @@
 <script setup>
 import { computed, ref } from 'vue'
 import LanguageSwitcher from 'src/components/LanguageSwitcher.vue'
+import CopyBox from 'src/components/common/CopyBox.vue'
+import LinkBox from 'src/components/common/LinkBox.vue'
 import { useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
+
+import gmailIcon from 'src/assets/gmail.png'
+import gitHubIcon from 'src/assets/github-mark-white.svg'
+import linkedInIcon from 'src/assets/linkedin.png'
 
 const route = useRoute()
 const $q = useQuasar()
@@ -133,7 +148,6 @@ const repoUrl = 'https://github.com/Lugoci-dev/Lugoci-sPortfolio-Vue-Quasar-'
 
 const leftDrawerOpen = ref(false)
 
-/* ── Dark mode: 3 estados (auto → forced dark → forced light → auto) ── */
 const darkIcon = computed(() => {
   if ($q.dark.mode === 'auto') return 'brightness_4'
   return $q.dark.isActive ? 'dark_mode' : 'light_mode'
@@ -164,7 +178,6 @@ const navItems = [
 </script>
 
 <style scoped>
-/* ── Mobile: nudge animation for the hamburger ── */
 @media (max-width: 767px) {
   .nudge-mobile {
     animation: hey-look 2s ease-in-out 8s infinite;
