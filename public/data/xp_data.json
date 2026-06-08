@@ -9,12 +9,12 @@
           "month_key": "december",
           "label": { "es": "Diciembre", "en": "December" }
         },
-        "end": { "year": 2026, "month_key": "june", "label": { "es": "Junio", "en": "June" } }
+        "end": null
       },
       "data": {
         "icon": "images/icon_example.jpg",
-        "link": "https://tupincha.app",
-        "github": "https://github.com/tupincha/mobile",
+        "link": null,
+        "github": null,
         "gallery": [
           "images/card_example.png",
           "images/discover_example.jpg",
@@ -61,6 +61,10 @@
           {
             "es": "Diseñé componentes frontend reutilizables y flujos móviles centrados en usabilidad y escalabilidad.",
             "en": "Designed reusable frontend components and mobile flows focused on usability and scalability."
+          },
+          {
+            "es": "Integré flujos de desarrollo asistido por IA, ingeniería de contexto y tooling agentic para acelerar prototipado, desarrollo de componentes, documentación y toma de decisiones técnicas.",
+            "en": "Leveraged AI-assisted development workflows, context engineering techniques, and agent-based tooling to accelerate prototyping, component development, documentation, and technical decision-making."
           }
         ]
       }
@@ -70,12 +74,16 @@
       "type": "experience",
       "cycle": {
         "start": { "year": 2026, "month_key": "may", "label": { "es": "Mayo", "en": "May" } },
-        "end": { "year": 2026, "month_key": "june", "label": { "es": "Junio", "en": "June" } }
+        "end": null
       },
       "data": {
         "icon": "images/icon_example.jpg",
-        "link": "https://tupincha.com",
-        "gallery": ["images/requests_example.jpg", "images/profile_exapmple.png"],
+        "link": "https://land.tupincha.com",
+        "gallery": [
+          "images/tupincha_landing_home.webp",
+          "images/tupincha_landing_hiw.webp",
+          "images/tupincha_landing_categories.webp"
+        ],
         "name": {
           "es": "TuPincha (Landing Page) - FrontEnd Developer",
           "en": "TuPincha (Landing Page) - FrontEnd Developer"
@@ -127,11 +135,13 @@
       },
       "data": {
         "icon": "images/icon_example.jpg",
-        "github": "https://github.com/lugocdev/ecommerce-thesis",
         "gallery": [
-          "images/card_example.png",
-          "images/discover_example.jpg",
-          "images/screens_example.jpg"
+          "images/ecomerce_tests.png",
+          "images/ecomerce_registry.png",
+          "images/ecomerce_form.png",
+          "images/ecomerce_mobile.png",
+          "images/ecomerce_buy_process_2.png",
+          "images/ecomerce_buy_process.png"
         ],
         "name": {
           "es": "Ecommerce - Proyecto de Tesis Universitaria",
@@ -410,7 +420,7 @@
     },
     {
       "id": "global-game-jam",
-      "type": "experience",
+      "type": "collage",
       "cycle": {
         "start": {
           "year": 2024,
@@ -420,30 +430,151 @@
         "end": { "year": 2025, "month_key": "june", "label": { "es": "Junio", "en": "June" } }
       },
       "data": {
-        "icon": "images/icon_example.jpg",
-        "link": null,
-        "github": null,
-        "gallery": ["images/profile_exapmple.png"],
+        "icon": "images/ggj_icon.webp",
         "name": {
-          "es": "Global Game Jam - Participante",
-          "en": "Global Game Jam - Participant"
+          "es": "Global Game Jam - Participante (como usuario Dan@_dev)",
+          "en": "Global Game Jam - Participant (as Dan@_dev user)"
         },
-        "summary": {
-          "es": "Participé en las ediciones 2024 y 2025 de la Global Game Jam, desarrollando prototipos de videojuegos con Godot en equipos multidisciplinarios.",
-          "en": "Participated in the 2024 and 2025 editions of Global Game Jam, developing video game prototypes with Godot in multidisciplinary teams."
-        },
-        "technologies": ["Godot", "GDScript"],
-        "tools": ["Trabajo en equipo"],
         "items": [
           {
-            "es": "Colaboré en equipos multidisciplinarios para desarrollar prototipos de juegos en 48 horas.",
-            "en": "Collaborated in multidisciplinary teams to develop game prototypes under 48-hour deadlines."
+            "es": "Participé en las ediciones 2024 y 2025 de la Global Game Jam, desarrollando prototipos de videojuegos con Godot en equipos multidisciplinarios.",
+            "en": "Participated in the 2024 and 2025 editions of Global Game Jam, developing video game prototypes with Godot in multidisciplinary teams."
+          }
+        ],
+        "projects": [
+          {
+            "id": "ggj_2024_chicken_adventure",
+            "name": {
+              "es": "Chicken Adventure",
+              "en": "Chicken Adventure"
+            },
+            "summary": {
+              "es": "Videojuego de plataformas desarrollado durante la Global Game Jam 2024, donde lideré el desarrollo técnico y participé en la definición creativa del proyecto.",
+              "en": "Platformer game developed during Global Game Jam 2024, where I led the technical development and contributed to the project's creative direction."
+            },
+            "technologies": ["Godot", "GDScript"],
+            "tools": [
+              "Gameplay Programming",
+              "Level Design",
+              "Rapid Prototyping",
+              "Team Collaboration"
+            ],
+            "link": "https://globalgamejam.org/games/2024/chicken-adventure-4",
+            "github": null,
+            "items": [
+              {
+                "es": "Lideré el desarrollo del juego y coordiné la implementación de las principales mecánicas dentro de un ciclo de producción de 48 horas.",
+                "en": "Led game development and coordinated the implementation of core mechanics within a 48-hour production cycle."
+              },
+              {
+                "es": "Diseñé el concepto principal del proyecto, definiendo la dirección del gameplay y la temática del personaje protagonista.",
+                "en": "Designed the core concept of the project, defining gameplay direction and the theme of the main character."
+              },
+              {
+                "es": "Implementé la mayor parte de la lógica de plataformas, movimiento del personaje e interacción con el entorno.",
+                "en": "Implemented most of the platforming logic, character movement, and environmental interactions."
+              },
+              {
+                "es": "Participé en la construcción de múltiples niveles jugables manteniendo una experiencia consistente y accesible.",
+                "en": "Contributed to the creation of multiple playable levels while maintaining a consistent and accessible experience."
+              },
+              {
+                "es": "Colaboré con diseñadores y artistas para entregar una experiencia completa y funcional dentro del tiempo establecido.",
+                "en": "Collaborated with designers and artists to deliver a complete and functional experience within the available timeframe."
+              }
+            ],
+            "gallery": ["images/chicken_adventure_icon.png"]
           },
           {
-            "es": "Contribuí a sistemas de jugabilidad, mecánicas de interacción y prototipado rápido con Godot.",
-            "en": "Contributed to gameplay systems, interaction mechanics, and fast prototyping with Godot."
+            "id": "ggj_2025_last_breath_bubbles",
+            "name": {
+              "es": "Last Breath Bubbles",
+              "en": "Last Breath Bubbles"
+            },
+            "summary": {
+              "es": "Juego multijugador cooperativo desarrollado durante la Global Game Jam 2025, enfocado en mecánicas de interacción física y resolución de desafíos inspirados en el tema 'Bubble'.",
+              "en": "Cooperative multiplayer game developed during Global Game Jam 2025, focused on physics-based interactions and challenge-solving mechanics inspired by the 'Bubble' theme."
+            },
+            "technologies": ["Godot", "GDScript", "Multiplayer Systems"],
+            "tools": [
+              "Gameplay Programming",
+              "Physics Systems",
+              "Rapid Prototyping",
+              "Team Collaboration"
+            ],
+            "link": "https://globalgamejam.org/games/2025/last-breath-bubbles-6",
+            "github": null,
+            "items": [
+              {
+                "es": "Desarrollé sistemas de movimiento del jugador y mecánicas de interacción con el entorno para soportar la experiencia cooperativa.",
+                "en": "Developed player movement systems and environment interaction mechanics to support the cooperative experience."
+              },
+              {
+                "es": "Implementé comportamientos de gameplay enfocados en la manipulación de objetos y resolución de obstáculos mediante físicas.",
+                "en": "Implemented gameplay behaviors focused on object manipulation and obstacle solving through physics-based interactions."
+              },
+              {
+                "es": "Colaboré estrechamente con otros desarrolladores integrando mecánicas individuales dentro de una arquitectura multijugador compartida.",
+                "en": "Worked closely with other developers integrating individual mechanics into a shared multiplayer architecture."
+              },
+              {
+                "es": "Participé en ciclos continuos de pruebas, balance y refinamiento para garantizar una experiencia jugable estable en un entorno de desarrollo acelerado.",
+                "en": "Participated in continuous testing, balancing, and refinement cycles to ensure a stable gameplay experience in a fast-paced development environment."
+              },
+              {
+                "es": "Contribuí a la entrega de un prototipo funcional en menos de 48 horas mediante iteraciones rápidas y validación constante de ideas.",
+                "en": "Contributed to delivering a functional prototype in under 48 hours through rapid iteration and continuous idea validation."
+              }
+            ],
+            "gallery": ["images/ggj_icon.webp"]
           }
         ]
+      }
+    },
+    {
+      "id": "uci-start",
+      "type": "achievement",
+      "cycle": {
+        "date": {
+          "year": 2022,
+          "month_key": "april",
+          "label": { "es": "Abril", "en": "April" }
+        }
+      },
+      "data": {
+        "title": {
+          "es": "Ingeniería en Ciencias Informáticas - UCI",
+          "en": "Computer Science Engineering - UCI"
+        },
+        "description": {
+          "es": "Inicié la carrera en la Universidad de las Ciencias Informáticas (UCI), La Habana, Cuba. Formación en desarrollo de software, arquitectura de sistemas y tecnologías web.",
+          "en": "Started the degree at the University of Computer Sciences (UCI), Havana, Cuba. Training in software development, systems architecture, and web technologies."
+        },
+        "icon": "school",
+        "tags": ["UCI", "Computer Science", "Formación"]
+      }
+    },
+    {
+      "id": "uci-graduation",
+      "type": "achievement",
+      "cycle": {
+        "date": {
+          "year": 2025,
+          "month_key": "july",
+          "label": { "es": "Julio", "en": "July" }
+        }
+      },
+      "data": {
+        "title": {
+          "es": "Graduado - Ingeniería en Ciencias Informáticas",
+          "en": "Graduated - Computer Science Engineering"
+        },
+        "description": {
+          "es": "Completé la carrera de Ingeniería en Ciencias Informáticas en la UCI. Tesis enfocada en desarrollo frontend con Vue 3, Quasar y Stripe.",
+          "en": "Completed the Computer Science Engineering degree at UCI. Thesis focused on frontend development with Vue 3, Quasar, and Stripe."
+        },
+        "icon": "workspace_premium",
+        "tags": ["UCI", "Graduación", "Ingeniería"]
       }
     },
     {
@@ -487,57 +618,45 @@
       }
     },
     {
-      "id": "best-ui-award",
-      "type": "award",
-      "cycle": {
-        "date": { "year": 2026, "month_key": "march", "label": { "es": "Marzo", "en": "March" } }
-      },
-      "data": {
-        "title": { "es": "Mención Especial - Mejor UI/UX", "en": "Special Mention - Best UI/UX" },
-        "organization": {
-          "es": "Hackaton Universitaria 2026",
-          "en": "University Hackathon 2026"
-        },
-        "description": {
-          "es": "Reconocimiento al mejor diseño de interfaz y experiencia de usuario en la competencia anual de innovación.",
-          "en": "Recognition for best interface design and user experience at the annual innovation competition."
-        }
-      }
-    },
-    {
-      "id": "vue-certification",
-      "type": "certification",
-      "cycle": {
-        "date": { "year": 2025, "month_key": "august", "label": { "es": "Agosto", "en": "August" } }
-      },
-      "data": {
-        "title": {
-          "es": "Vue 3 - Composition API Avanzada",
-          "en": "Vue 3 - Advanced Composition API"
-        },
-        "issuer": { "es": "Platzi", "en": "Platzi" },
-        "credential_url": "https://platzi.com/cursos/vue3-composition/",
-        "credential_id": "vue3-2025-abc123"
-      }
-    },
-    {
-      "id": "supabase-certification",
-      "type": "certification",
+      "id": "supabase-mastery",
+      "type": "achievement",
       "cycle": {
         "date": {
-          "year": 2025,
-          "month_key": "november",
-          "label": { "es": "Noviembre", "en": "November" }
+          "year": 2026,
+          "month_key": "january",
+          "label": { "es": "Enero", "en": "January" }
         }
       },
       "data": {
         "title": {
-          "es": "Supabase - Backend como Servicio",
-          "en": "Supabase - Backend as a Service"
+          "es": "Arquitectura Backend con Supabase",
+          "en": "Backend Architecture with Supabase"
         },
-        "issuer": { "es": "Supabase Docs", "en": "Supabase Docs" },
-        "credential_url": "https://supabase.com/docs",
-        "credential_id": "sb-2025-xyz789"
+        "description": {
+          "es": "Diseño e implementación de una arquitectura backend completa en Supabase para TuPincha, integrando autenticación, RLS, RPC y Edge Functions en un entorno de producción.",
+          "en": "Designed and implemented a complete backend architecture on Supabase for TuPincha, integrating authentication, RLS, RPC, and Edge Functions in a production environment."
+        },
+        "icon": "cloud_done",
+        "tags": ["Supabase", "PostgreSQL", "Backend", "Arquitectura"]
+      }
+    },
+    {
+      "id": "ai-workflows",
+      "type": "achievement",
+      "cycle": {
+        "date": { "year": 2026, "month_key": "april", "label": { "es": "Abril", "en": "April" } }
+      },
+      "data": {
+        "title": {
+          "es": "Flujos de Desarrollo Asistido por IA",
+          "en": "AI-Assisted Development Workflows"
+        },
+        "description": {
+          "es": "Incorporé ingeniería de contexto, tooling agentic y flujos de desarrollo asistido por IA para acelerar prototipado, desarrollo de componentes y documentación técnica en proyectos productivos.",
+          "en": "Integrated context engineering, agentic tooling, and AI-assisted development workflows to accelerate prototyping, component development, and technical documentation in production projects."
+        },
+        "icon": "smart_toy",
+        "tags": ["AI", "Prompt Engineering", "Agentic Workflows", "Productividad"]
       }
     }
   ]

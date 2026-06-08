@@ -21,7 +21,10 @@
             stroke-linejoin="round"
           />
         </svg>
-        <span>{{ localized(entry.cycle.end.label) }} {{ entry.cycle.end.year }}</span>
+        <span v-if="entry.cycle.end"
+          >{{ localized(entry.cycle.end.label) }} {{ entry.cycle.end.year }}</span
+        >
+        <span v-else>{{ $t('common.present') }}</span>
       </span>
 
       <!-- Type badge -->

@@ -87,8 +87,13 @@ export function normalizeCycle(cycle) {
     return { startIndex: m, endIndex: m, ...cycle }
   }
   const startIndex = toMonthIndex(cycle.start)
-  const endIndex = toMonthIndex(cycle.end)
+  const endIndex = cycle.end ? toMonthIndex(cycle.end) : currentMonthIndex()
   return { startIndex, endIndex, ...cycle }
+}
+
+function currentMonthIndex() {
+  const now = new Date()
+  return now.getFullYear() * 12 + now.getMonth()
 }
 
 /* ─══════════════════════════════════════════════
@@ -133,14 +138,18 @@ export function useTimelineEngine(entriesRef, options = {}) {
   /* ── 3. Altura estimada por tipo de card ── */
   function estimateCardHeight(type) {
     switch (type) {
+      case 'experience':
+        return 340
+      case 'collage':
+        return 380
       case 'achievement':
-        return 180
+        return 220
       case 'award':
-        return 160
+        return 200
       case 'certification':
-        return 170
+        return 200
       default:
-        return 280 // experience — puede tener muchos items
+        return 280
     }
   }
 
@@ -151,7 +160,7 @@ export function useTimelineEngine(entriesRef, options = {}) {
        - Anti-colisión INDEPENDIENTE por lado: items left solo compiten
          con otros left, right solo con right
        - DOT en temporalTop (alineado con markers), card en adjustedTop ── */
-  const CARD_GAP = 32
+  const CARD_GAP = 48
 
   const positionedEntries = computed(() => {
     const items = normalized.value
