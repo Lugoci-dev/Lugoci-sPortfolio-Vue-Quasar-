@@ -12,6 +12,15 @@
         "end": { "year": 2026, "month_key": "june", "label": { "es": "Junio", "en": "June" } }
       },
       "data": {
+        "icon": "images/icon_example.jpg",
+        "link": "https://tupincha.app",
+        "github": "https://github.com/tupincha/mobile",
+        "gallery": [
+          "images/card_example.png",
+          "images/discover_example.jpg",
+          "images/screens_example.jpg",
+          "images/index_example.jpg"
+        ],
         "name": {
           "es": "TuPincha (App móvil nueva versión) - Lead Developer",
           "en": "TuPincha (Mobile App new version) - Lead Developer"
@@ -64,6 +73,9 @@
         "end": { "year": 2026, "month_key": "june", "label": { "es": "Junio", "en": "June" } }
       },
       "data": {
+        "icon": "images/icon_example.jpg",
+        "link": "https://tupincha.com",
+        "gallery": ["images/requests_example.jpg", "images/profile_exapmple.png"],
         "name": {
           "es": "TuPincha (Landing Page) - FrontEnd Developer",
           "en": "TuPincha (Landing Page) - FrontEnd Developer"
@@ -114,6 +126,13 @@
         "end": { "year": 2025, "month_key": "july", "label": { "es": "Julio", "en": "July" } }
       },
       "data": {
+        "icon": "images/icon_example.jpg",
+        "github": "https://github.com/lugocdev/ecommerce-thesis",
+        "gallery": [
+          "images/card_example.png",
+          "images/discover_example.jpg",
+          "images/screens_example.jpg"
+        ],
         "name": {
           "es": "Ecommerce - Proyecto de Tesis Universitaria",
           "en": "Ecommerce - University Thesis Project"
@@ -142,7 +161,7 @@
     },
     {
       "id": "frontend-mentor",
-      "type": "experience",
+      "type": "collage",
       "cycle": {
         "start": {
           "year": 2024,
@@ -156,24 +175,114 @@
         }
       },
       "data": {
+        "icon": "images/icon_example.jpg",
         "name": {
           "es": "Proyectos Personales - Frontend Mentor",
           "en": "Personal Projects - Frontend Mentor"
         },
-        "summary": {
-          "es": "Desarrollé proyectos frontend aplicando HTML, CSS y JavaScript, publicados en GitHub Pages.",
-          "en": "Developed frontend projects using HTML, CSS, and JavaScript, published on GitHub Pages."
-        },
-        "technologies": ["HTML", "CSS", "JavaScript"],
-        "tools": ["GitHub Pages", "Git"],
         "items": [
           {
-            "es": "Desarrollé múltiples proyectos frontend enfocados en diseño responsivo y accesibilidad.",
-            "en": "Developed multiple frontend projects focused on responsive design and accessibility."
+            "es": "Practiqué maquetación responsive con HTML semántico y CSS moderno.",
+            "en": "Practiced responsive layout with semantic HTML and modern CSS."
           },
           {
-            "es": "Publiqué proyectos mediante GitHub Pages y mantuve control de versiones con Git.",
-            "en": "Published projects via GitHub Pages and maintained version control with Git."
+            "es": "Implementé componentes interactivos con JavaScript vanilla y consumo de APIs REST.",
+            "en": "Implemented interactive components with vanilla JavaScript and REST API consumption."
+          }
+        ],
+        "projects": [
+          {
+            "id": "fm-ecommerce",
+            "name": {
+              "es": "E-commerce Product Page",
+              "en": "E-commerce Product Page"
+            },
+            "summary": {
+              "es": "Página de producto interactiva con galería de imágenes, selector de cantidades y carrito de compras.",
+              "en": "Interactive product page with image gallery, quantity selector, and shopping cart."
+            },
+            "technologies": ["HTML", "CSS", "JavaScript"],
+            "tools": ["Flexbox", "CSS Grid"],
+            "link": "https://lugocdev.github.io/ecommerce-product-page",
+            "github": "https://github.com/lugocdev/ecommerce-product-page",
+            "items": [
+              {
+                "es": "Galería de imágenes con lightbox y navegación por thumbnails.",
+                "en": "Image gallery with lightbox and thumbnail navigation."
+              },
+              {
+                "es": "Selector de cantidad y agregado al carrito con estado persistente.",
+                "en": "Quantity selector and add-to-cart with persistent state."
+              },
+              {
+                "es": "Diseño responsive mobile-first con transiciones animadas.",
+                "en": "Mobile-first responsive design with animated transitions."
+              }
+            ],
+            "gallery": ["images/card_example.png", "images/screens_example.jpg"]
+          },
+          {
+            "id": "fm-rating",
+            "name": {
+              "es": "Interactive Rating Component",
+              "en": "Interactive Rating Component"
+            },
+            "summary": {
+              "es": "Componente de calificación interactivo con selección en estrella y envío de feedback.",
+              "en": "Interactive rating component with star selection and feedback submission."
+            },
+            "technologies": ["HTML", "CSS", "JavaScript"],
+            "tools": ["CSS Transitions", "DOM Manipulation"],
+            "link": "https://lugocdev.github.io/rating-component",
+            "github": "https://github.com/lugocdev/rating-component",
+            "items": [
+              {
+                "es": "Selección visual de calificación con hover y active states.",
+                "en": "Visual rating selection with hover and active states."
+              },
+              {
+                "es": "Estado de agradecimiento posterior al envío con animación.",
+                "en": "Thank-you state after submission with animation."
+              },
+              {
+                "es": "Validación de selección antes de permitir el envío.",
+                "en": "Selection validation before allowing submission."
+              }
+            ],
+            "gallery": ["images/discover_example.jpg", "images/index_example.jpg"]
+          },
+          {
+            "id": "fm-countries",
+            "name": {
+              "es": "REST Countries API",
+              "en": "REST Countries API"
+            },
+            "summary": {
+              "es": "Explorador de países con búsqueda, filtro por región y detalle con datos de la API REST Countries.",
+              "en": "Country explorer with search, region filter, and detail view using the REST Countries API."
+            },
+            "technologies": ["HTML", "CSS", "JavaScript", "REST API"],
+            "tools": ["Fetch API", "Async/Await"],
+            "github": "https://github.com/lugocdev/rest-countries",
+            "items": [
+              {
+                "es": "Búsqueda en tiempo real con filtro por región y nombre.",
+                "en": "Real-time search with region and name filtering."
+              },
+              {
+                "es": "Página de detalle de país con información completa y países fronterizos.",
+                "en": "Country detail page with full info and border countries."
+              },
+              {
+                "es": "Manejo de loading states y errores de red.",
+                "en": "Loading state and network error handling."
+              },
+              {
+                "es": "Modo oscuro/claro con persistencia en localStorage.",
+                "en": "Dark/light mode with localStorage persistence."
+              }
+            ],
+            "gallery": ["images/requests_example.jpg", "images/profile_exapmple.png"]
           }
         ]
       }
@@ -190,6 +299,10 @@
         "end": { "year": 2025, "month_key": "june", "label": { "es": "Junio", "en": "June" } }
       },
       "data": {
+        "icon": "images/icon_example.jpg",
+        "link": null,
+        "github": null,
+        "gallery": ["images/profile_exapmple.png"],
         "name": {
           "es": "Global Game Jam - Participante",
           "en": "Global Game Jam - Participant"
