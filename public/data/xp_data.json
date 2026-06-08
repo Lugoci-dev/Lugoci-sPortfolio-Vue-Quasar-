@@ -16,10 +16,12 @@
         "link": null,
         "github": null,
         "gallery": [
-          "images/card_example.png",
-          "images/discover_example.jpg",
-          "images/screens_example.jpg",
-          "images/index_example.jpg"
+          "images/tupincha_mobile_discover.webp",
+          "images/tupincha_mobile_reqready.webp",
+          "images/tupincha_mobile_reqinit.webp",
+          "images/tupincha_mobile_notifications.webp",
+          "images/tupincha_mobile_completedwork.webp",
+          "images/tupincha_mobile_mapview.webp"
         ],
         "name": {
           "es": "TuPincha (App móvil nueva versión) - Lead Developer",
