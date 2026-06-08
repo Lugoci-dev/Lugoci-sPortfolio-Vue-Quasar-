@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="es">
   <head>
     <title><%= productName %></title>
 
@@ -11,6 +11,76 @@
       name="viewport"
       content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
     />
+
+    <!-- ── SEO meta ── -->
+    <meta name="author" content="Isaac D. Gonzalez Rodriguez" />
+    <meta
+      name="keywords"
+      content="Isaac Gonzalez, Lugoci.dev, full-stack developer, Vue.js, React, Node.js, computer science engineer, portfolio"
+    />
+    <link rel="canonical" href="https://lugoci-dev.github.io/Lugoci-sPortfolio-Vue-Quasar-/" />
+
+    <!-- ── Open Graph ── -->
+    <meta property="og:title" content="Isaac D. Gonzalez Rodriguez | Lugoci.dev" />
+    <meta property="og:description" content="<%= productDescription %>" />
+    <meta
+      property="og:image"
+      content="https://lugoci-dev.github.io/Lugoci-sPortfolio-Vue-Quasar-/og-image.webp"
+    />
+    <meta property="og:url" content="https://lugoci-dev.github.io/Lugoci-sPortfolio-Vue-Quasar-/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lugoci.dev" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- ── Twitter Cards ── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Isaac D. Gonzalez Rodriguez | Lugoci.dev" />
+    <meta name="twitter:description" content="<%= productDescription %>" />
+    <meta
+      name="twitter:image"
+      content="https://lugoci-dev.github.io/Lugoci-sPortfolio-Vue-Quasar-/og-image.webp"
+    />
+
+    <!-- ── JSON-LD Structured Data (Person schema) ── -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Isaac D. Gonzalez Rodriguez",
+        "alternateName": "Lugoci.dev",
+        "jobTitle": "Computer Science Engineer & Full-Stack Developer",
+        "description": "<%= productDescription %>",
+        "url": "https://lugoci-dev.github.io/Lugoci-sPortfolio-Vue-Quasar-/",
+        "image": "https://lugoci-dev.github.io/Lugoci-sPortfolio-Vue-Quasar-/og-image.webp",
+        "email": "isaitodaniel@gmail.com",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Universidad de las Ciencias Informáticas (UCI)"
+        },
+        "knowsLanguage": [
+          { "@type": "Language", "name": "Spanish", "alternateName": "es" },
+          { "@type": "Language", "name": "English", "alternateName": "en" }
+        ],
+        "knowsAbout": [
+          "JavaScript",
+          "Vue.js",
+          "React",
+          "React Native",
+          "Node.js",
+          "TypeScript",
+          "PostgreSQL",
+          "Supabase",
+          "Tailwind CSS",
+          "Full-Stack Development",
+          "Mobile Development",
+          "UI/UX Design"
+        ],
+        "sameAs": [
+          "https://github.com/Lugoci-dev",
+          "https://www.linkedin.com/in/isaac-daniel-gonzalez-rodriguez"
+        ]
+      }
+    </script>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600;700&display=swap"

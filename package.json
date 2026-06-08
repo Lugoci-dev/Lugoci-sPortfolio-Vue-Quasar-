@@ -1,9 +1,9 @@
 {
   "name": "portafolio-s-lugoccidev",
   "version": "0.0.1",
-  "description": "A portafolio project",
-  "productName": "Lugocci_dev-portafolio",
-  "author": "Isaac Daniel <isaitodaiel@gmail.com>",
+  "description": "Computer Science Engineer & Full-Stack Developer — Vue.js, React, Node.js. Transforming ideas into digital products.",
+  "productName": "Isaac D. Gonzalez Rodriguez | Lugoci.dev",
+  "author": "Isaac D. Gonzalez Rodriguez <isaitodaniel@gmail.com>",
   "type": "module",
   "private": true,
   "scripts": {
