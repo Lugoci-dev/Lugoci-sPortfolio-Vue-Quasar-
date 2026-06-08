@@ -8,6 +8,7 @@ export default {
       not_hide: ' CV',
     },
     language: 'en',
+    source: 'Source Code',
   },
   intro: {
     hello: {
