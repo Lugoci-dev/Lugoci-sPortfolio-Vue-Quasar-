@@ -1,6 +1,5 @@
 <template>
   <q-page class="py-12 px-4 md:px-42 flex flex-col gap-8">
-    <!-- ═══ Back button ═══ -->
     <button
       @click="$router.back()"
       class="flex items-center gap-1 text-accent hover:opacity-80 transition-opacity mb-12 cursor-pointer"
@@ -15,29 +14,22 @@
       <span class="text-sm font-semibold">{{ $t('common.back') }}</span>
     </button>
 
-    <!-- ═══ LOADING ═══ -->
     <div v-if="loading" class="flex justify-center py-20">
       <q-spinner color="accent" size="3rem" />
     </div>
 
-    <!-- ═══ ERROR ═══ -->
     <div v-else-if="error" class="flex justify-center py-20">
       <p class="text-adaptive-mid text-lg">{{ $t('common.error') }}</p>
     </div>
 
-    <!-- ═══ NOT FOUND ═══ -->
     <div v-else-if="!entry" class="flex justify-center py-20">
       <p class="text-adaptive-mid text-lg">{{ $t('common.not_found') }}</p>
     </div>
 
-    <!-- ═══ CONTENT ═══ -->
     <template v-if="entry">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- LEFT: Name + Details -->
         <div class="order-1">
-          <!-- ── Header: Avatar + Name ── -->
           <div class="flex items-center gap-4 md:gap-6 mb-8">
-            <!-- Avatar circular -->
             <div
               class="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-xl md:text-2xl font-bold shrink-0"
               :class="entry.data.icon ? '' : 'bg-accent/20 text-accent'"
@@ -50,7 +42,6 @@
               <span v-else>{{ initials }}</span>
             </div>
 
-            <!-- Name y periodo -->
             <div>
               <p class="text-2xl md:text-3xl font-extrabold text-adaptive-dark leading-tight">
                 {{ localized(entry.data.name) }}
@@ -65,9 +56,7 @@
                 }}
               </p>
 
-              <!-- Link & GitHub buttons -->
               <div class="flex flex-wrap items-center gap-2 mt-3">
-                <!-- Live link -->
                 <a
                   v-if="linkUrl"
                   :href="linkUrl"
@@ -108,7 +97,6 @@
                   {{ $t('common.live') }}
                 </span>
 
-                <!-- GitHub link -->
                 <a
                   v-if="githubUrl"
                   :href="githubUrl"
@@ -140,103 +128,20 @@
             </div>
           </div>
 
-          <!-- ── Items (detailed, NOT summary) ── -->
-          <section v-if="visibleItems.length" class="flex flex-col mb-10 items-start">
-            <p class="text-lg font-bold text-adaptive-dark mb-4 flex items-center gap-2">
-              <span class="w-1 h-5 bg-accent rounded-full inline-block" />
-              {{ $t('project.details') }}
-            </p>
-
-            <ul class="space-y-3">
-              <li
-                v-for="(item, i) in visibleItems"
-                :key="i"
-                class="flex flex-row gap-2 text-adaptive-mid"
-              >
-                <svg class="w-5 h-5 shrink-0 text-accent" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="flex-1">{{ localized(item) }}</span>
-              </li>
-            </ul>
-
-            <!-- Expand / Collapse -->
-            <button
-              v-if="hiddenItemsCount > 0"
-              class="self-end mt-3 text-sm font-semibold text-accent hover:opacity-80 transition-opacity cursor-pointer"
-              @click="showAllItems = !showAllItems"
-            >
-              <template v-if="showAllItems">
-                {{ $t('common.show_less') }}
-              </template>
-              <template v-else> +{{ hiddenItemsCount }} {{ $t('common.show_more') }}... </template>
-            </button>
-          </section>
+          <ItemList :items="localizedItems" class="mb-10" />
         </div>
-        <!-- RIGHT: Gallery column -->
         <div class="order-4 md:order-2">
-          <!-- ── Gallery (collage layout) ── -->
           <section v-if="allGalleryImages.length">
-            <p class="text-lg font-bold text-adaptive-dark mb-4 flex items-center gap-2">
-              <span class="w-1 h-5 bg-accent rounded-full inline-block" />
-              {{ $t('project.gallery') }}
-            </p>
+            <SectionTitle :label="$t('project.gallery')" />
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <!-- First image: large, spans full row -->
-              <div
-                v-if="visibleGallery[0]"
-                class="md:col-span-3 rounded-xl overflow-hidden card-bg card-border border cursor-pointer group"
-                @click="openViewer(0)"
-              >
-                <img
-                  :src="visibleGallery[0]"
-                  :alt="`${localized(entry.data.name)} screenshot 1`"
-                  class="w-full h-64 md:h-80 object-cover transition-transform duration-300 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-
-              <!-- Remaining images (up to 3) — 3 in a row on desktop, stacked on mobile -->
-              <template v-for="(img, i) in visibleGallery.slice(1)" :key="i">
-                <div
-                  class="relative rounded-xl overflow-hidden card-bg card-border border cursor-pointer group aspect-square"
-                >
-                  <img
-                    :src="img"
-                    :alt="`${localized(entry.data.name)} screenshot ${i + 2}`"
-                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    loading="lazy"
-                    @click="openViewer(i + 1)"
-                  />
-                  <!-- +N overlay on the last visible card when there are hidden images -->
-                  <div
-                    v-if="i === 2 && remainingCount > 0"
-                    class="absolute inset-0 bg-black/60 flex items-center justify-center cursor-pointer hover:bg-black/70 transition-colors"
-                    @click="openViewer(3)"
-                  >
-                    <span class="text-white text-3xl md:text-4xl font-bold"
-                      >+{{ remainingCount }}</span
-                    >
-                  </div>
-                </div>
-              </template>
-            </div>
+            <ImageGallery :images="allGalleryImages" :alt="entryName" @open="openViewer" />
           </section>
         </div>
-        <!-- PROJECTS: selector (collage only, full width) -->
         <div
           v-if="entry.type === 'collage' && entry.data.projects?.length"
           class="order-2 md:order-3 md:col-span-2 mb-8"
         >
-          <p class="text-lg font-bold text-adaptive-dark mb-4 flex items-center gap-2">
-            <span class="w-1 h-5 bg-accent rounded-full inline-block" />
-            {{ $t('project.projects') }}
-          </p>
+          <SectionTitle :label="$t('project.projects')" />
           <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
             <button
               v-for="(proj, i) in entry.data.projects"
@@ -258,61 +163,25 @@
             </button>
           </div>
         </div>
-        <!-- BOTTOM: Skills & Tools (full width) -->
         <div class="order-3 md:order-4 md:col-span-2">
           <section class="mb-10">
-            <p class="text-lg font-bold text-adaptive-dark mb-4 flex items-center gap-2">
-              <span class="w-1 h-5 bg-accent rounded-full inline-block" />
-              {{ $t('project.skills') }}
-            </p>
+            <SectionTitle :label="$t('project.skills')" />
 
-            <!-- Combined matrix: highlights current entry/project, dims others -->
-            <!-- Technologies -->
-            <div v-if="allTechnologies.length" class="mb-6">
-              <p class="text-sm font-semibold text-adaptive-mid uppercase tracking-wider mb-3">
-                {{ $t('project.technologies') }}
-              </p>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  v-for="tech in allTechnologies"
-                  :key="tech"
-                  class="px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
-                  :class="
-                    entryTechnologies.has(tech)
-                      ? 'bg-accent text-white shadow-sm'
-                      : 'border text-adaptive-mid opacity-40 border-adaptive'
-                  "
-                >
-                  {{ tech }}
-                </span>
-              </div>
-            </div>
-
-            <!-- Tools -->
-            <div v-if="allTools.length">
-              <p class="text-sm font-semibold text-adaptive-mid uppercase tracking-wider mb-3">
-                {{ $t('project.tools') }}
-              </p>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  v-for="tool in allTools"
-                  :key="tool"
-                  class="px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
-                  :class="
-                    entryTools.has(tool)
-                      ? 'bg-accent text-white shadow-sm'
-                      : 'border text-adaptive-mid opacity-40 border-adaptive'
-                  "
-                >
-                  {{ tool }}
-                </span>
-              </div>
-            </div>
+            <SkillPillList
+              :items="allTechnologies"
+              :active-items="entryTechnologies"
+              :label="$t('project.technologies')"
+              class="mb-6"
+            />
+            <SkillPillList
+              :items="allTools"
+              :active-items="entryTools"
+              :label="$t('project.tools')"
+            />
           </section>
         </div>
       </div>
 
-      <!-- ── Image Viewer ── -->
       <ImageViewer
         v-if="viewerOpen"
         :images="allGalleryImages"
@@ -328,6 +197,10 @@ import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import ImageViewer from 'src/components/common/ImageViewer.vue'
+import ImageGallery from 'src/components/common/ImageGallery.vue'
+import SectionTitle from 'src/components/common/SectionTitle.vue'
+import SkillPillList from 'src/components/common/SkillPillList.vue'
+import ItemList from 'src/components/common/ItemList.vue'
 import { useTimelineData } from 'src/composables/useTimelineData'
 
 const route = useRoute()
@@ -339,7 +212,6 @@ const entry = computed(() => {
   return timeline.value.find((e) => e.id === route.params.id)
 })
 
-/* ── Collage: active project tracking ── */
 const activeProjectIndex = ref(0)
 const currentProject = computed(() => {
   if (entry.value?.type === 'collage') {
@@ -348,9 +220,15 @@ const currentProject = computed(() => {
   return null
 })
 
-/* ── Iniciales del nombre para fallback del avatar ── */
+const currentData = computed(() => {
+  if (entry.value?.type === 'collage') return currentProject.value ?? {}
+  return entry.value?.data ?? {}
+})
+
+const entryName = computed(() => localized(entry.value?.data?.name))
+
 const initials = computed(() => {
-  const name = localized(entry.value?.data?.name)
+  const name = entryName.value
   if (!name) return '?'
   return name
     .split(/[\s-/]+/)
@@ -360,25 +238,10 @@ const initials = computed(() => {
     .toUpperCase()
 })
 
-/* ── Expand/collapse for items list ── */
-const showAllItems = ref(false)
-const visibleItems = computed(() => {
-  const items =
-    entry.value?.type === 'collage'
-      ? (currentProject.value?.items ?? [])
-      : (entry.value?.data?.items ?? [])
-  if (showAllItems.value) return items
-  return items.slice(0, 3)
-})
-const hiddenItemsCount = computed(() => {
-  const items =
-    entry.value?.type === 'collage'
-      ? (currentProject.value?.items ?? [])
-      : (entry.value?.data?.items ?? [])
-  return Math.max(0, items.length - 3)
-})
+const localizedItems = computed(() =>
+  (currentData.value?.items ?? []).map((item) => localized(item)),
+)
 
-/* ── Base URL helper (needed for public path resolution) ── */
 const baseUrl = import.meta.env.BASE_URL
 function resolveUrl(path) {
   if (!path) return ''
@@ -386,7 +249,6 @@ function resolveUrl(path) {
   return baseUrl + path
 }
 
-/* ── Image viewer state ── */
 const viewerOpen = ref(false)
 const viewerIndex = ref(0)
 
@@ -395,26 +257,10 @@ function openViewer(index) {
   viewerOpen.value = true
 }
 
-/* ── Gallery images (all resolved for the viewer) ── */
-const allGalleryImages = computed(() => {
-  const gallery =
-    entry.value?.type === 'collage'
-      ? (currentProject.value?.gallery ?? [])
-      : (entry.value?.data?.gallery ?? [])
-  return gallery.map((img) => resolveUrl(img))
-})
+const allGalleryImages = computed(() =>
+  (currentData.value?.gallery ?? []).map((img) => resolveUrl(img)),
+)
 
-/* ── First 4 visible images for the collage ── */
-const visibleGallery = computed(() => {
-  return allGalleryImages.value.slice(0, 4)
-})
-
-/* ── How many images are hidden beyond the 4 shown ── */
-const remainingCount = computed(() => {
-  return Math.max(0, allGalleryImages.value.length - 4)
-})
-
-/* ── Todas las technologies de experience entries + collage projects ── */
 const allTechnologies = computed(() => {
   const techs = new Set()
   for (const e of timeline.value) {
@@ -430,7 +276,6 @@ const allTechnologies = computed(() => {
   return [...techs].sort()
 })
 
-/* ── Todas las tools de experience entries + collage projects ── */
 const allTools = computed(() => {
   const tools = new Set()
   for (const e of timeline.value) {
@@ -446,27 +291,12 @@ const allTools = computed(() => {
   return [...tools].sort()
 })
 
-/* ── Technologies y tools del entry actual (como Set para lookup rápido) ── */
-const entryTechnologies = computed(() => {
-  if (entry.value?.type === 'collage') return new Set(currentProject.value?.technologies ?? [])
-  return new Set(entry.value?.data?.technologies ?? [])
-})
-const entryTools = computed(() => {
-  if (entry.value?.type === 'collage') return new Set(currentProject.value?.tools ?? [])
-  return new Set(entry.value?.data?.tools ?? [])
-})
+const entryTechnologies = computed(() => new Set(currentData.value?.technologies ?? []))
+const entryTools = computed(() => new Set(currentData.value?.tools ?? []))
 
-/* ── Link URLs: from entry or from current collage project ── */
-const linkUrl = computed(() => {
-  if (entry.value?.type === 'collage') return currentProject.value?.link ?? null
-  return entry.value?.data?.link ?? null
-})
-const githubUrl = computed(() => {
-  if (entry.value?.type === 'collage') return currentProject.value?.github ?? null
-  return entry.value?.data?.github ?? null
-})
+const linkUrl = computed(() => currentData.value?.link ?? null)
+const githubUrl = computed(() => currentData.value?.github ?? null)
 
-/* ── Helper de i18n ── */
 function localized(obj) {
   if (!obj) return ''
   return obj[locale.value] || obj.en || ''

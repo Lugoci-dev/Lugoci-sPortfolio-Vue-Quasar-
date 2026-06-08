@@ -12,7 +12,8 @@
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "build": "quasar build",
-    "postinstall": "quasar prepare"
+    "postinstall": "quasar prepare",
+    "deploy": "git fetch origin gh-pages --depth 1 && git branch -D gh-pages 2>/dev/null; git branch gh-pages origin/gh-pages 2>/dev/null; rm -rf /tmp/gh-deploy && git worktree add /tmp/gh-deploy gh-pages && find /tmp/gh-deploy -mindepth 1 -not -path '/tmp/gh-deploy/.git' -not -path '/tmp/gh-deploy/.git/*' -delete && cp -r dist/spa/* /tmp/gh-deploy/ && touch /tmp/gh-deploy/.nojekyll && git -C /tmp/gh-deploy add -A && git -C /tmp/gh-deploy commit -m \"deploy: SPA build from $(git rev-parse --short HEAD)\" && git -C /tmp/gh-deploy push origin gh-pages && rm -rf /tmp/gh-deploy && git worktree prune"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
