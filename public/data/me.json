@@ -22,12 +22,12 @@
   "socialLinks": [
     {
       "name": "GitHub",
-      "url": "https://github.com/IsaacGonzalez01",
+      "url": "https://github.com/Lugoci-dev",
       "iconFile": "github-mark-white.svg"
     },
     {
       "name": "LinkedIn",
-      "url": "https://www.linkedin.com/in/isaac-daniel-gonz%C3%A1lez-rodr%C3%ADguez-3438892b1",
+      "url": "https://www.linkedin.com/in/lugocci002/",
       "iconFile": "linkedin.png"
     }
   ],
@@ -36,11 +36,22 @@
   "techIcons": [
     "icons/angular.svg",
     "icons/axios.svg",
+    "icons/css.svg",
+    "icons/expo.svg",
     "icons/expressjs.svg",
-    "icons/getpinoio.svg",
+    "icons/git.svg",
+    "icons/godot.svg",
+    "icons/html5.svg",
     "icons/javascript.svg",
     "icons/nodejs.svg",
-    "icons/pinboard.svg",
-    "icons/pingcap.svg"
+    "icons/pinia.svg",
+    "icons/postgresql.svg",
+    "icons/quasar.svg",
+    "icons/react.svg",
+    "icons/supabase.svg",
+    "icons/tailwindcss.svg",
+    "icons/typescript.svg",
+    "icons/vite.svg",
+    "icons/vuejs.svg"
   ]
 }
