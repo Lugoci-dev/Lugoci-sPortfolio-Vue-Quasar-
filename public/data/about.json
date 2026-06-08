@@ -1,0 +1,121 @@
+{
+  "bio": {
+    "description": {
+      "es": "Ingeniero en Ciencias Informáticas con más de 3 años de experiencia en desarrollo de software orientado a aplicaciones web y móviles. Disfruto transformar ideas de negocio en productos digitales combinando desarrollo frontend, arquitectura backend y diseño centrado en el usuario. Recientemente, trabajé en TuPincha, una plataforma de servicios locales que integra geolocalización, autenticación, comunicación en tiempo real y servicios backend en la nube. Estoy particularmente interesado en ecosistemas JavaScript modernos, desarrollo móvil, flujos de trabajo asistidos por IA e ingeniería orientada a productos.",
+      "en": "Computer Science Engineer with 3+ years of software development experience focused on web and mobile applications. I enjoy transforming business ideas into digital products by combining frontend development, backend architecture, and user-centered design. Recently, I have been working on TuPincha, a local services platform that integrates geolocation, authentication, real-time communication, and cloud-based backend services. I am particularly interested in modern JavaScript ecosystems, mobile development, AI-assisted workflows, and product-oriented engineering."
+    }
+  },
+  "expertise": [
+    {
+      "icon": "Rocket",
+      "title": {
+        "es": "Desarrollo de Productos",
+        "en": "Product Development"
+      },
+      "description": {
+        "es": "Transformo requisitos de negocio en productos digitales escalables, enfocados en usabilidad, mantenibilidad y crecimiento.",
+        "en": "Transforming business requirements into scalable digital products focused on usability, maintainability, and growth."
+      }
+    },
+    {
+      "icon": "LayoutDashboard",
+      "title": {
+        "es": "Arquitectura Frontend",
+        "en": "Frontend Architecture"
+      },
+      "description": {
+        "es": "Diseño sistemas reutilizables basados en componentes e interfaces de usuario escalables para aplicaciones web y móviles.",
+        "en": "Designing reusable component-based systems and scalable user interfaces for web and mobile applications."
+      }
+    },
+    {
+      "icon": "Smartphone",
+      "title": {
+        "es": "Desarrollo Móvil",
+        "en": "Mobile Development"
+      },
+      "description": {
+        "es": "Construyo experiencias mobile-first usando React Native y Expo con un fuerte enfoque en rendimiento y experiencia de usuario.",
+        "en": "Building mobile-first experiences using React Native and Expo with a strong focus on performance and user experience."
+      }
+    },
+    {
+      "icon": "Bot",
+      "title": {
+        "es": "Desarrollo Asistido por IA",
+        "en": "AI-Assisted Development"
+      },
+      "description": {
+        "es": "Aprovecho flujos de trabajo agentic, ingeniería de prompts y técnicas de ingeniería de contexto para acelerar la entrega de productos.",
+        "en": "Leveraging agentic workflows, prompt engineering, and context engineering techniques to accelerate product delivery."
+      }
+    }
+  ],
+  "education": {
+    "institution": {
+      "es": "Universidad de las Ciencias Informáticas (UCI)",
+      "en": "University of Computer Sciences (UCI)"
+    },
+    "degree": {
+      "es": "Ingeniería en Ciencias Informáticas",
+      "en": "Computer Science Engineering"
+    },
+    "location": {
+      "es": "La Habana, Cuba",
+      "en": "Havana, Cuba"
+    },
+    "period": "2022 - 2025"
+  },
+  "languages": [
+    {
+      "name": {
+        "es": "Español",
+        "en": "Spanish"
+      },
+      "level": {
+        "es": "Nativo",
+        "en": "Native"
+      }
+    },
+    {
+      "name": {
+        "es": "Inglés",
+        "en": "English"
+      },
+      "level": "B1+"
+    }
+  ],
+  "skills": {
+    "frontend": [
+      "React",
+      "React Native",
+      "Expo",
+      "Vue.js",
+      "Quasar Framework",
+      "TypeScript",
+      "JavaScript",
+      "HTML5",
+      "CSS3",
+      "Tailwind CSS",
+      "Pinia",
+      "Vite"
+    ],
+    "backend": [
+      "Node.js",
+      "Supabase",
+      "PostgreSQL",
+      "SQL",
+      "JWT Authentication",
+      "RPC Functions",
+      "Edge Functions"
+    ],
+    "tools": ["Git", "GitHub", "Figma", "Axios", "Stripe", "Scrum"],
+    "ai": [
+      "Prompt Engineering",
+      "AI-Assisted Development",
+      "Context Engineering",
+      "MCP",
+      "Agentic Workflows"
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 /**
- * useTimelineData — Fetch y estado de data.json
+ * useTimelineData — Fetch y estado de data/xp_data.json
  *
  * Maneja loading, error, y expone la colección timeline[]
  * en el formato que espera useTimelineEngine.
@@ -24,17 +24,16 @@ export function useTimelineData() {
   onMounted(async () => {
     try {
       const base = import.meta.env.BASE_URL ?? '/'
-      const res = await fetch(`${base}data.json`)
+      const res = await fetch(`${base}data/xp_data.json`)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const json = await res.json()
 
-      // Soporta tanto el nuevo formato { timeline: [] } como arrays planos
       if (json.timeline) {
         timeline.value = json.timeline
       } else if (Array.isArray(json)) {
         timeline.value = json
       } else {
-        throw new Error('Formato de data.json no reconocido')
+        throw new Error('Formato de data/xp_data.json no reconocido')
       }
     } catch (e) {
       console.error('[useTimelineData] Error:', e)

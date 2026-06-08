@@ -9,7 +9,7 @@ import axios from 'axios'
 // for each client)
 const api = axios.create({ baseURL: 'https://api.example.com' })
 
-const apiProducts = axios.create({ baseURL: `${import.meta.env.BASE_URL}/data.json` })
+const apiProducts = axios.create({ baseURL: `${import.meta.env.BASE_URL}data/xp_data.json` })
 
 export default defineBoot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

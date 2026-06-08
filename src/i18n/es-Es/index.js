@@ -24,6 +24,17 @@ export default {
     certification: 'Certificación',
     collage: 'Compilado',
   },
+  about: {
+    title: 'Sobre Mí',
+    expertise: 'Especialización',
+    education: 'Formación',
+    skills: 'Habilidades Técnicas',
+    frontend: 'Frontend',
+    backend: 'Backend',
+    tools: 'Herramientas',
+    ai: 'IA & Desarrollo Agentic',
+    languages: 'Idiomas',
+  },
   project: {
     details: 'Detalles',
     skills: 'Skills & Tools',
