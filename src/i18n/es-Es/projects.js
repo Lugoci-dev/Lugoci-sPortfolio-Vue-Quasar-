@@ -1,6 +1,6 @@
 export default {
   title: {
-    announce: 'Proyectos',
+    announce: 'Tecnologías',
     highlighted: 'Relevantes',
   },
   all: 'Todos los proyectos',

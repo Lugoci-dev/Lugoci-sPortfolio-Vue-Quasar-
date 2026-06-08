@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div :class="fullWidth ? 'w-full' : ''">
     <q-btn-dropdown
-      class="px-2 text-adaptive-mid"
+      :class="fullWidth ? 'px-2 text-adaptive-mid w-full' : 'px-2 text-adaptive-mid'"
       split
       unelevated
       flat
@@ -34,7 +34,10 @@ import { useQuasar } from 'quasar'
 
 import us from '../../public/icons/us.svg'
 import es from '../../public/icons/es.svg'
-// import fg from '../../public/icons/flagicon.ico'
+
+defineProps({
+  fullWidth: { type: Boolean, default: false },
+})
 
 const { locale } = useI18n()
 const $q = useQuasar()

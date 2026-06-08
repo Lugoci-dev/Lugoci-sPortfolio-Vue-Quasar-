@@ -1,0 +1,57 @@
+{
+  "name": "Isaac D. Gonzalez Rodriguez",
+  "greeting": {
+    "es": "Hola, ",
+    "en": "Hello, "
+  },
+  "greetingHighlighted": {
+    "es": "me llamo",
+    "en": "I'am"
+  },
+  "bio": {
+    "es": "Me apasiona transformar ideas en productos digitales con propósito. Ya sea una aplicación móvil, una plataforma web o un prototipo de videojuego desarrollado en 48 horas, disfruto resolver problemas complejos, diseñar experiencias atractivas y dar vida a conceptos a través del software.",
+    "en": "I am passionate about transforming ideas into meaningful digital products. Whether it's a mobile application, a web platform, or a game prototype built in 48 hours, I enjoy solving complex problems, designing engaging experiences, and bringing concepts to life through software."
+  },
+  "phrase": {
+    "es": "¡Frase ingeniosa no encontrada!",
+    "en": "Clever phrase not found!"
+  },
+  "email": "isaitodaniel@gmail.com",
+  "profileImage": "images/owner.webp",
+  "emailIconFile": "gmail.png",
+  "socialLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/Lugoci-dev",
+      "iconFile": "github-mark-white.svg"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/lugocci002/",
+      "iconFile": "linkedin.png"
+    }
+  ],
+  "sourceCode": "https://github.com/Lugoci-dev/Lugoci-sPortfolio-Vue-Quasar-",
+  "cvFile": "Isaac%20D.%20Gonz%C3%A1lez%20CV%20-%20Software%20Developer.pdf",
+  "techIcons": [
+    "icons/angular.svg",
+    "icons/axios.svg",
+    "icons/css.svg",
+    "icons/expo.svg",
+    "icons/expressjs.svg",
+    "icons/git.svg",
+    "icons/godot.svg",
+    "icons/html5.svg",
+    "icons/javascript.svg",
+    "icons/nodejs.svg",
+    "icons/pinia.svg",
+    "icons/postgresql.svg",
+    "icons/quasar.svg",
+    "icons/react.svg",
+    "icons/supabase.svg",
+    "icons/tailwindcss.svg",
+    "icons/typescript.svg",
+    "icons/vite.svg",
+    "icons/vuejs.svg"
+  ]
+}

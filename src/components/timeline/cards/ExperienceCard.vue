@@ -1,21 +1,40 @@
 <template>
-  <div class="experience-card">
-    <!-- Periodo: mes inicio → mes fin -->
-    <span
-      class="period-badge inline-flex items-center gap-1 bg-Red400 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full mb-3"
-    >
-      <span>{{ localized(entry.cycle.start.label) }} {{ entry.cycle.start.year }}</span>
-      <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none">
-        <path
-          d="M2 6h8M6 2l4 4-4 4"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-      <span>{{ localized(entry.cycle.end.label) }} {{ entry.cycle.end.year }}</span>
-    </span>
+  <div
+    class="experience-card cursor-pointer group"
+    @click="$router.push(`/project/${entry.id}`)"
+    role="button"
+    tabindex="0"
+    @keydown.enter="$router.push(`/project/${entry.id}`)"
+  >
+    <!-- Periodo + Type badge -->
+    <div class="flex flex-wrap items-center gap-2 mb-3">
+      <span
+        class="period-badge inline-flex items-center gap-1 bg-Red400 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full"
+      >
+        <span>{{ localized(entry.cycle.start.label) }} {{ entry.cycle.start.year }}</span>
+        <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none">
+          <path
+            d="M2 6h8M6 2l4 4-4 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span v-if="entry.cycle.end"
+          >{{ localized(entry.cycle.end.label) }} {{ entry.cycle.end.year }}</span
+        >
+        <span v-else>{{ $t('common.present') }}</span>
+      </span>
+
+      <!-- Type badge -->
+      <span
+        class="inline-flex items-center text-[10px] md:text-xs font-semibold px-2.5 py-0.5 rounded-full border text-adaptive-mid"
+        style="border-color: var(--n600)"
+      >
+        {{ $t('type.' + entry.type) }}
+      </span>
+    </div>
 
     <!-- Nombre del rol / proyecto (desde entry.data) -->
     <h5 class="text-adaptive-dark text-base md:text-lg font-bold mb-2 leading-snug">
@@ -54,8 +73,10 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 const { locale } = useI18n()
+const $router = useRouter()
 
 defineProps({
   entry: { type: Object, required: true },

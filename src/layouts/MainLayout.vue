@@ -1,16 +1,25 @@
 <template>
   <q-layout>
-    <!-- Left drawer: mobile navigation -->
     <q-drawer v-model="leftDrawerOpen" side="left" behavior="mobile" width="280" class="card-bg">
       <div class="flex flex-col h-full p-4">
-        <!-- Branding -->
-        <div class="flex items-center gap-3 mb-8 mt-6">
-          <q-icon name="code" class="text-accent" size="2.5rem" />
-          <span class="text-adaptive-dark font-extrabold text-xl"> Lugoci@<b>dev</b> </span>
+        <div class="flex items-center justify-center gap-3 mb-1 mt-6">
+          <q-avatar size="2.5rem">
+            <img :src="assetUrl(data?.profileImage)" loading="lazy" alt="Isaac" />
+          </q-avatar>
+          <div class="flex-col justify-center">
+            <router-link
+              to="/"
+              class="flex-1 text-adaptive-dark font-extrabold text-xl no-underline"
+            >
+              Lugoci@<b>dev</b>
+            </router-link>
+            <p class="flex-1 text-adaptive-mi text-[11px] mt-0.5 opacity-60 leading-tight">
+              {{ data?.name || $t('home.intro.name') }}
+            </p>
+          </div>
         </div>
 
-        <!-- Navigation -->
-        <q-list separator>
+        <q-list separator class="mt-6">
           <q-item
             v-for="item in navItems"
             :key="item.path"
@@ -28,8 +37,32 @@
 
         <q-space />
 
-        <!-- Language switcher -->
-        <LanguageSwitcher />
+        <div class="flex flex-col gap-2">
+          <LanguageSwitcher full-width />
+          <a
+            :href="data?.sourceCode || '#'"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-adaptive/20 text-adaptive-mid hover:text-accent hover:border-accent/30 transition-colors duration-200 text-xs font-semibold no-underline"
+          >
+            <q-icon name="code" size="1rem" />
+            {{ $t('home.nav.source') }}
+          </a>
+
+          <q-separator class="my-1" />
+
+          <CopyBox
+            :box-icon="`img:${assetUrl(data?.emailIconFile)}`"
+            :text-link="data?.email || 'isaitodaniel@gmail.com'"
+          />
+          <LinkBox
+            v-for="link in data?.socialLinks ?? []"
+            :key="link.name"
+            :link-icon="`img:${assetUrl(link.iconFile)}`"
+            :text-link="link.name"
+            :target="link.url"
+          />
+        </div>
       </div>
     </q-drawer>
 
@@ -37,15 +70,17 @@
       <q-toolbar class="toolbar-bg" style="border-radius: 12px">
         <q-icon
           name="code"
-          class="text-accent cursor-pointer select-none"
+          class="text-accent cursor-pointer select-none nudge-mobile"
           size="3rem"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
+
         <q-toolbar-title class="text-adaptive-dark font-extrabold">
-          Lugoci@<b>dev</b>
+          <router-link to="/" class="no-underline text-adaptive-dark">
+            Lugoci@<b>dev</b>
+          </router-link>
         </q-toolbar-title>
 
-        <!-- Desktop: nav links -->
         <q-space class="max-md:hidden" />
         <div class="text-weight-regular max-md:hidden">
           <router-link
@@ -61,7 +96,6 @@
         </div>
         <q-space class="max-md:hidden" />
 
-        <!-- Dark mode toggle -->
         <q-btn flat round dense size="sm" @click="toggleDark" class="q-mr-sm border nav-link">
           <q-icon :name="darkIcon" class="nav-link" size="1.2rem" />
           <q-tooltip anchor="bottom middle" self="top middle" :offset="[0, 4]">
@@ -69,10 +103,9 @@
           </q-tooltip>
         </q-btn>
 
-        <!-- Desktop: LanguageSwitcher -->
         <LanguageSwitcher class="max-md:hidden" />
         <a
-          :href="cvUrl"
+          :href="assetUrl(data?.cvFile)"
           download
           class="transition-all duration-300 ease-in-out p-0.5 cursor-pointer download-hover border border-dashed download-border rounded-md"
         >
@@ -96,18 +129,35 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import LanguageSwitcher from 'src/components/LanguageSwitcher.vue'
+import CopyBox from 'src/components/common/CopyBox.vue'
+import LinkBox from 'src/components/common/LinkBox.vue'
 import { useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 const route = useRoute()
 const $q = useQuasar()
-const cvUrl = `${import.meta.env.BASE_URL}CV%20IsaacGonz%C3%A1lez-es.pdf`
 
 const leftDrawerOpen = ref(false)
 
-/* ── Dark mode: 3 estados (auto → forced dark → forced light → auto) ── */
+const data = ref(null)
+
+const baseUrl = import.meta.env.BASE_URL ?? '/'
+
+function assetUrl(relativePath) {
+  return relativePath ? `${baseUrl}${relativePath}` : ''
+}
+
+onMounted(async () => {
+  try {
+    const res = await fetch(`${baseUrl}data/me.json`)
+    if (res.ok) data.value = await res.json()
+  } catch (e) {
+    console.error('[MainLayout] Error loading me.json:', e)
+  }
+})
+
 const darkIcon = computed(() => {
   if ($q.dark.mode === 'auto') return 'brightness_4'
   return $q.dark.isActive ? 'dark_mode' : 'light_mode'
@@ -121,13 +171,10 @@ const darkTooltip = computed(() => {
 function toggleDark() {
   const mode = $q.dark.mode
   if (mode === 'auto') {
-    // Salir de auto → forzar el opuesto al estado actual del sistema
     $q.dark.set(!$q.dark.isActive)
   } else if ($q.dark.isActive) {
-    // Oscuro forzado → claro
     $q.dark.set(false)
   } else {
-    // Claro forzado → volver a auto
     $q.dark.mode = 'auto'
   }
   localStorage.setItem('dark-mode', $q.dark.mode)
@@ -139,3 +186,27 @@ const navItems = [
   { name: 'home.nav.portfolio', path: '/portfolio' },
 ]
 </script>
+
+<style scoped>
+@media (max-width: 767px) {
+  .nudge-mobile {
+    animation: hey-look 2s ease-in-out 8s infinite;
+  }
+}
+
+@keyframes hey-look {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(4px);
+  }
+  30% {
+    transform: translateX(-4px);
+  }
+  45% {
+    transform: translateX(0);
+  }
+}
+</style>

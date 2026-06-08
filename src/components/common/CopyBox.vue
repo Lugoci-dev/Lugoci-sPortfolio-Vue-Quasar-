@@ -6,14 +6,14 @@
       <q-icon size="1.5rem" :name="boxIcon" />
       <span> {{ props.textLink }}</span>
     </div>
-    <button :onclick="copyText" class="cursor-pointer text-adaptive-mid">
-      <q-icon class="card-icon-bg p-1.5 rounded-md" name="content_copy" />
+    <button @click="copyText" class="cursor-pointer text-adaptive-mid">
+      <q-icon class="card-icon-bg p-1.5 rounded-md" :name="copied ? 'check' : 'content_copy'" />
     </button>
   </div>
 </template>
 
 <script setup>
-// import { computed } from 'vue'
+import { useClipboard } from 'src/composables/useClipboard'
 
 const props = defineProps({
   textLink: {
@@ -26,7 +26,9 @@ const props = defineProps({
   },
 })
 
+const { copied, copy } = useClipboard()
+
 const copyText = () => {
-  console.log('Text Copied')
+  copy(props.textLink)
 }
 </script>

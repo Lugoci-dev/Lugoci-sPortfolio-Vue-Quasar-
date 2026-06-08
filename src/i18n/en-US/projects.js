@@ -1,7 +1,7 @@
 export default {
   title: {
     announce: 'Relevant',
-    highlighted: 'Projects',
+    highlighted: 'Technologies',
   },
   all: 'All projects',
   relevant: 'Relevant',
