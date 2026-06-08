@@ -175,7 +175,7 @@
         }
       },
       "data": {
-        "icon": "images/icon_example.jpg",
+        "icon": "images/icon_frontendmentor.png",
         "name": {
           "es": "Proyectos Personales - Frontend Mentor",
           "en": "Personal Projects - Frontend Mentor"
@@ -192,97 +192,218 @@
         ],
         "projects": [
           {
-            "id": "fm-ecommerce",
+            "id": "recipe_page_solution",
             "name": {
-              "es": "E-commerce Product Page",
-              "en": "E-commerce Product Page"
+              "es": "Recipe Page",
+              "en": "Recipe Page"
             },
             "summary": {
-              "es": "Página de producto interactiva con galería de imágenes, selector de cantidades y carrito de compras.",
-              "en": "Interactive product page with image gallery, quantity selector, and shopping cart."
+              "es": "Página de receta responsive enfocada en HTML semántico, jerarquía visual y presentación estructurada de información nutricional.",
+              "en": "Responsive recipe page focused on semantic HTML, visual hierarchy, and structured nutritional information presentation."
             },
-            "technologies": ["HTML", "CSS", "JavaScript"],
-            "tools": ["Flexbox", "CSS Grid"],
-            "link": "https://lugocdev.github.io/ecommerce-product-page",
-            "github": "https://github.com/lugocdev/ecommerce-product-page",
+            "technologies": ["HTML5", "CSS3"],
+            "tools": ["Flexbox", "Responsive Design", "Semantic HTML"],
+            "link": "https://lugoci-dev.github.io/Recipe-page-solution/",
+            "github": "https://github.com/Lugoci-dev/Recipe-page-solution",
             "items": [
               {
-                "es": "Galería de imágenes con lightbox y navegación por thumbnails.",
-                "en": "Image gallery with lightbox and thumbnail navigation."
+                "es": "Implementé una estructura semántica para mejorar accesibilidad y mantenibilidad.",
+                "en": "Implemented a semantic structure to improve accessibility and maintainability."
               },
               {
-                "es": "Selector de cantidad y agregado al carrito con estado persistente.",
-                "en": "Quantity selector and add-to-cart with persistent state."
+                "es": "Diseñé una experiencia responsive adaptada a dispositivos móviles y escritorio.",
+                "en": "Designed a responsive experience adapted to mobile and desktop devices."
               },
               {
-                "es": "Diseño responsive mobile-first con transiciones animadas.",
-                "en": "Mobile-first responsive design with animated transitions."
+                "es": "Organicé información nutricional y pasos de preparación mediante componentes visualmente consistentes.",
+                "en": "Organized nutritional information and preparation steps through visually consistent components."
               }
             ],
-            "gallery": ["images/card_example.png", "images/screens_example.jpg"]
+            "gallery": ["images/recipe_page.jpg"]
           },
           {
-            "id": "fm-rating",
+            "id": "bento_grid_solution",
             "name": {
-              "es": "Interactive Rating Component",
-              "en": "Interactive Rating Component"
+              "es": "Bento Grid",
+              "en": "Bento Grid"
             },
             "summary": {
-              "es": "Componente de calificación interactivo con selección en estrella y envío de feedback.",
-              "en": "Interactive rating component with star selection and feedback submission."
+              "es": "Maquetación avanzada utilizando CSS Grid para construir una interfaz modular con distribución compleja de contenido.",
+              "en": "Advanced layout implementation using CSS Grid to build a modular interface with complex content distribution."
             },
-            "technologies": ["HTML", "CSS", "JavaScript"],
-            "tools": ["CSS Transitions", "DOM Manipulation"],
-            "link": "https://lugocdev.github.io/rating-component",
-            "github": "https://github.com/lugocdev/rating-component",
+            "technologies": ["HTML5", "CSS3"],
+            "tools": ["CSS Grid", "Responsive Design"],
+            "link": "https://lugoci-dev.github.io/Bento-grid-solution/",
+            "github": "https://github.com/Lugoci-dev/Bento-grid-solution",
             "items": [
               {
-                "es": "Selección visual de calificación con hover y active states.",
-                "en": "Visual rating selection with hover and active states."
+                "es": "Construí una interfaz basada en CSS Grid con múltiples áreas de contenido.",
+                "en": "Built a CSS Grid based interface with multiple content areas."
               },
               {
-                "es": "Estado de agradecimiento posterior al envío con animación.",
-                "en": "Thank-you state after submission with animation."
+                "es": "Adapté la distribución para diferentes tamaños de pantalla manteniendo la jerarquía visual.",
+                "en": "Adapted the layout for different screen sizes while preserving visual hierarchy."
               },
               {
-                "es": "Validación de selección antes de permitir el envío.",
-                "en": "Selection validation before allowing submission."
+                "es": "Practiqué técnicas modernas de composición visual utilizadas en landing pages y dashboards.",
+                "en": "Practiced modern visual composition techniques commonly used in landing pages and dashboards."
               }
             ],
-            "gallery": ["images/discover_example.jpg", "images/index_example.jpg"]
+            "gallery": ["images/bento_grid.jpg"]
           },
           {
-            "id": "fm-countries",
+            "id": "contact_form_solution",
+            "name": {
+              "es": "Contact Form",
+              "en": "Contact Form"
+            },
+            "summary": {
+              "es": "Formulario accesible con validaciones en tiempo real, mensajes de error y confirmación de envío.",
+              "en": "Accessible form featuring real-time validation, error handling, and submission confirmation."
+            },
+            "technologies": ["HTML5", "CSS3", "JavaScript"],
+            "tools": ["Form Validation", "Accessibility", "DOM Manipulation"],
+            "link": "https://lugoci-dev.github.io/Contact-form-solution/",
+            "github": "https://github.com/Lugoci-dev/Contact-form-solution",
+            "items": [
+              {
+                "es": "Implementé validaciones para campos obligatorios y correos electrónicos.",
+                "en": "Implemented validation for required fields and email addresses."
+              },
+              {
+                "es": "Desarrollé estados visuales de éxito y error para mejorar la experiencia de usuario.",
+                "en": "Developed success and error states to improve user experience."
+              },
+              {
+                "es": "Apliqué buenas prácticas de accesibilidad para navegación mediante teclado.",
+                "en": "Applied accessibility best practices for keyboard navigation."
+              }
+            ],
+            "gallery": ["images/contact_form.jpg"]
+          },
+          {
+            "id": "advice_generator_app",
+            "name": {
+              "es": "Advice Generator App",
+              "en": "Advice Generator App"
+            },
+            "summary": {
+              "es": "Aplicación interactiva que consume una API externa para generar consejos dinámicamente.",
+              "en": "Interactive application that consumes an external API to dynamically generate advice."
+            },
+            "technologies": ["HTML5", "CSS3", "JavaScript", "REST API"],
+            "tools": ["Fetch API", "Async/Await"],
+            "link": "https://lugoci-dev.github.io/Advice-generator-app-solution/",
+            "github": "https://github.com/Lugoci-dev/Advice-generator-app-solution",
+            "items": [
+              {
+                "es": "Integré una API REST para obtener contenido dinámico.",
+                "en": "Integrated a REST API to retrieve dynamic content."
+              },
+              {
+                "es": "Gestioné peticiones asíncronas y actualización de la interfaz en tiempo real.",
+                "en": "Handled asynchronous requests and real-time interface updates."
+              },
+              {
+                "es": "Implementé estados interactivos y transiciones visuales para mejorar la experiencia del usuario.",
+                "en": "Implemented interactive states and visual transitions to enhance user experience."
+              }
+            ],
+            "gallery": ["images/advice_generator.jpg"]
+          },
+          {
+            "id": "time_tracking_dashboard",
+            "name": {
+              "es": "Time Tracking Dashboard",
+              "en": "Time Tracking Dashboard"
+            },
+            "summary": {
+              "es": "Dashboard interactivo para visualización y análisis de métricas de tiempo en distintos periodos.",
+              "en": "Interactive dashboard for visualizing and analyzing time metrics across multiple periods."
+            },
+            "technologies": ["HTML5", "CSS3", "JavaScript"],
+            "tools": ["JSON Data", "Responsive Layouts"],
+            "link": "https://lugoci-dev.github.io/Time-tracking-dashboard-solution/",
+            "github": "https://github.com/Lugoci-dev/Time-tracking-dashboard-solution",
+            "items": [
+              {
+                "es": "Desarrollé una interfaz de dashboard orientada a la visualización de datos.",
+                "en": "Developed a dashboard interface focused on data visualization."
+              },
+              {
+                "es": "Implementé cambios dinámicos entre vistas diarias, semanales y mensuales.",
+                "en": "Implemented dynamic switching between daily, weekly, and monthly views."
+              },
+              {
+                "es": "Optimicé la presentación de información para mejorar legibilidad y navegación.",
+                "en": "Optimized information presentation to improve readability and navigation."
+              }
+            ],
+            "gallery": ["images/time_tracking.jpg"]
+          },
+          {
+            "id": "job_listings_filtering",
+            "name": {
+              "es": "Job Listings with Filtering",
+              "en": "Job Listings with Filtering"
+            },
+            "summary": {
+              "es": "Plataforma de ofertas laborales con filtrado dinámico basado en múltiples criterios.",
+              "en": "Job listing platform featuring dynamic filtering based on multiple criteria."
+            },
+            "technologies": ["HTML5", "CSS3", "JavaScript"],
+            "tools": ["Array Filtering", "DOM Manipulation"],
+            "link": "https://lugoci-dev.github.io/Job-listings-with-filtering/",
+            "github": "https://github.com/Lugoci-dev/Job-listings-with-filtering",
+            "items": [
+              {
+                "es": "Implementé filtros combinables para mejorar la búsqueda de vacantes.",
+                "en": "Implemented combinable filters to improve job search experiences."
+              },
+              {
+                "es": "Gestioné actualizaciones dinámicas del contenido sin recarga de página.",
+                "en": "Managed dynamic content updates without page reloads."
+              },
+              {
+                "es": "Diseñé una experiencia intuitiva para explorar grandes conjuntos de datos.",
+                "en": "Designed an intuitive experience for exploring large data sets."
+              }
+            ],
+            "gallery": ["images/job_listings.jpg"]
+          },
+          {
+            "id": "rest_countries_api",
             "name": {
               "es": "REST Countries API",
               "en": "REST Countries API"
             },
             "summary": {
-              "es": "Explorador de países con búsqueda, filtro por región y detalle con datos de la API REST Countries.",
-              "en": "Country explorer with search, region filter, and detail view using the REST Countries API."
+              "es": "Explorador de países con búsqueda avanzada, filtrado regional y visualización detallada de información geográfica.",
+              "en": "Country explorer with advanced search, regional filtering, and detailed geographical information views."
             },
-            "technologies": ["HTML", "CSS", "JavaScript", "REST API"],
-            "tools": ["Fetch API", "Async/Await"],
-            "github": "https://github.com/lugocdev/rest-countries",
+            "technologies": ["Angular", "HTML5", "CSS3", "TypeScript", "REST API"],
+            "tools": ["Fetch API", "Async/Await", "Local Storage"],
+            "link": "https://lugoci-dev.github.io/Rest-Countries-API/",
+            "github": "https://github.com/Lugoci-dev/Rest-Countries-API",
             "items": [
               {
-                "es": "Búsqueda en tiempo real con filtro por región y nombre.",
-                "en": "Real-time search with region and name filtering."
+                "es": "Consumí datos desde una API REST para construir vistas dinámicas.",
+                "en": "Consumed data from a REST API to build dynamic views."
               },
               {
-                "es": "Página de detalle de país con información completa y países fronterizos.",
-                "en": "Country detail page with full info and border countries."
+                "es": "Implementé búsqueda y filtrado por regiones para facilitar la exploración.",
+                "en": "Implemented search and region filtering to simplify exploration."
               },
               {
-                "es": "Manejo de loading states y errores de red.",
-                "en": "Loading state and network error handling."
+                "es": "Desarrollé páginas de detalle con información ampliada y navegación contextual.",
+                "en": "Developed detail pages with extended information and contextual navigation."
               },
               {
-                "es": "Modo oscuro/claro con persistencia en localStorage.",
-                "en": "Dark/light mode with localStorage persistence."
+                "es": "Incorporé soporte para tema claro y oscuro con persistencia local.",
+                "en": "Added light and dark theme support with local persistence."
               }
             ],
-            "gallery": ["images/requests_example.jpg", "images/profile_exapmple.png"]
+            "gallery": ["images/country_api.jpg"]
           }
         ]
       }
