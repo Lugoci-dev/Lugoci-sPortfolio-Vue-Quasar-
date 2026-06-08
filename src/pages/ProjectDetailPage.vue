@@ -126,24 +126,54 @@
             class="order-2 md:order-3 md:col-span-2 mb-8"
           >
             <SectionTitle :label="$t('project.projects')" />
-            <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
+
+            <!-- Mobile: 2-col grid | Desktop: horizontal scroll -->
+            <div
+              class="grid grid-cols-2 gap-3 md:flex md:overflow-x-auto md:flex-nowrap md:gap-3 md:pb-2 scrollbar-thin"
+            >
               <button
                 v-for="(proj, i) in entry.data.projects"
                 :key="proj.id"
-                class="flex-shrink-0 w-48 md:w-56 p-3 rounded-xl border text-left transition-all duration-200"
+                class="relative flex flex-col gap-2 p-3 rounded-xl border-2 text-left transition-all duration-300 md:flex-shrink-0 md:w-56"
                 :class="
                   activeProjectIndex === i
-                    ? 'border-accent bg-accent/10 shadow-sm'
-                    : 'border-transparent card-bg card-border hover:border-adaptive'
+                    ? 'border-accent bg-accent/[0.08] shadow-sm'
+                    : 'border-transparent card-bg card-border hover:border-accent/30 hover:shadow-sm'
                 "
                 @click="activeProjectIndex = i"
               >
-                <p class="text-xs font-bold text-adaptive-dark leading-snug mb-1">
+                <!-- Project name -->
+                <p class="text-xs font-bold text-adaptive-dark leading-snug">
                   {{ localized(proj.name) }}
                 </p>
-                <p class="text-[11px] text-adaptive-mid leading-tight line-clamp-2">
+
+                <!-- Summary -->
+                <p
+                  v-if="proj.summary"
+                  class="text-[11px] text-adaptive-mid leading-tight line-clamp-2"
+                >
                   {{ localized(proj.summary) }}
                 </p>
+
+                <!-- Tech badges row -->
+                <div
+                  v-if="proj.technologies?.length"
+                  class="flex flex-wrap items-center gap-1 mt-auto"
+                >
+                  <span
+                    v-for="tech in proj.technologies.slice(0, 2)"
+                    :key="tech"
+                    class="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-accent/15 text-accent leading-none"
+                  >
+                    {{ tech }}
+                  </span>
+                  <span
+                    v-if="proj.technologies.length > 2"
+                    class="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-adaptive-mid/10 text-adaptive-mid leading-none"
+                  >
+                    +{{ proj.technologies.length - 2 }}
+                  </span>
+                </div>
               </button>
             </div>
           </div>
