@@ -22,16 +22,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div class="order-1">
             <div class="flex items-center gap-4 md:gap-6 mb-8">
-              <div
-                class="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-xl md:text-2xl font-bold shrink-0"
-                :class="entry.data.icon ? '' : 'bg-accent/20 text-accent'"
-              >
-                <img
-                  v-if="entry.data.icon"
-                  :src="resolveUrl(entry.data.icon)"
-                  class="w-full h-full rounded-full object-cover"
-                />
-                <span v-else>{{ initials }}</span>
+              <div class="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0">
+                <img :src="resolveUrl(currentIcon)" class="w-full h-full object-cover" />
               </div>
 
               <div>
@@ -221,15 +213,17 @@ const currentData = computed(() => {
 
 const entryName = computed(() => localized(entry.value?.data?.name))
 
-const initials = computed(() => {
-  const name = entryName.value
-  if (!name) return '?'
-  return name
-    .split(/[\s-/]+/)
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase()
+/**
+ * Icon to display in the avatar:
+ * - For collage projects: project icon → entry icon → fallback /icon.webp
+ * - For other entries: entry icon → fallback /icon.webp
+ * Never shows initials — always shows an image.
+ */
+const currentIcon = computed(() => {
+  if (entry.value?.type === 'collage') {
+    return currentData.value?.icon || entry.value?.data?.icon || 'icon.webp'
+  }
+  return entry.value?.data?.icon || 'icon.webp'
 })
 
 const localizedItems = computed(() =>

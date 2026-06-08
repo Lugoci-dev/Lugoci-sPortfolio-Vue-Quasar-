@@ -26,11 +26,22 @@
       :style="dotShiftStyle"
     />
 
-    <div
-      class="node-card card-bg card-border border rounded-xl p-5 md:p-6 transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]"
-      :class="entry.side === 'left' ? 'card-left' : 'card-right'"
-    >
-      <slot />
+    <div class="card-stack-wrapper relative">
+      <!-- Ghost cards for collage multi-project stack -->
+      <div
+        v-for="n in ghostCount"
+        :key="n"
+        class="card-stack-ghost absolute rounded-xl border card-bg card-border pointer-events-none"
+        :class="entry.side === 'left' ? 'ghost-peek-right' : 'ghost-peek-left'"
+        :style="ghostStackStyle(n)"
+      />
+
+      <div
+        class="node-card card-bg card-border border rounded-xl p-5 md:p-6 transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]"
+        :class="entry.side === 'left' ? 'card-left' : 'card-right'"
+      >
+        <slot />
+      </div>
     </div>
   </div>
 </template>
@@ -53,6 +64,33 @@ const nodeStyle = computed(() => ({
   right: props.entry.side === 'left' ? 'auto' : '0',
   width: 'calc(50% - 28px)',
 }))
+
+/**
+ * Number of ghost cards for collage multi-project stacking.
+ * Returns 0 for non-collage types or single-project collages.
+ * Caps at 2 ghosts max.
+ */
+const ghostCount = computed(() => {
+  if (props.entry.type !== 'collage') return 0
+  const projects = props.entry.data?.projects
+  if (!projects || projects.length <= 1) return 0
+  return Math.min(projects.length - 1, 2)
+})
+
+/**
+ * Returns inline style for a ghost card at position n (1-based).
+ * Ghosts shift horizontally (away from the timeline line) and slightly down.
+ * Each successive ghost is more transparent than the previous.
+ */
+function ghostStackStyle(n) {
+  const xOffset = n * 12
+  const direction = props.entry.side === 'left' ? -1 : 1
+  return {
+    zIndex: -n,
+    opacity: Math.max(0.3, 1 - n * 0.3),
+    transform: `translateY(${n * 5}px) translateX(${xOffset * direction}px)`,
+  }
+}
 
 const dotOffset = computed(() => {
   const offset = props.entry.top - props.entry.temporalTop
@@ -151,6 +189,29 @@ const connVStyle = computed(() => ({
 
 .conn-h-right {
   right: calc(100% + 9px);
+}
+
+.card-stack-wrapper {
+  position: relative;
+}
+
+.card-stack-ghost {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Ghosts peek away from the timeline center line */
+.card-stack-wrapper .ghost-peek-right {
+  /* Card is on LEFT → ghost peeks RIGHT */
+}
+
+.card-stack-wrapper .ghost-peek-left {
+  /* Card is on RIGHT → ghost peeks LEFT */
 }
 
 .node-card {
