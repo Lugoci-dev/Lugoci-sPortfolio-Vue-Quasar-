@@ -2,9 +2,9 @@
   <q-layout>
     <q-drawer v-model="leftDrawerOpen" side="left" behavior="mobile" width="280" class="card-bg">
       <div class="flex flex-col h-full p-4">
-        <div class="flex items-centerjustify-center gap-3 mb-1 mt-6">
+        <div class="flex items-center justify-center gap-3 mb-1 mt-6">
           <q-avatar size="2.5rem">
-            <img src="src/assets/images/owner.webp" loading="lazy" alt="Isaac" />
+            <img :src="assetUrl(data?.profileImage)" loading="lazy" alt="Isaac" />
           </q-avatar>
           <div class="flex-col justify-center">
             <router-link
@@ -14,7 +14,7 @@
               Lugoci@<b>dev</b>
             </router-link>
             <p class="flex-1 text-adaptive-mi text-[11px] mt-0.5 opacity-60 leading-tight">
-              {{ $t('home.intro.name') }}
+              {{ data?.name || $t('home.intro.name') }}
             </p>
           </div>
         </div>
@@ -40,7 +40,7 @@
         <div class="flex flex-col gap-2">
           <LanguageSwitcher full-width />
           <a
-            :href="repoUrl"
+            :href="data?.sourceCode || '#'"
             target="_blank"
             rel="noopener noreferrer"
             class="flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-adaptive/20 text-adaptive-mid hover:text-accent hover:border-accent/30 transition-colors duration-200 text-xs font-semibold no-underline"
@@ -51,17 +51,16 @@
 
           <q-separator class="my-1" />
 
-          <CopyBox :box-icon="`img:${gmailIcon}`" text-link="isaitodaniel@gmail.com" />
-          <LinkBox
-            :link-icon="`img:${gitHubIcon}`"
-            text-link="GitHub"
-            target="https://www.github.com"
+          <CopyBox
+            :box-icon="`img:${assetUrl(data?.emailIconFile)}`"
+            :text-link="data?.email || 'isaitodaniel@gmail.com'"
           />
           <LinkBox
-            :link-icon="`img:${linkedInIcon}`"
-            text-link="LinkedIn"
-            action-icon="open_in_new"
-            target="https://www.linkedin.com"
+            v-for="link in data?.socialLinks ?? []"
+            :key="link.name"
+            :link-icon="`img:${assetUrl(link.iconFile)}`"
+            :text-link="link.name"
+            :target="link.url"
           />
         </div>
       </div>
@@ -106,7 +105,7 @@
 
         <LanguageSwitcher class="max-md:hidden" />
         <a
-          :href="cvUrl"
+          :href="assetUrl(data?.cvFile)"
           download
           class="transition-all duration-300 ease-in-out p-0.5 cursor-pointer download-hover border border-dashed download-border rounded-md"
         >
@@ -130,24 +129,37 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import LanguageSwitcher from 'src/components/LanguageSwitcher.vue'
 import CopyBox from 'src/components/common/CopyBox.vue'
 import LinkBox from 'src/components/common/LinkBox.vue'
 import { useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
 
-import gmailIcon from 'src/assets/gmail.png'
-import gitHubIcon from 'src/assets/github-mark-white.svg'
-import linkedInIcon from 'src/assets/linkedin.png'
-
 const route = useRoute()
 const $q = useQuasar()
-const cvUrl = `${import.meta.env.BASE_URL}CV%20IsaacGonz%C3%A1lez-es.pdf`
-const repoUrl = 'https://github.com/Lugoci-dev/Lugoci-sPortfolio-Vue-Quasar-'
 
 const leftDrawerOpen = ref(false)
 
+/* ── Data from me.json ── */
+const data = ref(null)
+
+const baseUrl = import.meta.env.BASE_URL ?? '/'
+
+function assetUrl(relativePath) {
+  return relativePath ? `${baseUrl}${relativePath}` : ''
+}
+
+onMounted(async () => {
+  try {
+    const res = await fetch(`${baseUrl}data/me.json`)
+    if (res.ok) data.value = await res.json()
+  } catch (e) {
+    console.error('[MainLayout] Error loading me.json:', e)
+  }
+})
+
+/* ── Dark mode ── */
 const darkIcon = computed(() => {
   if ($q.dark.mode === 'auto') return 'brightness_4'
   return $q.dark.isActive ? 'dark_mode' : 'light_mode'
@@ -170,6 +182,7 @@ function toggleDark() {
   localStorage.setItem('dark-mode', $q.dark.mode)
 }
 
+/* ── Navigation ── */
 const navItems = [
   { name: 'home.nav.home', path: '/' },
   { name: 'home.nav.about', path: '/about' },

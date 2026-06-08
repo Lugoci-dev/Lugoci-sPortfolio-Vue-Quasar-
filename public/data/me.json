@@ -1,0 +1,46 @@
+{
+  "name": "Isaac D. Gonzalez Rodriguez",
+  "greeting": {
+    "es": "Hola, ",
+    "en": "Hello, "
+  },
+  "greetingHighlighted": {
+    "es": "me llamo",
+    "en": "I'am"
+  },
+  "bio": {
+    "es": "Ingeniero en Ciencias Informáticas con más de 3 años de experiencia en desarrollo de software orientado a aplicaciones web y móviles. Disfruto transformar ideas de negocio en productos digitales combinando desarrollo frontend, arquitectura backend y diseño centrado en el usuario.",
+    "en": "Computer Science Engineer with 3+ years of software development experience focused on web and mobile applications. I enjoy transforming business ideas into digital products by combining frontend development, backend architecture, and user-centered design."
+  },
+  "phrase": {
+    "es": "¡Frase ingeniosa no encontrada!",
+    "en": "Clever phrase not found!"
+  },
+  "email": "isaitodaniel@gmail.com",
+  "profileImage": "images/owner.webp",
+  "emailIconFile": "gmail.png",
+  "socialLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/IsaacGonzalez01",
+      "iconFile": "github-mark-white.svg"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/isaac-daniel-gonz%C3%A1lez-rodr%C3%ADguez-3438892b1",
+      "iconFile": "linkedin.png"
+    }
+  ],
+  "sourceCode": "https://github.com/Lugoci-dev/Lugoci-sPortfolio-Vue-Quasar-",
+  "cvFile": "CV%20IsaacGonz%C3%A1lez-es.pdf",
+  "techIcons": [
+    "icons/angular.svg",
+    "icons/axios.svg",
+    "icons/expressjs.svg",
+    "icons/getpinoio.svg",
+    "icons/javascript.svg",
+    "icons/nodejs.svg",
+    "icons/pinboard.svg",
+    "icons/pingcap.svg"
+  ]
+}
