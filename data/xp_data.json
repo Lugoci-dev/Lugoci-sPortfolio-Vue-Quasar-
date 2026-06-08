@@ -136,7 +136,7 @@
         "end": { "year": 2025, "month_key": "july", "label": { "es": "Julio", "en": "July" } }
       },
       "data": {
-        "icon": "images/icon_example.jpg",
+        "icon": null,
         "gallery": [
           "images/ecomerce_tests.png",
           "images/ecomerce_registry.png",
