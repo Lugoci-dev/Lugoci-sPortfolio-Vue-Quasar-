@@ -1,87 +1,80 @@
 <template>
   <q-page class="px-4 md:px-42 pt-16 pb-24">
-    <div v-if="loading" class="flex justify-center py-20">
-      <q-spinner color="accent" size="3rem" />
-    </div>
+    <LoadingState :loading="loading" :error="error">
+      <template v-if="data">
+        <div class="max-w-6xl mx-auto flex flex-col gap-16 md:gap-20">
+          <q-intersection once @visibility="(v) => v && (row1Vis = true)">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start"
+              :class="['reveal', { visible: row1Vis }]"
+            >
+              <BioSection :description="data.bio.description" class="md:mt-auto" />
 
-    <div v-else-if="error" class="flex justify-center py-20 text-center">
-      <p class="text-Red400 font-bold text-lg">{{ $t('common.error') }}</p>
-      <p class="text-adaptive-mid text-sm mt-2">{{ error }}</p>
-    </div>
-
-    <template v-if="data">
-      <div class="max-w-6xl mx-auto flex flex-col gap-16 md:gap-20">
-        <q-intersection once @visibility="(v) => v && (row1Vis = true)">
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start"
-            :class="['reveal', { visible: row1Vis }]"
-          >
-            <BioSection :description="data.bio.description" class="md:mt-auto" />
-
-            <div class="md:-mt-4">
-              <p class="text-2xl md:text-3xl font-extrabold text-adaptive-dark mb-4">
-                {{ $t('about.expertise') }}
-              </p>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div
-                  v-for="(item, i) in data.expertise"
-                  :key="i"
-                  class="expertise-card card-bg card-border border rounded-xl p-4 hover:border-accent/30 hover:shadow-sm transition-colors duration-300 cursor-default"
-                >
-                  <q-icon
-                    :name="iconMap[item.icon] || 'code'"
-                    size="1.5rem"
-                    color="accent"
-                    class="mb-2 block"
-                  />
-                  <p class="text-sm font-bold text-adaptive-dark mb-1">
-                    {{ localized(item.title) }}
-                  </p>
-                  <p class="text-xs text-adaptive-mid leading-relaxed">
-                    {{ localized(item.description) }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </q-intersection>
-
-        <q-intersection once @visibility="(v) => v && (row2Vis = true)">
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start"
-            :class="['reveal', { visible: row2Vis }]"
-          >
-            <EducationBlock
-              :education="data.education"
-              :languages="data.languages"
-              class="md:mt-6"
-            />
-
-            <div class="md:-mt-2">
-              <p class="text-2xl md:text-3xl font-extrabold text-adaptive-dark mb-4">
-                {{ $t('about.skills') }}
-              </p>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
-                <div v-for="(skills, category) in data.skills" :key="category" class="skills-cat">
-                  <p class="text-xs font-bold text-adaptive-dark uppercase tracking-wider mb-3">
-                    {{ categoryLabel(category) }}
-                  </p>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span
-                      v-for="skill in skills"
-                      :key="skill"
-                      class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-accent/10 text-accent"
-                    >
-                      {{ skill }}
-                    </span>
+              <div class="md:-mt-4">
+                <p class="text-2xl md:text-3xl font-extrabold text-adaptive-dark mb-4">
+                  {{ $t('about.expertise') }}
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div
+                    v-for="(item, i) in data.expertise"
+                    :key="i"
+                    class="expertise-card card-bg card-border border rounded-xl p-4 hover:border-accent/30 hover:shadow-sm transition-colors duration-300 cursor-default"
+                  >
+                    <q-icon
+                      :name="iconMap[item.icon] || 'code'"
+                      size="1.5rem"
+                      color="accent"
+                      class="mb-2 block"
+                    />
+                    <p class="text-sm font-bold text-adaptive-dark mb-1">
+                      {{ localized(item.title) }}
+                    </p>
+                    <p class="text-xs text-adaptive-mid leading-relaxed">
+                      {{ localized(item.description) }}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </q-intersection>
-      </div>
-    </template>
+          </q-intersection>
+
+          <q-intersection once @visibility="(v) => v && (row2Vis = true)">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start"
+              :class="['reveal', { visible: row2Vis }]"
+            >
+              <EducationBlock
+                :education="data.education"
+                :languages="data.languages"
+                class="md:mt-6"
+              />
+
+              <div class="md:-mt-2">
+                <p class="text-2xl md:text-3xl font-extrabold text-adaptive-dark mb-4">
+                  {{ $t('about.skills') }}
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+                  <div v-for="(skills, category) in data.skills" :key="category" class="skills-cat">
+                    <p class="text-xs font-bold text-adaptive-dark uppercase tracking-wider mb-3">
+                      {{ categoryLabel(category) }}
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                      <span
+                        v-for="skill in skills"
+                        :key="skill"
+                        class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-accent/10 text-accent"
+                      >
+                        {{ skill }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </q-intersection>
+        </div>
+      </template>
+    </LoadingState>
   </q-page>
 </template>
 
@@ -91,6 +84,7 @@ import { useI18n } from 'vue-i18n'
 
 import BioSection from 'src/components/about/BioSection.vue'
 import EducationBlock from 'src/components/about/EducationBlock.vue'
+import LoadingState from 'src/components/common/LoadingState.vue'
 
 const { t, locale } = useI18n()
 

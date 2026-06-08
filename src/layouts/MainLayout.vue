@@ -141,7 +141,6 @@ const $q = useQuasar()
 
 const leftDrawerOpen = ref(false)
 
-/* ── Data from me.json ── */
 const data = ref(null)
 
 const baseUrl = import.meta.env.BASE_URL ?? '/'
@@ -159,7 +158,6 @@ onMounted(async () => {
   }
 })
 
-/* ── Dark mode ── */
 const darkIcon = computed(() => {
   if ($q.dark.mode === 'auto') return 'brightness_4'
   return $q.dark.isActive ? 'dark_mode' : 'light_mode'
@@ -182,7 +180,6 @@ function toggleDark() {
   localStorage.setItem('dark-mode', $q.dark.mode)
 }
 
-/* ── Navigation ── */
 const navItems = [
   { name: 'home.nav.home', path: '/' },
   { name: 'home.nav.about', path: '/about' },
