@@ -1,20 +1,18 @@
 <template>
   <div
-    class="flex flex-2 hover:bg-negative justify-between gap-2 items-center bg-dark border rounded-md border-Neutral700 p-2"
+    class="flex flex-2 card-hover justify-between gap-2 items-center card-bg border rounded-md card-border p-2"
   >
-    <div class="flex flex-2 justify-center gap-2 items-center">
+    <div class="flex flex-2 justify-center gap-2 items-center text-adaptive-mid">
       <q-icon size="1.5rem" :name="linkIcon" />
       <span> {{ props.textLink }}</span>
     </div>
-    <a :href="target" target="blank">
-      <q-icon class="bg-negative p-1.5 rounded-md" :name="actionIcon" />
+    <a :href="target" target="blank" class="text-adaptive-mid">
+      <q-icon class="card-icon-bg p-1.5 rounded-md" :name="actionIcon" />
     </a>
   </div>
 </template>
 
 <script setup>
-// import { computed } from 'vue'
-
 const props = defineProps({
   textLink: {
     type: String,

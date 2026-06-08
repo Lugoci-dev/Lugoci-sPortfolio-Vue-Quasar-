@@ -38,14 +38,14 @@ export default defineConfig((ctx) => {
         node: 'node20',
       },
 
-      vueRouterMode: 'history', // available values: 'hash', 'hash'
+      vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: '/Lugoci-sPortfolio-Vue-Quasar-/',
       // analyze: true,
       // env: {},
       // rawDefine: {}
@@ -121,7 +121,7 @@ export default defineConfig((ctx) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Dark'],
     },
 
     // animations: 'all', // --- includes all animations

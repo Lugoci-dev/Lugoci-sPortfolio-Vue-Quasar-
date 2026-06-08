@@ -9,6 +9,8 @@ import axios from 'axios'
 // for each client)
 const api = axios.create({ baseURL: 'https://api.example.com' })
 
+const apiProducts = axios.create({ baseURL: `${import.meta.env.BASE_URL}data/xp_data.json` })
+
 export default defineBoot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
@@ -19,6 +21,7 @@ export default defineBoot(({ app }) => {
   app.config.globalProperties.$api = api
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
+  app.config.globalProperties.$apiProducts = apiProducts
 })
 
-export { api }
+export { api, apiProducts }

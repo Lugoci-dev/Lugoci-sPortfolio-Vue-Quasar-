@@ -29,5 +29,9 @@ yarn-error.log*
 *.njsproj
 *.sln
 
+# Python cache
+__pycache__/
+*.pyc
+
 # local .env files
 .env.local*
