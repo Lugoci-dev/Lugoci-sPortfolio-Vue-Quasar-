@@ -19,7 +19,18 @@
           class="timeline-line absolute left-1/2 -translate-x-1/2 w-[2px] pointer-events-none z-5"
           :style="lineStyle"
         >
-          <div class="w-full h-full bg-gradient-to-b from-Red400/10 via-Red400/45 to-Red400/15" />
+          <div class="relative w-full h-full">
+            <!-- Core gradient line -->
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-Red400/10 via-Red400/45 to-Red400/15 rounded-full"
+            />
+
+            <!-- Inertia glow — destello que sigue el scroll con inercia -->
+            <div
+              class="timeline-glow absolute left-1/2 -translate-x-1/2 pointer-events-none"
+              :style="{ top: `${glowProgress * 100}%` }"
+            />
+          </div>
         </div>
 
         <div
@@ -48,7 +59,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useQuasar } from 'quasar'
 import { useTimelineEngine } from 'src/composables/useTimelineEngine'
@@ -91,6 +102,57 @@ const componentMap = {
 function resolveComponent(type) {
   return componentMap[type] || ExperienceCard
 }
+
+/* ─══════════════════════════════════════════════════
+   Inertia Glow — la línea de tiempo "respira"
+   y sigue el scroll con inercia orgánica
+   ─══════════════════════════════════════════════════ */
+
+const containerRef = ref(null)
+const glowProgress = ref(0.5)
+let targetProgress = 0.5
+let glowAnimId = null
+const GLOW_LERP = 0.045 // lower = más inercia (arrastra más)
+
+function updateGlowTarget() {
+  if (!containerRef.value) return
+  const rect = containerRef.value.getBoundingClientRect()
+  const windowH = window.innerHeight
+
+  // Progreso 0 → el timeline está entrando (top en viewport)
+  // Progreso 1 → el timeline está saliendo (bottom sale)
+  const totalScroll = rect.height + windowH
+  const scrolled = windowH - rect.top
+  targetProgress = Math.max(0, Math.min(1, scrolled / totalScroll))
+
+  // Iniciar el loop de inercia si no está corriendo
+  if (!glowAnimId) {
+    glowAnimId = requestAnimationFrame(tickGlow)
+  }
+}
+
+function tickGlow() {
+  const diff = targetProgress - glowProgress.value
+  glowProgress.value += diff * GLOW_LERP
+
+  // Cuando está suficientemente cerca, para el RAF
+  if (Math.abs(diff) > 0.002) {
+    glowAnimId = requestAnimationFrame(tickGlow)
+  } else {
+    glowProgress.value = targetProgress
+    glowAnimId = null
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', updateGlowTarget, { passive: true })
+  updateGlowTarget()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateGlowTarget)
+  if (glowAnimId) cancelAnimationFrame(glowAnimId)
+})
 </script>
 
 <style scoped>
@@ -104,6 +166,29 @@ function resolveComponent(type) {
   height: var(--line-height);
   z-index: 5;
 }
+
+/* ── Inertia Glow ──
+   Pequeño destello radial que viaja por la línea
+   siguiendo el scroll con inercia (lerp + RAF).
+   Se siente como energía fluyendo. */
+
+.timeline-glow {
+  width: 14px;
+  height: 32px;
+  margin-top: -16px;
+  background: radial-gradient(
+    ellipse,
+    hsla(3, 86%, 64%, 0.35) 0%,
+    hsla(3, 86%, 64%, 0.12) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(2px);
+  will-change: top;
+  z-index: 6;
+}
+
+/* ── Cycle segments ── */
 
 .cycle-segment {
   width: 4px;

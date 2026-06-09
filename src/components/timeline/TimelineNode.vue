@@ -1,7 +1,12 @@
 <template>
   <div
+    ref="nodeRef"
     class="timeline-node"
-    :class="{ 'is-dimmed': isDimmed, 'is-hovered': isHovered }"
+    :class="{
+      'is-dimmed': isDimmed,
+      'is-hovered': isHovered,
+      'is-visible': isVisible,
+    }"
     :style="nodeStyle"
     @mouseenter="$emit('mouseenter')"
     @mouseleave="$emit('mouseleave')"
@@ -37,7 +42,7 @@
       />
 
       <div
-        class="node-card card-bg card-border border rounded-xl p-5 md:p-6 transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]"
+        class="node-card card-bg card-border border rounded-xl p-5 md:p-6"
         :class="entry.side === 'left' ? 'card-left' : 'card-right'"
       >
         <slot />
@@ -47,7 +52,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({
   entry: { type: Object, required: true },
@@ -57,6 +62,30 @@ const props = defineProps({
 
 defineEmits(['mouseenter', 'mouseleave'])
 
+/* ── Scroll reveal via IntersectionObserver ── */
+const nodeRef = ref(null)
+const isVisible = ref(false)
+let observer = null
+
+onMounted(() => {
+  if (!nodeRef.value) return
+  observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        isVisible.value = true
+        observer?.unobserve(entry.target)
+      }
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -20px 0px' },
+  )
+  observer.observe(nodeRef.value)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
+
+/* ── Positioning ── */
 const nodeStyle = computed(() => ({
   position: 'absolute',
   top: `${props.entry.top}px`,
@@ -66,32 +95,25 @@ const nodeStyle = computed(() => ({
 }))
 
 /**
- * Number of ghost cards for collage multi-project stacking.
- * Returns 0 for non-collage types or single-project collages.
- * Caps at 2 ghosts max.
+ * Always 3 ghost cards for collage type — consistent stacked-card visual.
  */
-const ghostCount = computed(() => {
-  if (props.entry.type !== 'collage') return 0
-  const projects = props.entry.data?.projects
-  if (!projects || projects.length <= 1) return 0
-  return Math.min(projects.length - 1, 2)
-})
+const ghostCount = computed(() => (props.entry.type === 'collage' ? 3 : 0))
 
 /**
- * Returns inline style for a ghost card at position n (1-based).
- * Ghosts shift horizontally (away from the timeline line) and slightly down.
- * Each successive ghost is more transparent than the previous.
+ * Inline style for ghost cards at position n (1-based).
+ * Translates away from the timeline center line.
  */
 function ghostStackStyle(n) {
-  const xOffset = n * 12
+  const xOffset = n * 8
+  const yOffset = n * 4
   const direction = props.entry.side === 'left' ? -1 : 1
   return {
     zIndex: -n,
-    opacity: Math.max(0.3, 1 - n * 0.3),
-    transform: `translateY(${n * 5}px) translateX(${xOffset * direction}px)`,
+    transform: `translateY(${yOffset}px) translateX(${xOffset * direction}px)`,
   }
 }
 
+/* ── Dot offset & connectors ── */
 const dotOffset = computed(() => {
   const offset = props.entry.top - props.entry.temporalTop
   return offset > 0 ? offset : 0
@@ -111,11 +133,23 @@ const connVStyle = computed(() => ({
 </script>
 
 <style scoped>
+/* ═══════════════════════════════════════════════
+   NODE — entrada con reveal + fade-up
+   ═══════════════════════════════════════════════ */
+
 .timeline-node {
   z-index: 10;
+  opacity: 0;
+  transform: translateY(24px);
   transition:
-    opacity 0.35s ease,
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.35s ease;
+}
+
+.timeline-node.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .timeline-node.is-dimmed {
@@ -130,10 +164,9 @@ const connVStyle = computed(() => ({
   filter: none;
 }
 
-.timeline-node.is-hovered .node-card {
-  transform: scale(1.03);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
+/* ═══════════════════════════════════════════════
+   DOT — anillo expansivo al aparecer
+   ═══════════════════════════════════════════════ */
 
 .node-dot {
   position: absolute;
@@ -149,6 +182,28 @@ const connVStyle = computed(() => ({
   flex-shrink: 0;
 }
 
+.timeline-node.is-visible .node-dot {
+  animation: dot-ring-pulse 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes dot-ring-pulse {
+  0% {
+    box-shadow:
+      0 0 0 0 hsla(3, 86%, 64%, 0.5),
+      0 0 0 0 hsla(3, 86%, 64%, 0.15);
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+  100% {
+    box-shadow:
+      0 0 0 12px hsla(3, 86%, 64%, 0),
+      0 0 0 24px hsla(3, 86%, 64%, 0);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
 .dot-left {
   left: 100%;
 }
@@ -156,6 +211,10 @@ const connVStyle = computed(() => ({
 .dot-right {
   left: 0;
 }
+
+/* ═══════════════════════════════════════════════
+   CONECTORES
+   ═══════════════════════════════════════════════ */
 
 .node-connector-v {
   position: absolute;
@@ -191,34 +250,76 @@ const connVStyle = computed(() => ({
   right: calc(100% + 9px);
 }
 
+/* ═══════════════════════════════════════════════
+   CARD — "Radial Unfold": swing desde el centro
+   ═══════════════════════════════════════════════ */
+
 .card-stack-wrapper {
   position: relative;
-}
-
-.card-stack-ghost {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-
-/* Ghosts peek away from the timeline center line */
-.card-stack-wrapper .ghost-peek-right {
-  /* Card is on LEFT → ghost peeks RIGHT */
-}
-
-.card-stack-wrapper .ghost-peek-left {
-  /* Card is on RIGHT → ghost peeks LEFT */
 }
 
 .node-card {
   position: relative;
   z-index: 10;
+  /* Entrada: swing desde centro con rotación */
+  transform-origin: var(--swing-origin, center);
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease,
+    opacity 0.5s ease;
 }
 
+/* Left card: swing desde la derecha (desde la línea central) */
+.card-left {
+  --swing-x: -40px;
+  --swing-r: 3.5deg;
+  --swing-origin: right center;
+}
+
+/* Right card: swing desde la izquierda */
+.card-right {
+  --swing-x: 40px;
+  --swing-r: -3.5deg;
+  --swing-origin: left center;
+}
+
+/* Estado oculto: desplazado + rotado (como plegado hacia el centro) */
+.timeline-node:not(.is-visible) .node-card {
+  transform: translateX(var(--swing-x)) rotate(var(--swing-r));
+  opacity: 0;
+  transition: none;
+}
+
+/* Visible: posición final */
+.timeline-node.is-visible .node-card {
+  transform: translateX(0) rotate(0deg);
+  opacity: 1;
+  animation: card-unfold 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes card-unfold {
+  0% {
+    transform: translateX(var(--swing-x)) rotate(var(--swing-r));
+    opacity: 0;
+  }
+  60% {
+    /* Micro-rebote para sensación orgánica */
+    transform: translateX(calc(var(--swing-x) * -0.08)) rotate(calc(var(--swing-r) * -0.3));
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Hover de la card (solo cuando ya es visible) */
+.timeline-node.is-visible.is-hovered .node-card {
+  transform: scale(1.03);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Flechita decorativa */
 .node-card::before {
   content: '';
   position: absolute;
@@ -242,5 +343,128 @@ const connVStyle = computed(() => ({
   border-width: 1px 1px 0 0;
   transform: rotate(45deg);
   box-shadow: 2px -2px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ═══════════════════════════════════════════════
+   GHOSTS — fade-in en cascada + hover wave
+   ═══════════════════════════════════════════════ */
+
+.card-stack-ghost {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  scale: 1;
+  border-color: transparent;
+  transition:
+    opacity 0.45s ease,
+    scale 0.45s ease,
+    filter 0.45s ease,
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+  transition-delay: 0ms;
+}
+
+/* ── Opacidad target (cuando son visibles) ── */
+.timeline-node.is-visible .card-stack-ghost {
+  opacity: 0.6;
+}
+
+.timeline-node.is-visible .card-stack-ghost:nth-child(2) {
+  opacity: 0.38;
+}
+
+.timeline-node.is-visible .card-stack-ghost:nth-child(3) {
+  opacity: 0.18;
+}
+
+/* ── Cascade de entrada (delays escalonados) ── */
+.timeline-node.is-visible .card-stack-ghost:nth-child(1) {
+  transition-delay: 90ms;
+}
+
+.timeline-node.is-visible .card-stack-ghost:nth-child(2) {
+  transition-delay: 180ms;
+}
+
+.timeline-node.is-visible .card-stack-ghost:nth-child(3) {
+  transition-delay: 280ms;
+}
+
+/* ── Hover wave: ghosts se enfocan en cascada ── */
+.timeline-node.is-hovered .card-stack-ghost {
+  scale: 1.03;
+  filter: brightness(1.2);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+  border-color: hsl(3, 86%, 64%, 0.35);
+  transition-delay: 0ms;
+}
+
+.timeline-node.is-hovered .card-stack-ghost:nth-child(1) {
+  transition-delay: 30ms;
+}
+
+.timeline-node.is-hovered .card-stack-ghost:nth-child(2) {
+  transition-delay: 110ms;
+}
+
+.timeline-node.is-hovered .card-stack-ghost:nth-child(3) {
+  transition-delay: 200ms;
+  opacity: 0.5;
+}
+
+/* nth-child hover override */
+.timeline-node.is-hovered .card-stack-ghost:nth-child(1) {
+  opacity: 0.9;
+}
+
+.timeline-node.is-hovered .card-stack-ghost:nth-child(2) {
+  opacity: 0.72;
+}
+
+/* Ghosts peek away from the timeline center line */
+.card-stack-wrapper .ghost-peek-right {
+  /* Card is on LEFT → ghost peeks RIGHT */
+}
+
+.card-stack-wrapper .ghost-peek-left {
+  /* Card is on RIGHT → ghost peeks LEFT */
+}
+
+/* ═══════════════════════════════════════════════
+   prefers-reduced-motion — respeta accesibilidad
+   ═══════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-node {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .timeline-node .node-card {
+    opacity: 1;
+    transform: none !important;
+    animation: none !important;
+    transition: none;
+  }
+
+  .card-stack-ghost {
+    opacity: 0.6 !important;
+    transition: none;
+  }
+
+  .card-stack-ghost:nth-child(2) {
+    opacity: 0.38 !important;
+  }
+
+  .card-stack-ghost:nth-child(3) {
+    opacity: 0.18 !important;
+  }
+
+  .timeline-node .node-dot {
+    animation: none !important;
+  }
 }
 </style>
