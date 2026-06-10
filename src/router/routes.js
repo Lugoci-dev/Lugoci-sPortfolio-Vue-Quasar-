@@ -5,14 +5,17 @@ const routes = [
     children: [
       {
         path: '',
+        name: 'home',
         component: () => import('pages/HomePage.vue'),
       },
       {
         path: 'about',
+        name: 'about',
         component: () => import('pages/AboutPage.vue'),
       },
       {
         path: 'portfolio',
+        name: 'portfolio',
         component: () => import('pages/PortfolioPage.vue'),
       },
       {

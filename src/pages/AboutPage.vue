@@ -75,6 +75,10 @@
         </div>
       </template>
     </LoadingState>
+    <PageNavigator
+      :prev="{ name: $t('nav.home'), path: '/' }"
+      :next="{ name: $t('nav.portfolio'), path: '/portfolio' }"
+    />
   </q-page>
 </template>
 
@@ -85,6 +89,7 @@ import { useI18n } from 'vue-i18n'
 import BioSection from 'src/components/about/BioSection.vue'
 import EducationBlock from 'src/components/about/EducationBlock.vue'
 import LoadingState from 'src/components/common/LoadingState.vue'
+import PageNavigator from 'src/components/common/PageNavigator.vue'
 
 const { t, locale } = useI18n()
 

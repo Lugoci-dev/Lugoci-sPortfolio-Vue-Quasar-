@@ -16,12 +16,14 @@
         <p class="text-adaptive-mid">No hay entradas en la timeline todavía.</p>
       </div>
     </LoadingState>
+    <PageNavigator :prev="{ name: $t('nav.about'), path: '/about' }" />
   </q-page>
 </template>
 
 <script setup>
 import TimelineRoot from 'src/components/timeline/TimelineRoot.vue'
 import LoadingState from 'src/components/common/LoadingState.vue'
+import PageNavigator from 'src/components/common/PageNavigator.vue'
 import { useTimelineData } from 'src/composables/useTimelineData'
 
 const { timeline, loading, error } = useTimelineData()

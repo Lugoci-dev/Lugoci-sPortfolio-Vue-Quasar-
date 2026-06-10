@@ -2,6 +2,7 @@
 import LinkBox from 'src/components/common/LinkBox.vue'
 import CopyBox from 'src/components/common/CopyBox.vue'
 import LoadingState from 'src/components/common/LoadingState.vue'
+import PageNavigator from 'src/components/common/PageNavigator.vue'
 
 import { useProjectsStore } from 'src/stores/projects-store'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
@@ -148,6 +149,7 @@ function loop() {
         </div>
       </template>
     </LoadingState>
+    <PageNavigator :next="{ name: $t('nav.about'), path: '/about' }" />
   </q-page>
 </template>
 

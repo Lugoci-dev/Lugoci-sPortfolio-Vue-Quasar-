@@ -6,6 +6,13 @@ export default {
   success: 'Action was successful',
   home,
   projects,
+  nav: {
+    prev: 'Previous',
+    next: 'Next',
+    home: 'Home',
+    about: 'About',
+    portfolio: 'Portfolio',
+  },
   common: {
     back: 'Back',
     error: 'Something went wrong',
