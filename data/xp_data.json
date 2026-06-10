@@ -660,6 +660,100 @@
         "icon": "smart_toy",
         "tags": ["AI", "Prompt Engineering", "Agentic Workflows", "Productividad"]
       }
+    },
+    {
+      "id": "award-merito-academico",
+      "type": "award",
+      "cycle": {
+        "date": {
+          "year": 2022,
+          "month_key": "december",
+          "label": { "es": "Diciembre", "en": "December" }
+        }
+      },
+      "data": {
+        "title": {
+          "es": "Premio al Mérito Académico",
+          "en": "Academic Merit Award"
+        },
+        "organization": {
+          "es": "Universidad de las Ciencias Informáticas (UCI)",
+          "en": "University of Computer Sciences (UCI)"
+        },
+        "description": {
+          "es": "Reconocimiento otorgado por el destacado desempeño académico durante el curso, manteniendo un alto promedio general y contribuciones en proyectos universitarios.",
+          "en": "Award granted for outstanding academic performance during the course, maintaining a high overall GPA and contributions to university projects."
+        }
+      }
+    },
+    {
+      "id": "award-mejor-proyecto",
+      "type": "award",
+      "cycle": {
+        "date": {
+          "year": 2023,
+          "month_key": "july",
+          "label": { "es": "Julio", "en": "July" }
+        }
+      },
+      "data": {
+        "title": {
+          "es": "Reconocimiento al Mejor Proyecto Web",
+          "en": "Best Web Project Award"
+        },
+        "organization": {
+          "es": "Feria Tecnológica UCI 2023",
+          "en": "UCI Tech Fair 2023"
+        },
+        "description": {
+          "es": "Primer lugar en la categoría de desarrollo web por la implementación de una plataforma de comercio electrónico accesible con integración de pasarela de pago.",
+          "en": "First place in the web development category for implementing an accessible e-commerce platform with payment gateway integration."
+        }
+      }
+    },
+    {
+      "id": "cert-scrum-fundamentals",
+      "type": "certification",
+      "cycle": {
+        "date": {
+          "year": 2022,
+          "month_key": "september",
+          "label": { "es": "Septiembre", "en": "September" }
+        }
+      },
+      "data": {
+        "title": {
+          "es": "Scrum Fundamentals Certified (SFC)",
+          "en": "Scrum Fundamentals Certified (SFC)"
+        },
+        "issuer": {
+          "es": "SCRUMstudy",
+          "en": "SCRUMstudy"
+        },
+        "credential_url": "https://www.scrumstudy.com/"
+      }
+    },
+    {
+      "id": "cert-frontend-essentials",
+      "type": "certification",
+      "cycle": {
+        "date": {
+          "year": 2023,
+          "month_key": "november",
+          "label": { "es": "Noviembre", "en": "November" }
+        }
+      },
+      "data": {
+        "title": {
+          "es": "Meta Front-End Developer - Fundamentos",
+          "en": "Meta Front-End Developer - Fundamentals"
+        },
+        "issuer": {
+          "es": "Meta (Coursera)",
+          "en": "Meta (Coursera)"
+        },
+        "credential_url": "https://www.coursera.org/meta"
+      }
     }
   ]
 }
