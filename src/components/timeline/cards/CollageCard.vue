@@ -1,11 +1,24 @@
 <template>
   <div
-    class="collage-card cursor-pointer group"
+    class="collage-card cursor-pointer group relative"
     @click="$router.push(`/project/${entry.id}`)"
     role="button"
     tabindex="0"
     @keydown.enter="$router.push(`/project/${entry.id}`)"
   >
+    <!-- Type icon badge — siempre esquina inferior-derecha -->
+    <div
+      class="type-icon-badge absolute z-20 flex items-center justify-center w-14 h-14 rounded-xl shadow-lg border-2 border-white/20"
+    >
+      <!-- Stack/grid icon — múltiples proyectos apilados -->
+      <svg class="w-8 h-8 text-white" viewBox="0 0 28 28" fill="none">
+        <rect x="3" y="3" width="10" height="10" rx="1.5" fill="currentColor" opacity="0.5" />
+        <rect x="15" y="3" width="10" height="10" rx="1.5" fill="currentColor" opacity="0.7" />
+        <rect x="9" y="13" width="10" height="10" rx="1.5" fill="currentColor" opacity="0.9" />
+        <rect x="3" y="15" width="10" height="5" rx="1" fill="currentColor" opacity="0.5" />
+      </svg>
+    </div>
+
     <!-- Periodo + Type badge + count -->
     <div class="flex flex-wrap items-center gap-2 mb-3">
       <span
@@ -89,5 +102,21 @@ function localized(obj) {
 <style scoped>
 .collage-card {
   width: 100%;
+}
+
+.type-icon-badge {
+  bottom: -28px;
+  right: -16px;
+  background: #ef4444;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.45);
+  transform: rotate(5deg);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.collage-card:hover .type-icon-badge {
+  transform: rotate(5deg) scale(1.08);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
 }
 </style>

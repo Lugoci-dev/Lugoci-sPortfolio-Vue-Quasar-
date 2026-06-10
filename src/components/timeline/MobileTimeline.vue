@@ -15,10 +15,20 @@
           style="left: -20px; top: 20px; transform: translateX(-50%)"
         />
 
-        <div class="mobile-card card-bg card-border border rounded-xl p-5 relative">
-          <slot name="card" :entry="entry">
-            <component :is="resolveComponent(entry.type)" :entry="entry" />
-          </slot>
+        <div class="mobile-card-wrapper relative">
+          <!-- Ghost cards for collage multi-project stack en mobile -->
+          <div
+            v-for="n in ghostCount(entry)"
+            :key="n"
+            class="mobile-card-ghost absolute rounded-xl border card-bg card-border pointer-events-none"
+            :style="ghostStackStyle(n)"
+          />
+
+          <div class="mobile-card card-bg card-border border rounded-xl p-5 relative">
+            <slot name="card" :entry="entry">
+              <component :is="resolveComponent(entry.type)" :entry="entry" />
+            </slot>
+          </div>
         </div>
       </div>
     </div>
@@ -49,6 +59,23 @@ function resolveComponent(type) {
 const props = defineProps({
   entries: { type: Array, required: true },
 })
+
+/** Cantidad de ghost cards para collage (misma lógica que TimelineNode) */
+function ghostCount(entry) {
+  if (entry.type !== 'collage') return 0
+  const projects = entry.data?.projects
+  if (!projects || projects.length <= 1) return 0
+  return Math.min(projects.length - 1, 2)
+}
+
+/** Estilo para cada ghost card en mobile (siempre peek a la derecha) */
+function ghostStackStyle(n) {
+  return {
+    zIndex: -n,
+    opacity: Math.max(0.3, 1 - n * 0.3),
+    transform: `translateY(${n * 5}px) translateX(${n * 12}px)`,
+  }
+}
 
 const mobileYearGroups = computed(() => {
   const items = (props.entries || []).map((entry) => ({
@@ -89,6 +116,20 @@ const mobileYearGroups = computed(() => {
 .mobile-card {
   position: relative;
   z-index: 10;
+}
+
+.mobile-card-wrapper {
+  position: relative;
+}
+
+.mobile-card-ghost {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .mobile-card::before {
