@@ -50,4 +50,21 @@ export default {
     gallery: 'Gallery',
     projects: 'Projects',
   },
+  assistant: {
+    title: 'AI Assistant',
+    subtitle: "Isaac's Portfolio",
+    greeting:
+      "Hello! 👋\n\nI am the assistant for Isaac's portfolio.\n\nI can help you learn about:\n\n• Professional experience\n• Technologies mastered\n• Featured projects\n• Technical achievements\n• Career path",
+    quick_actions: 'Quick Actions',
+    suggested: 'Suggested Questions',
+    input_placeholder: 'Ask about Isaac...',
+    processing: 'Waiting for response...',
+    reset: 'Reset conversation',
+    close: 'Close',
+    error: {
+      no_key: 'The Groq API key is not configured correctly. Check the .env file',
+      rate_limit: 'Too many requests. Please wait a moment and try again.',
+      generic: 'Oops, something went wrong. Please try again.',
+    },
+  },
 }

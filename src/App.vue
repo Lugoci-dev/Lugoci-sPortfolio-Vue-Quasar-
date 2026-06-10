@@ -1,9 +1,11 @@
 <template>
   <router-view />
+  <AiAssistant />
 </template>
 
 <script setup>
 import { useQuasar } from 'quasar'
+import AiAssistant from 'src/components/assistant/AiAssistant.vue'
 
 // ── Inicializar dark mode desde preferencia guardada o dispositivo ──
 // (solo cliente; en SSR el server no tiene localStorage ni matchMedia)

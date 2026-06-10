@@ -50,4 +50,21 @@ export default {
     gallery: 'Galería',
     projects: 'Proyectos',
   },
+  assistant: {
+    title: 'Asistente IA',
+    subtitle: 'Portfolio de Isaac',
+    greeting:
+      '¡Hola! 👋\n\nSoy el asistente del portfolio de Isaac.\n\nPuedo ayudarte a conocer:\n\n• Experiencia profesional\n• Tecnologías que domina\n• Proyectos destacados\n• Logros técnicos\n• Trayectoria profesional',
+    quick_actions: 'Acciones rápidas',
+    suggested: 'Preguntas sugeridas',
+    input_placeholder: 'Preguntá sobre Isaac...',
+    processing: 'Esperando respuesta...',
+    reset: 'Resetear conversación',
+    close: 'Cerrar',
+    error: {
+      no_key: 'La API key de Groq no está configurada correctamente. Revisá el archivo .env',
+      rate_limit: 'Demasiadas solicitudes. Esperá un momento y volvé a intentar.',
+      generic: 'Ups, algo salió mal. Intentalo de nuevo.',
+    },
+  },
 }

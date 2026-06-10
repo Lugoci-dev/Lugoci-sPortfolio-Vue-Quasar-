@@ -34,4 +34,5 @@ __pycache__/
 *.pyc
 
 # local .env files
+.env
 .env.local*
