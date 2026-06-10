@@ -2,7 +2,7 @@
  * useAiAssistant — Composable principal del Asistente IA
  *
  * Responsabilidades:
- * - Estado global del asistente (abierto/cerrado, mensajes, loading)
+ * - Estado global del asistente (abierto/cerrado, mensajes, loading, streaming)
  * - Orquestación: knowledge → contextBuilder → groqClient
  * - Acciones rápidas (resume, pitch, tech, projects)
  * - NO contiene lógica de UI
@@ -35,6 +35,7 @@ export function useAiAssistant() {
   const error = ref(null)
   const messages = ref([])
   const knowledgeBase = ref({ me: null, about: null, xpData: null })
+  const currentModel = ref('')
 
   /** Provider de IA (inicializado lazy) */
   let provider = null
@@ -60,12 +61,42 @@ export function useAiAssistant() {
       knowledgeBase.value = await loadKnowledgeBase()
 
       const apiKey = import.meta.env.VITE_GROQ_API_KEY
+
+      // ╔══════════════════════════════════════════════════════════════╗
+      // ║  🥷  ESTA API KEY ESTA ACÁ A PROPÓSITO  🥷                 ║
+      // ║                                                              ║
+      // ║  Sí, la viste. Está hardcodeada en el bundle.               ║
+      // ║  No, no me olvidé de sacarla — es un portfolio personal     ║
+      // ║  y la key es de Groq (no de mi banco).                      ║
+      // ║                                                              ║
+      // ║  Por favor: NO la uses, NO la compartas, NO me gastes       ║
+      // ║  los créditos gratis de Groq que tan buen precio me         ║
+      // ║  salieron (?
+      // ║                                                              ║
+      // ║  Si llegaste hasta acá: gracias por curiosear, y si         ║
+      // ║  querés contratar a Isaac, mandale un mail                  ║
+      // ║  → isaitodaniel@gmail.com                                   ║
+      // ║                                                              ║
+      // ║  Atentamente,                                               ║
+      // ║  El dev que sabía lo que hacía (?
+      // ╚══════════════════════════════════════════════════════════════╝
+
+      if (apiKey) {
+        console.warn(
+          '%c[AI Assistant] 🥷 Groq API key detectada. ' +
+            'Si estás curioseando el bundle: sí, está a propósito. ' +
+            'No la uses, no me gastes los créditos. Gracias ✌️',
+          'color: #f59e0b; font-weight: bold; font-size: 12px;',
+        )
+      }
+
       provider = groqProvider({
         apiKey: apiKey || '',
-        model: 'llama-3.1-8b-instant',
         temperature: 0.7,
         maxTokens: 1024,
       })
+
+      currentModel.value = provider.name()
 
       isLoaded.value = true
     } catch (err) {
@@ -76,16 +107,12 @@ export function useAiAssistant() {
 
   /* ─── Abrir / Cerrar ─── */
   function toggleOpen() {
-    if (!isOpen.value) {
-      init()
-    }
+    if (!isOpen.value) init()
     isOpen.value = !isOpen.value
   }
 
   function open() {
-    if (!isOpen.value) {
-      init()
-    }
+    if (!isOpen.value) init()
     isOpen.value = true
   }
 
@@ -94,12 +121,13 @@ export function useAiAssistant() {
   }
 
   /* ─── Agregar mensaje ─── */
-  function addMessage(role, content) {
+  function addMessage(role, content, extras = {}) {
     messages.value.push({
       id: ++msgId,
       role,
       content,
       timestamp: Date.now(),
+      ...extras,
     })
   }
 
@@ -116,31 +144,38 @@ export function useAiAssistant() {
     isProcessing.value = true
     error.value = null
 
-    // Scroll al fondo después del render
     await nextTick()
 
     try {
-      // 3. Esperar un momento para que se vea el typing indicator
-      await new Promise((r) => setTimeout(r, 300))
+      // 3. Breve pausa para que se vea el typing indicator
+      await new Promise((r) => setTimeout(r, 400))
 
       // 4. Construir prompt con contexto inteligente
       const history = messages.value
         .filter((m) => m.role !== 'system')
-        .slice(-10, -1) // últimas 10 interacciones (excluyendo la actual)
+        .slice(-10, -1)
         .map((m) => ({ role: m.role, content: m.content }))
 
       const promptMessages = buildPrompt(question, knowledgeBase.value, locale.value, history)
 
-      // 5. Enviar a Groq
-      const reply = await provider.send(promptMessages)
+      // 5. Enviar a Groq (con fallback automático de modelos)
+      const result = await provider.send(promptMessages)
 
-      // 6. Agregar respuesta
-      addMessage('assistant', reply)
+      // 6. Agregar respuesta con metadatos del modelo y flag para animación
+      currentModel.value = result.model
+      addMessage('assistant', result.content, {
+        model: result.model,
+        modelId: result.modelId,
+        isStreaming: true,
+      })
     } catch (err) {
       console.error('[useAiAssistant] Error sending message:', err)
-      error.value = err.message || 'Error al comunicarse con el asistente'
+      error.value = err.message || getErrorMessage(err, locale.value)
 
-      addMessage('assistant', getErrorMessage(err, locale.value))
+      addMessage('assistant', getErrorMessage(err, locale.value), {
+        model: currentModel.value || 'Error',
+        isStreaming: false,
+      })
     } finally {
       isProcessing.value = false
     }
@@ -156,10 +191,8 @@ export function useAiAssistant() {
     try {
       const promptMessages = buildQuickActionPrompt(actionId, knowledgeBase.value, locale.value)
 
-      // El último mensaje es del usuario — lo mostramos
       const userMsg = promptMessages.findLast((m) => m.role === 'user')
       if (userMsg) {
-        // Extraer la pregunta del contenido
         const match = userMsg.content.match(/=== PREGUNTA ===\n\n([\s\S]*)/)
         const displayQuestion = match?.[1]?.trim() ?? actionId
         addMessage('user', displayQuestion)
@@ -167,14 +200,31 @@ export function useAiAssistant() {
 
       await nextTick()
 
-      const reply = await provider.send(promptMessages)
-      addMessage('assistant', reply)
+      const result = await provider.send(promptMessages)
+
+      currentModel.value = result.model
+      addMessage('assistant', result.content, {
+        model: result.model,
+        modelId: result.modelId,
+        isStreaming: true,
+      })
     } catch (err) {
       console.error('[useAiAssistant] Quick action error:', err)
       error.value = err.message
-      addMessage('assistant', getErrorMessage(err, locale.value))
+      addMessage('assistant', getErrorMessage(err, locale.value), {
+        model: currentModel.value || 'Error',
+        isStreaming: false,
+      })
     } finally {
       isProcessing.value = false
+    }
+  }
+
+  /* ─── Marcar mensaje como no-streaming (lo llama el componente al terminar animación) ─── */
+  function markMessageComplete(messageId) {
+    const msg = messages.value.find((m) => m.id === messageId)
+    if (msg) {
+      msg.isStreaming = false
     }
   }
 
@@ -186,15 +236,21 @@ export function useAiAssistant() {
 
   /* ─── Helpers ─── */
   function getErrorMessage(err, lang) {
-    if (err.message?.includes('401') || err.message?.includes('API key')) {
+    const msg = err.message ?? ''
+    if (msg.includes('401') || msg.includes('API key') || msg.includes('autenticación')) {
       return lang === 'es'
         ? 'La API key de Groq no está configurada correctamente. Revisá el archivo .env'
         : 'The Groq API key is not configured correctly. Check the .env file'
     }
-    if (err.message?.includes('429')) {
+    if (msg.includes('429') || msg.includes('rate')) {
       return lang === 'es'
-        ? 'Demasiadas solicitudes. Esperá un momento y volvé a intentar.'
-        : 'Too many requests. Please wait a moment and try again.'
+        ? 'Todos los modelos están en su límite. Esperá un momento y volvé a intentar.'
+        : 'All models are rate-limited. Please wait and try again.'
+    }
+    if (msg.includes('Todos los modelos')) {
+      return lang === 'es'
+        ? 'No se pudo conectar con ningún modelo de IA. Intentá de nuevo más tarde.'
+        : 'Could not connect to any AI model. Please try again later.'
     }
     return lang === 'es'
       ? 'Ups, algo salió mal. Intentalo de nuevo.'
@@ -209,6 +265,7 @@ export function useAiAssistant() {
     error,
     messages,
     knowledgeBase,
+    currentModel,
     suggestedQuestions,
     quickActionsList,
     greetingMessage,
@@ -219,6 +276,7 @@ export function useAiAssistant() {
     close,
     sendMessage,
     triggerQuickAction,
+    markMessageComplete,
     resetChat,
     init,
   }
