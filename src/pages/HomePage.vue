@@ -149,7 +149,7 @@ function loop() {
         </div>
       </template>
     </LoadingState>
-    <PageNavigator :next="{ name: $t('nav.about'), path: '/about' }" />
+    <PageNavigator :next="{ name: $t('nav.about'), path: '/about' }" class="px-4 md:px-42 pb-6" />
   </q-page>
 </template>
 

@@ -19,6 +19,7 @@
     "@quasar/extras": "^1.16.4",
     "@tailwindcss/postcss": "^4.1.13",
     "axios": "^1.2.1",
+    "marked": "^18.0.5",
     "pinia": "^3.0.1",
     "quasar": "^2.16.0",
     "tailwindcss": "^4.1.13",

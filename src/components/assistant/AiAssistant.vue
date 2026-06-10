@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ── FAB Button con animación periódica ── -->
-    <div v-if="!assistant.isOpen.value" class="fixed z-[6000] bottom-6 right-6">
+    <div v-if="!assistant.isOpen.value" class="fixed z-[6000] bottom-16 right-6">
       <!-- Tooltip burbuja que aparece periódicamente -->
       <transition name="tooltip-pop">
         <div
@@ -126,7 +126,7 @@
 
               <!-- Messages del chat -->
               <div v-for="msg in messages" :key="msg.id" class="mb-3 last:mb-0">
-                <AiChatMessage :message="msg" />
+                <AiChatMessage :message="msg" @stream-complete="handleStreamComplete" />
               </div>
 
               <!-- Error message -->
@@ -138,26 +138,18 @@
                 </div>
               </div>
 
-              <!-- Typing indicator -->
-              <div v-if="assistant.isProcessing.value" class="mb-3">
-                <div class="flex items-center gap-2 px-1">
+              <!-- Loading state: burbuja del assistant pensando -->
+              <div v-if="assistant.isProcessing.value && !hasStreamingMessage" class="mb-3">
+                <div class="flex items-start gap-2 flex-row px-1">
                   <div
-                    class="w-7 h-7 rounded-full bg-Neutral600/20 flex items-center justify-center flex-shrink-0"
+                    class="w-7 h-7 rounded-full bg-Neutral600/20 flex items-center justify-center text-[10px] font-bold text-Neutral300 flex-shrink-0 mt-1"
                   >
-                    <span class="text-[10px] text-Neutral300">IA</span>
+                    IA
                   </div>
                   <div
-                    class="flex items-center gap-1 px-4 py-3 rounded-2xl card-bg border border-adaptive/10"
+                    class="rounded-2xl rounded-bl-md border border-adaptive/10 card-bg px-5 py-3.5"
                   >
-                    <span class="w-2 h-2 rounded-full bg-adaptive-mid/40 dot-pulse" />
-                    <span
-                      class="w-2 h-2 rounded-full bg-adaptive-mid/40 dot-pulse"
-                      style="animation-delay: 0.2s"
-                    />
-                    <span
-                      class="w-2 h-2 rounded-full bg-adaptive-mid/40 dot-pulse"
-                      style="animation-delay: 0.4s"
-                    />
+                    <span class="text-xl leading-none tracking-[0.15em] text-Red400"> ... </span>
                   </div>
                 </div>
               </div>
@@ -179,14 +171,15 @@
                 type="submit"
                 class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200 cursor-pointer"
                 :class="
-                  canSend
+                  canSend || assistant.isProcessing.value
                     ? 'bg-Red400 text-white hover:bg-Red700 shadow-sm'
                     : 'bg-Neutral600/20 text-adaptive-mid/40'
                 "
-                :disabled="!canSend"
+                :disabled="!canSend && !assistant.isProcessing.value"
                 aria-label="Enviar mensaje"
               >
-                <q-icon name="send" size="1.1rem" />
+                <q-spinner v-if="assistant.isProcessing.value" size="1.2rem" class="text-white" />
+                <q-icon v-else name="send" size="1.1rem" />
               </button>
             </form>
           </div>
@@ -282,6 +275,11 @@ const canSend = computed(() => {
   return inputText.value.trim().length > 0 && !isProcessing.value
 })
 
+/* ─── Detectar si ya hay un mensaje del assistant haciendo streaming ─── */
+const hasStreamingMessage = computed(() => {
+  return messages.value.some((m) => m.role === 'assistant' && m.isStreaming)
+})
+
 /* ─── Panel classes responsive ─── */
 const panelClasses = computed(() => {
   return [
@@ -331,6 +329,10 @@ async function handleQuickAction(actionId) {
 function handleReset() {
   assistant.resetChat()
   inputText.value = ''
+}
+
+function handleStreamComplete(messageId) {
+  assistant.markMessageComplete(messageId)
 }
 
 /* ─── Init ─── */
@@ -484,23 +486,23 @@ watch(
 }
 
 /* ═══════════════════════════════════════════
-   TYPING DOTS
+   PANEL CONTENT: Sutil glow en borde
    ═══════════════════════════════════════════ */
 
-.dot-pulse {
-  animation: dotPulse 1.4s ease-in-out infinite;
+.thinking-dot {
+  animation: thinkingBounce 1.2s ease-in-out infinite;
 }
 
-@keyframes dotPulse {
+@keyframes thinkingBounce {
   0%,
-  80%,
+  60%,
   100% {
     opacity: 0.3;
-    transform: scale(0.8);
+    transform: translateY(0);
   }
-  40% {
+  30% {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(-4px);
   }
 }
 </style>
